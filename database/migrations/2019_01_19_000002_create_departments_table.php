@@ -18,6 +18,9 @@ class CreateDepartmentsTable extends Migration
             $table->string('descriptions');
             $table->unsignedInteger('division_id');
             $table->timestamps();
+
+
+            //
             $table->foreign('division_id')->references('id')->on('divisions');
         });
     }

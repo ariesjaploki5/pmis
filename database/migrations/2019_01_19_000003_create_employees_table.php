@@ -19,6 +19,7 @@ class CreateEmployeesTable extends Migration
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('department_id');
 
+            //
             $table->foreign('department_id')->references('id')->on('departments');
             $table->foreign('user_id')->references('id')->on('users');
         });

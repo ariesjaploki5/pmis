@@ -8,7 +8,11 @@ export function initialize(store, router) {
         if(requiresAuth && !currentUser) {
             next('/login');
         } else if(to.path == '/login' && currentUser) {
-            next('/');
+            if(currentUser.role == 1){
+                next('/dashboard');
+            }else{
+                next('/home');
+            }
         } else {
             next();
         }

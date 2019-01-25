@@ -23,10 +23,8 @@ class CreateRequestItemsTable extends Migration
             $table->unsignedInteger('supply_id');
             $table->timestamps();
 
-
             $table->foreign('unit_of_issue_id')->references('id')->on('unit_of_issues');
             $table->foreign('supply_id')->references('id')->on('supplies');
-            
         });
     }
 

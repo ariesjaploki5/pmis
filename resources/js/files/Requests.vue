@@ -1,12 +1,20 @@
 <template>
-	<div class="container">
-		
-	</div>	
+    <div class="card mt-4">
+        <div class="card-header">Requests</div>
+
+        <div class="card-body">
+            
+        </div>
+    </div>  
 </template>
+
 <script>
     export default {
-        mounted() {
-            console.log('Component mounted.')
+        name: 'dashboard',
+        computed: {
+            welcome() {
+                return this.$store.getters.welcome
+            }
         }
     }
 </script>

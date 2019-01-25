@@ -13,6 +13,7 @@ import StoreData from './store';
 
 import MainApp from './pages/MainApp.vue';
 import {initialize} from './helpers/general';
+import appvue from './app.vue';
 
 Vue.use(VueRouter);
 Vue.use(Vuex);
@@ -31,6 +32,6 @@ const app = new Vue({
     router,
     store,
     components: {
-        MainApp
+        appvue
     }
 });

@@ -19,7 +19,7 @@ import Pap_codes from './files/Pap_codes.vue';
 import Requests from './files/Requests.vue';
 import Supplies from './files/Supplies.vue';
 import Users from './files/Users.vue';
-
+import Navbar from './pages/Navbar.vue';
 
 export const routes = [
     {
