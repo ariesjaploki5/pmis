@@ -19,9 +19,6 @@ import pap_codes from './files/pap_codes.vue';
 import requests from './files/requests.vue';
 import items from './files/items.vue';
 import users from './files/users.vue';
-import navbar from './pages/navbar.vue';
-
-
 
 
     
