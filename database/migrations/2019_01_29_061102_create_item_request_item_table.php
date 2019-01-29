@@ -20,7 +20,6 @@ class CreateItemRequestItemTable extends Migration
             $table->unsignedInteger('request_item_id');
             $table->unsignedInteger('unit_of_issue_id');
             $table->timestamps();
-
             $table->foreign('item_id')->references('id')->on('items');
             $table->foreign('request_item_id')->references('id')->on('request_items');
             $table->foreign('unit_of_issue_id')->references('id')->on('unit_of_issues');
