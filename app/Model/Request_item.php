@@ -6,17 +6,23 @@ use Illuminate\Database\Eloquent\Model;
 
 class Request_item extends Model
 {
+    //
     protected $fillable = [
-        'qunatity', 'stock_no', 'purpose', 'date', 'unit_of_issue_id', 'supply_id'
+        'request_quantity', 'item_id', 'unit_of_issue_id', 'purchase_request_id'
     ];
 
-    public function unit_of_issue()
+    public function items()
     {
-    	return $this->hasOne('App\Model\Unit_of_issue');
+        return $this->belongsToMany('App\Model\Item');
     }
 
-    public function supply()
+    public function unit_of_issues()
     {
-    	return $this->hasOne('App\Model\Supply');
+        return $this->belongsToMany('App\Model\Unit_of_issue');
+    }
+
+    public function purchase_requests()
+    {
+        return $this->belongsToMany('App\Model\Purchase_request');
     }
 }

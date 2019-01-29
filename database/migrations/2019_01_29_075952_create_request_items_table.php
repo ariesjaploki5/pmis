@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateItemRequestItemTable extends Migration
+class CreateRequestItemsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,16 @@ class CreateItemRequestItemTable extends Migration
      */
     public function up()
     {
-        Schema::create('item_request_item', function (Blueprint $table) {
+        Schema::create('request_items', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('quantity')->nullable();
+            $table->integer('request_quantity')->nullable();
             $table->unsignedInteger('item_id');
-            $table->unsignedInteger('request_item_id');
-            $table->unsignedInteger('unit_of_issue_id');
+            $table->unsignedInteger('unit_of_issue_id')->nullable();
+            $table->unsignedInteger('purchase_request_id')->nullable();
+
             $table->timestamps();
             $table->foreign('item_id')->references('id')->on('items');
-            $table->foreign('request_item_id')->references('id')->on('request_items');
+            $table->foreign('purchase_request_id')->references('id')->on('purchase_requests');
             $table->foreign('unit_of_issue_id')->references('id')->on('unit_of_issues');
         });
     }
@@ -33,6 +34,6 @@ class CreateItemRequestItemTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('item_request_item');
+        Schema::dropIfExists('request_items');
     }
 }

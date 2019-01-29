@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
     	$user = new User;
     	$user->username = 'justin';
     	$user->password = bcrypt('justin');
-    	$user->role = 1;
+    	$user->role_id = 1;
     	$user->save();
     }
 }

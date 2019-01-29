@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAccountCodesTable extends Migration
+class CreatePurchaseRequestsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,11 @@ class CreateAccountCodesTable extends Migration
      */
     public function up()
     {
-        Schema::create('account_codes', function (Blueprint $table) {
+        Schema::create('purchase_requests', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('account_code');
+            $table->string('purpose');
+            $table->date('date');
+            $table->string('status');
             $table->timestamps();
         });
     }
@@ -27,6 +29,6 @@ class CreateAccountCodesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('account_codes');
+        Schema::dropIfExists('purchase_requests');
     }
 }
