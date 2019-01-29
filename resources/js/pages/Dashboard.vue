@@ -10,11 +10,6 @@
 
 <script>
     export default {
-        name: 'dashboard',
-        computed: {
-            welcome() {
-                return this.$store.getters.welcome
-            }
-        }
+
     }
 </script>

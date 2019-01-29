@@ -1,116 +1,107 @@
 
 //Authentication
-import Register from './auth/Register.vue';
-import Login from './auth/Login.vue';
+import register from './auth/register.vue';
+import login from './auth/login.vue';
 
 //requires auth
 //Landing Pages for each user
-import Welcome from './pages/Welcome.vue';
-import Home from './pages/Home.vue';
-import Dashboard from './pages/Dashboard.vue';
+
+import home from './pages/home.vue';
+import dashboard from './pages/dashboard.vue';
 
 //File Management
-import Account_codes from './files/Account_codes.vue';
-import Departments from './files/Departments.vue';
-import Divisions from './files/Divisions.vue';
-import Employees from './files/Employees.vue';
-import Heads from './files/Heads.vue';
-import Pap_codes from './files/Pap_codes.vue';
-import Requests from './files/Requests.vue';
-import Supplies from './files/Supplies.vue';
-import Users from './files/Users.vue';
-import Navbar from './pages/Navbar.vue';
 
+import departments from './files/departments.vue';
+import divisions from './files/divisions.vue';
+import employees from './files/employees.vue';
+import heads from './files/heads.vue';
+import pap_codes from './files/pap_codes.vue';
+import requests from './files/requests.vue';
+import items from './files/items.vue';
+import users from './files/users.vue';
+import navbar from './pages/navbar.vue';
+
+
+
+
+    
 export const routes = [
+
     {
         path: '/login',
-        component: Login
+        component: login
     },
     {
         path: '/register',
-        component: Register
+        component: register
     },
 
     {
-        path: '/',
-        component: Welcome,
-        meta: {
-            requiresAuth: true
-        }
-    },
-    {
         path: '/home',
-        component: Home,
+        component: home,
         meta: {
             requiresAuth: true
         }
     },
     {
         path: '/dashboard',
-        component: Dashboard,
+        component: dashboard,
         meta: {
             requiresAuth: true
         }
     },
     {
-        path: '/account_codes',
-        component: Account_codes,
+        path: '/items',
+        component: items,
         meta: {
             requiresAuth: true
         }
     },
     {
         path: '/departments',
-        component: Departments,
+        component: departments,
         meta: {
             requiresAuth: true
         }
     },
     {
         path: '/divisions',
-        component: Divisions,
+        component: divisions,
         meta: {
             requiresAuth: true
         }
     },
     {
         path: '/employees',
-        component: Employees,
+        component: employees,
         meta: {
             requiresAuth: true
         }
     },
     {
         path: '/heads',
-        component: Heads,
+        component: heads,
         meta: {
             requiresAuth: true
         }
     },
     {
         path: '/pap_codes',
-        component: Pap_codes,
+        component: pap_codes,
         meta: {
             requiresAuth: true
         }
     },
     {
         path: '/requests',
-        component: Requests,
-        meta: {
-            requiresAuth: true
-        }
-    },
-    {
-        path: '/supplies',
-        component: Supplies,
+        component: requests,
         meta: {
             requiresAuth: true
         }
     },
     {
         path: '/users',
-        component: Users,
+        component: users,
         meta: {
             requiresAuth: true
         }

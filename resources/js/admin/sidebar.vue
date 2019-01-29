@@ -11,7 +11,7 @@
               <!-- <img src="" class="img-circle elevation-2" alt="User Image"> -->
             </div>
             <div class="info text-center">
-              <router-link to="#" class="d-block">{{ currentUser.username }}</router-link>
+              <router-link to="#" class="d-block">{{ current_user.username }}</router-link>
             </div>
           </div>
 
@@ -94,8 +94,8 @@
             }
         },
         computed: {
-            currentUser() {
-                return this.$store.getters.currentUser
+            current_user() {
+                return this.$store.getters.current_user
             }
         }
     }

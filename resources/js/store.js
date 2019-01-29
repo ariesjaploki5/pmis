@@ -1,10 +1,10 @@
-import { getLocalUser } from "./helpers/auth";
+import { get_local_user } from "./helpers/auth";
 
-const user = getLocalUser();
+const user = get_local_user();
 
 export default {
     state: {
-        currentUser: user,
+        current_user: user,
         isLoggedIn: !!user,
         loading: false,
 
@@ -16,8 +16,8 @@ export default {
         isLoggedIn(state) {
             return state.isLoggedIn;
         },
-        currentUser(state) {
-            return state.currentUser;
+        current_user(state) {
+            return state.current_user;
         },
     },
     mutations: {
@@ -29,9 +29,9 @@ export default {
             state.auth_error = null;
             state.isLoggedIn = true;
             state.loading = false;
-            state.currentUser = Object.assign({}, payload.user, {token: payload.access_token});
+            state.current_user = Object.assign({}, payload.user, {token: payload.access_token});
 
-            localStorage.setItem("user", JSON.stringify(state.currentUser));
+            localStorage.setItem("user", JSON.stringify(state.current_user));
         },
         loginFailed(state, payload) {
             state.loading = false;
@@ -40,7 +40,7 @@ export default {
         logout(state) {
             localStorage.removeItem("user");
             state.isLoggedIn = false;
-            state.currentUser = null;
+            state.current_user = null;
         },
 
     },

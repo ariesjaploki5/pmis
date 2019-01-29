@@ -3,16 +3,12 @@
 export function initialize(store, router) {
     router.beforeEach((to, from, next) => {
         const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
-        const currentUser = store.state.currentUser;
+        const current_user = store.state.current_user;
     
-        if(requiresAuth && !currentUser) {
+        if(requiresAuth && !current_user) {
             next('/login');
-        } else if(to.path == '/login' && currentUser) {
-            if(currentUser.role == 1){
-                next('/dashboard');
-            }else{
-                next('/home');
-            }
+        } else if(to.path == '/login' && current_user) {
+            next('/home');
         } else {
             next();
         }
@@ -27,8 +23,8 @@ export function initialize(store, router) {
         return Promise.reject(error);
     });
 
-    if (store.getters.currentUser) {
-        setAuthorization(store.getters.currentUser.token);
+    if (store.getters.current_user) {
+        setAuthorization(store.getters.current_user.token);
     }
 }
 

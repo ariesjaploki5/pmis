@@ -6,7 +6,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ml-auto" v-if="!currentUser">
+                <ul class="navbar-nav ml-auto" v-if="!current_user">
                     <li>
                         <router-link to="/login" class="nav-link">Login</router-link>
                     </li>
@@ -20,7 +20,7 @@
                     </li>
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
-                            {{ currentUser.username }} <span class="caret"></span>
+                            {{ current_user.username }} <span class="caret"></span>
                         </a>
 
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -35,7 +35,7 @@
 
 <script>
     export default {
-        name: 'app-header',
+        name: 'guestbar',
         methods: {
             logout() {
                 this.$store.commit('logout');
@@ -43,8 +43,8 @@
             }
         },
         computed: {
-            currentUser() {
-                return this.$store.getters.currentUser
+            current_user() {
+                return this.$store.getters.current_user
             }
         }
     }

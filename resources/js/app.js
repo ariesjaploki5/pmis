@@ -1,6 +1,5 @@
 
 
-
 require('./bootstrap');
 import Vue from 'vue';
 import VueRouter from 'vue-router';
@@ -11,7 +10,7 @@ import {routes} from './routes';
 import StoreData from './store';
 
 
-import MainApp from './pages/MainApp.vue';
+
 import {initialize} from './helpers/general';
 import appvue from './app.vue';
 
