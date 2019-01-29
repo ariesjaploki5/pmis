@@ -20,11 +20,8 @@ Route::group(['prefix' => 'auth'], function ($router) {
     Route::post('me', 'AuthController@me');
 });
 
-Route::group(['middleware' => 'jwt.auth'], function ($router) {
-    
-});
 
-    Route::get('item/{role_id}', 'ItemCtr@index');
+    Route::get('item', 'ItemCtr@index');
     Route::post('item', 'ItemCtr@store');
     Route::put('item', 'ItemCtr@update');
     Route::delete('item/{id}', 'ItemCtr@destroy');
@@ -68,3 +65,7 @@ Route::group(['middleware' => 'jwt.auth'], function ($router) {
     Route::post('unit_of_issue', 'UnitOfIssueCtr@store');
     Route::put('unit_of_issue/{id}', 'UnitOfIssueCtr@update');
     Route::delete('unit_of_issue/{id}', 'UnitOfIssueCtr@destroy');
+
+
+
+

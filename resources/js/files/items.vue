@@ -4,22 +4,35 @@
           <div class="row">
             <div class="col-8"><div class="card-title">Items</div></div>
             <div class="col-4">
-                <button class="btn btn-primary" @click="create()">Add</button>
+                <button class="btn btn-primary" @click="create_item()">Add</button>
             </div>
             <div class="modal fade" id="item_modal" tabindex="-1" role="dialog" aria-labelledby="item_modal_label" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="item_modal_label">Add Item</h5>
-                        
+                        <h5 class="modal-title" id="item_modal_label">New Item</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form>
+                    <form action="">
                         <div class="modal-body">
                             <div class="form-group">
-
+                               
+                                <label for="item_code">Code</label>
+                                <input type="text" class="form-control-sm" v-model="this.form.item_code">
+                            </div>
+                            <div class="form-group">
+                                <label for="item_description">Description</label>
+                                <input type="text" class="form-control-sm" v-model="this.form.item_description">
+                            </div>
+                            <div class="form-group">
+                                <label for="item_total_quantity">Total</label>
+                                <input type="text" class="form-control-sm" v-model="this.form.item_total_quantity">
+                            </div>
+                            <div class="form-group">
+                                <label for="pap_code_id">Pap Code</label>
+                                <input type="text" class="form-control-sm" v-model="this.form.pap_code_id">
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -45,13 +58,16 @@
            			</tr>
            		</thead>
            		<tbody>
-           			<tr>
-                        <td></td>
-                        <td></td>
-           				<td></td>
-           				<td></td>
-           				<td></td>
-           				<td></td>
+           			<tr v-for="item in items" :key="item.id">
+                        <td>{{ item.id }}</td>
+                        <td>{{ item.item_code }}</td>
+           				<td>{{ item.item_descriptions }}</td>
+           				<td>{{ item.pap_code_id }}</td>
+           				<td>{{ item.account_code }}</td>
+           				<td>
+                               <button class="btn btn-sm btn-success">Edit</button>
+                               <button class="btn btn-sm btn-danger">Delete</button>
+                        </td>
            			</tr>
            		</tbody>
            </table> 
@@ -63,70 +79,35 @@
 </template>
 <script>
     export default {
-        data(){
+        data() {
             return {
-                editmode: false,
-                items: {},
                 role_id: '',
+                editmode: false,
+                items : {},
                 form: new Form({
-                    id: '',
-                    item_code: '',
-                    item_description: '',
-                    item_total_quantity: '',
-                    account_code: '',
-                    pap_code_id: '',
+                    id:'',
+
                 })
             }
         },
-        methods: {
-            load_all(){
-                this.load_items();
-            },
-            load_items(){
-                axios.get('item/'+this.role_id).then(({data}) => this.items)
-                .catch(() => {
-
-                });
-            },
+        methods:{
             load_page(){
-                axios.get('item?page=' + page).then(response => {this.items = response.data;});
-            },
-            create(){
-                this.editmode = true;
-                this.form.reset();
-                $('#item_modal').modal('show');
-            },
-            store(){
-                this.form.post('item').then(() => {
-                    
-                }).catch(() => {
 
-                });
             },
-            edit(item){
-                this.editmode = true;
-                this.form.reset();
-                $('#item_modal').modal('show');
-                this.form.fill(item);
-            },
-            update(){
-
+            load_all(){
+                this.load_role();
             },
             load_role(){
-                this.role_id = current_user.role;
-            }
+                this.role_id = this.current_user.role_id;
+            },
         },
         computed: {
             current_user() {
-                return this.$store.state.current_user;
+                return this.$store.getters.current_user;
             }
         },
         created(){
             this.load_all();
-            Fire.$on('AfterStore', () => {
-                this.load_items();
-            });
-        },
-        
+        }
     }
 </script>

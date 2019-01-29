@@ -1,12 +1,12 @@
 import { get_local_user } from "./helpers/auth";
 
+
 const user = get_local_user();
 
 export default {
     state: {
         current_user: user,
         isLoggedIn: !!user,
-        loading: false,
 
     },
     getters: {
@@ -19,6 +19,7 @@ export default {
         current_user(state) {
             return state.current_user;
         },
+
     },
     mutations: {
         login(state) {
@@ -42,7 +43,6 @@ export default {
             state.isLoggedIn = false;
             state.current_user = null;
         },
-
     },
     actions: {
         login(context) {

@@ -32,12 +32,7 @@
                     <p>Items</p>
                 </router-link>
               </li>
-              <li class="nav-item">
-                <router-link to='/requests' class="nav-link">
-                    <i class="nav-icon fa fa-th"></i>
-                    <p>Item Requests</p>
-                </router-link>
-              </li>
+
               <li class="nav-item">
                 <router-link to='/account_codes' class="nav-link">
                     <i class="nav-icon fa fa-th"></i>

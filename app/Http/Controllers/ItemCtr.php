@@ -2,13 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use JWTAuth;
 use Illuminate\Http\Request;
 use App\Model\Item;
+use App\User;
+
 
 class ItemCtr extends Controller
 {
-    public function index($role_id)
+
+    public function index(Request $request)
     {
+
+        $user = JWTAuth::parseToken()->toUser();
+        
+
+
         $items = Item::with('pap_code')->orderBy('id')->get();
         
         return response()->json($items);

@@ -1906,11 +1906,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'app-sidebar',
   methods: {
@@ -2417,113 +2412,51 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      role_id: '',
       editmode: false,
       items: {},
-      role_id: '',
       form: new Form({
-        id: '',
-        item_code: '',
-        item_description: '',
-        item_total_quantity: '',
-        account_code: '',
-        pap_code_id: ''
+        id: ''
       })
     };
   },
   methods: {
+    load_page: function load_page() {},
     load_all: function load_all() {
-      this.load_items();
+      this.load_role();
     },
-    load_items: function load_items() {
-      var _this = this;
-
-      axios.get('item/' + this.role_id).then(function (_ref) {
-        var data = _ref.data;
-        return _this.items;
-      }).catch(function () {});
-    },
-    load_page: function load_page() {
-      var _this2 = this;
-
-      axios.get('item?page=' + page).then(function (response) {
-        _this2.items = response.data;
-      });
-    },
-    create: function create() {
-      this.editmode = true;
-      this.form.reset();
-      $('#item_modal').modal('show');
-    },
-    store: function store() {
-      this.form.post('item').then(function () {}).catch(function () {});
-    },
-    edit: function edit(item) {
-      this.editmode = true;
-      this.form.reset();
-      $('#item_modal').modal('show');
-      this.form.fill(item);
-    },
-    update: function update() {},
     load_role: function load_role() {
-      this.role_id = current_user.role;
+      this.role_id = this.current_user.role_id;
     }
   },
   computed: {
     current_user: function current_user() {
-      return this.$store.state.current_user;
+      return this.$store.getters.current_user;
     }
   },
   created: function created() {
-    var _this3 = this;
-
     this.load_all();
-    Fire.$on('AfterStore', function () {
-      _this3.load_items();
-    });
   }
 });
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/files/pap_codes.vue?vue&type=script&lang=js&":
-/*!***************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/files/pap_codes.vue?vue&type=script&lang=js& ***!
-  \***************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-/* harmony default export */ __webpack_exports__["default"] = ({});
 
 /***/ }),
 
@@ -60628,23 +60561,6 @@ var render = function() {
                 [
                   _c(
                     "router-link",
-                    { staticClass: "nav-link", attrs: { to: "/requests" } },
-                    [
-                      _c("i", { staticClass: "nav-icon fa fa-th" }),
-                      _vm._v(" "),
-                      _c("p", [_vm._v("Item Requests")])
-                    ]
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "li",
-                { staticClass: "nav-item" },
-                [
-                  _c(
-                    "router-link",
                     {
                       staticClass: "nav-link",
                       attrs: { to: "/account_codes" }
@@ -61502,7 +61418,7 @@ var render = function() {
               staticClass: "btn btn-primary",
               on: {
                 click: function($event) {
-                  _vm.create()
+                  _vm.create_item()
                 }
               }
             },
@@ -61510,11 +61426,192 @@ var render = function() {
           )
         ]),
         _vm._v(" "),
-        _vm._m(1)
+        _c(
+          "div",
+          {
+            staticClass: "modal fade",
+            attrs: {
+              id: "item_modal",
+              tabindex: "-1",
+              role: "dialog",
+              "aria-labelledby": "item_modal_label",
+              "aria-hidden": "true"
+            }
+          },
+          [
+            _c(
+              "div",
+              { staticClass: "modal-dialog", attrs: { role: "document" } },
+              [
+                _c("div", { staticClass: "modal-content" }, [
+                  _vm._m(1),
+                  _vm._v(" "),
+                  _c("form", { attrs: { action: "" } }, [
+                    _c("div", { staticClass: "modal-body" }, [
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("label", { attrs: { for: "item_code" } }, [
+                          _vm._v("Code")
+                        ]),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: this.form.item_code,
+                              expression: "this.form.item_code"
+                            }
+                          ],
+                          staticClass: "form-control-sm",
+                          attrs: { type: "text" },
+                          domProps: { value: this.form.item_code },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                this.form,
+                                "item_code",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("label", { attrs: { for: "item_description" } }, [
+                          _vm._v("Description")
+                        ]),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: this.form.item_description,
+                              expression: "this.form.item_description"
+                            }
+                          ],
+                          staticClass: "form-control-sm",
+                          attrs: { type: "text" },
+                          domProps: { value: this.form.item_description },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                this.form,
+                                "item_description",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("label", { attrs: { for: "item_total_quantity" } }, [
+                          _vm._v("Total")
+                        ]),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: this.form.item_total_quantity,
+                              expression: "this.form.item_total_quantity"
+                            }
+                          ],
+                          staticClass: "form-control-sm",
+                          attrs: { type: "text" },
+                          domProps: { value: this.form.item_total_quantity },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                this.form,
+                                "item_total_quantity",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("label", { attrs: { for: "pap_code_id" } }, [
+                          _vm._v("Pap Code")
+                        ]),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: this.form.pap_code_id,
+                              expression: "this.form.pap_code_id"
+                            }
+                          ],
+                          staticClass: "form-control-sm",
+                          attrs: { type: "text" },
+                          domProps: { value: this.form.pap_code_id },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                this.form,
+                                "pap_code_id",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        })
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _vm._m(2)
+                  ])
+                ])
+              ]
+            )
+          ]
+        )
       ])
     ]),
     _vm._v(" "),
-    _vm._m(2),
+    _c("div", { staticClass: "card-body" }, [
+      _c("table", { staticClass: "table" }, [
+        _vm._m(3),
+        _vm._v(" "),
+        _c(
+          "tbody",
+          _vm._l(_vm.items, function(item) {
+            return _c("tr", { key: item.id }, [
+              _c("td", [_vm._v(_vm._s(item.id))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(item.item_code))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(item.item_descriptions))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(item.pap_code_id))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(item.account_code))]),
+              _vm._v(" "),
+              _vm._m(4, true)
+            ])
+          }),
+          0
+        )
+      ])
+    ]),
     _vm._v(" "),
     _c(
       "div",
@@ -61542,121 +61639,76 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass: "modal fade",
-        attrs: {
-          id: "item_modal",
-          tabindex: "-1",
-          role: "dialog",
-          "aria-labelledby": "item_modal_label",
-          "aria-hidden": "true"
-        }
-      },
-      [
-        _c(
-          "div",
-          { staticClass: "modal-dialog", attrs: { role: "document" } },
-          [
-            _c("div", { staticClass: "modal-content" }, [
-              _c("div", { staticClass: "modal-header" }, [
-                _c(
-                  "h5",
-                  {
-                    staticClass: "modal-title",
-                    attrs: { id: "item_modal_label" }
-                  },
-                  [_vm._v("Add Item")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "close",
-                    attrs: {
-                      type: "button",
-                      "data-dismiss": "modal",
-                      "aria-label": "Close"
-                    }
-                  },
-                  [
-                    _c("span", { attrs: { "aria-hidden": "true" } }, [
-                      _vm._v("×")
-                    ])
-                  ]
-                )
-              ]),
-              _vm._v(" "),
-              _c("form", [
-                _c("div", { staticClass: "modal-body" }, [
-                  _c("div", { staticClass: "form-group" })
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "modal-footer" }, [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-primary",
-                      attrs: { type: "submit" }
-                    },
-                    [_vm._v("Submit")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-secondary",
-                      attrs: { type: "button", "data-dismiss": "modal" }
-                    },
-                    [_vm._v("Close")]
-                  )
-                ])
-              ])
-            ])
-          ]
-        )
-      ]
-    )
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "h5",
+        { staticClass: "modal-title", attrs: { id: "item_modal_label" } },
+        [_vm._v("New Item")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
+    ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-body" }, [
-      _c("table", { staticClass: "table" }, [
-        _c("thead", [
-          _c("tr", [
-            _c("th", [_vm._v("ID")]),
-            _vm._v(" "),
-            _c("th", [_vm._v("Item Code")]),
-            _vm._v(" "),
-            _c("th", [_vm._v("Item Descriptions")]),
-            _vm._v(" "),
-            _c("th", [_vm._v("Pap Code")]),
-            _vm._v(" "),
-            _c("th", [_vm._v("Account Code")]),
-            _vm._v(" "),
-            _c("th", [_vm._v("Action")])
-          ])
-        ]),
+    return _c("div", { staticClass: "modal-footer" }, [
+      _c(
+        "button",
+        { staticClass: "btn btn-primary", attrs: { type: "submit" } },
+        [_vm._v("Submit")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-secondary",
+          attrs: { type: "button", "data-dismiss": "modal" }
+        },
+        [_vm._v("Close")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("ID")]),
         _vm._v(" "),
-        _c("tbody", [
-          _c("tr", [
-            _c("td"),
-            _vm._v(" "),
-            _c("td"),
-            _vm._v(" "),
-            _c("td"),
-            _vm._v(" "),
-            _c("td"),
-            _vm._v(" "),
-            _c("td"),
-            _vm._v(" "),
-            _c("td")
-          ])
-        ])
+        _c("th", [_vm._v("Item Code")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Item Descriptions")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Pap Code")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Account Code")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Action")])
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", [
+      _c("button", { staticClass: "btn btn-sm btn-success" }, [_vm._v("Edit")]),
+      _vm._v(" "),
+      _c("button", { staticClass: "btn btn-sm btn-danger" }, [_vm._v("Delete")])
     ])
   }
 ]
@@ -61681,46 +61733,9 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div")
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card" }, [
-      _c("div", { staticClass: "card-header" }, [_vm._v("Pap Codes")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "card-body" }, [
-        _c("table", { staticClass: "table" }, [
-          _c("thead", [
-            _c("tr", [
-              _c("th", [_vm._v("ID")]),
-              _vm._v(" "),
-              _c("th", [_vm._v("Pap Code")]),
-              _vm._v(" "),
-              _c("th", [_vm._v("Pap Descriptions")]),
-              _vm._v(" "),
-              _c("th", [_vm._v("Action")])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("tbody", [
-            _c("tr", [
-              _c("td"),
-              _vm._v(" "),
-              _c("td"),
-              _vm._v(" "),
-              _c("td"),
-              _vm._v(" "),
-              _c("td")
-            ])
-          ])
-        ])
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -77726,17 +77741,15 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _pap_codes_vue_vue_type_template_id_34ddfbe0___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./pap_codes.vue?vue&type=template&id=34ddfbe0& */ "./resources/js/files/pap_codes.vue?vue&type=template&id=34ddfbe0&");
-/* harmony import */ var _pap_codes_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./pap_codes.vue?vue&type=script&lang=js& */ "./resources/js/files/pap_codes.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
-
-
+var script = {}
 
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _pap_codes_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__["default"])(
+  script,
   _pap_codes_vue_vue_type_template_id_34ddfbe0___WEBPACK_IMPORTED_MODULE_0__["render"],
   _pap_codes_vue_vue_type_template_id_34ddfbe0___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
@@ -77750,20 +77763,6 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 if (false) { var api; }
 component.options.__file = "resources/js/files/pap_codes.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/files/pap_codes.vue?vue&type=script&lang=js&":
-/*!*******************************************************************!*\
-  !*** ./resources/js/files/pap_codes.vue?vue&type=script&lang=js& ***!
-  \*******************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_pap_codes_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./pap_codes.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/files/pap_codes.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_pap_codes_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
@@ -78263,8 +78262,7 @@ var user = Object(_helpers_auth__WEBPACK_IMPORTED_MODULE_0__["get_local_user"])(
 /* harmony default export */ __webpack_exports__["default"] = ({
   state: {
     current_user: user,
-    isLoggedIn: !!user,
-    loading: false
+    isLoggedIn: !!user
   },
   getters: {
     isLoading: function isLoading(state) {
