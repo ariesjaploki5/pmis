@@ -1905,6 +1905,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'app-sidebar',
   methods: {
@@ -2294,7 +2300,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = ({});
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {},
+  methods: {},
+  created: function created() {}
+});
 
 /***/ }),
 
@@ -2378,7 +2388,40 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = ({});
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {},
+  methods: {
+    loadall: function loadall() {},
+    create: function create() {},
+    store: function store() {},
+    edit: function edit() {},
+    update: function update() {}
+  },
+  created: function created() {
+    this.loadall();
+  }
+});
 
 /***/ }),
 
@@ -38205,6 +38248,23 @@ var render = function() {
                 [
                   _c(
                     "router-link",
+                    { staticClass: "nav-link", attrs: { to: "/items" } },
+                    [
+                      _c("i", { staticClass: "nav-icon fa fa-th" }),
+                      _vm._v(" "),
+                      _c("p", [_vm._v("Items")])
+                    ]
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "li",
+                { staticClass: "nav-item" },
+                [
+                  _c(
+                    "router-link",
                     { staticClass: "nav-link", attrs: { to: "/requests" } },
                     [
                       _c("i", { staticClass: "nav-icon fa fa-th" }),
@@ -39083,7 +39143,82 @@ var staticRenderFns = [
           _vm._v(" "),
           _c("div", { staticClass: "col-4" }, [
             _c("button", { staticClass: "btn btn-primary" }, [_vm._v("Add")])
-          ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "modal fade",
+              attrs: {
+                id: "exampleModal",
+                tabindex: "-1",
+                role: "dialog",
+                "aria-labelledby": "exampleModalLabel",
+                "aria-hidden": "true"
+              }
+            },
+            [
+              _c(
+                "div",
+                { staticClass: "modal-dialog", attrs: { role: "document" } },
+                [
+                  _c("div", { staticClass: "modal-content" }, [
+                    _c("div", { staticClass: "modal-header" }, [
+                      _c(
+                        "h5",
+                        {
+                          staticClass: "modal-title",
+                          attrs: { id: "exampleModalLabel" }
+                        },
+                        [_vm._v("Modal title")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "close",
+                          attrs: {
+                            type: "button",
+                            "data-dismiss": "modal",
+                            "aria-label": "Close"
+                          }
+                        },
+                        [
+                          _c("span", { attrs: { "aria-hidden": "true" } }, [
+                            _vm._v("×")
+                          ])
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "modal-body" }, [
+                      _vm._v("\n                    ...\n                ")
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "modal-footer" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-secondary",
+                          attrs: { type: "button", "data-dismiss": "modal" }
+                        },
+                        [_vm._v("Close")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-primary",
+                          attrs: { type: "button" }
+                        },
+                        [_vm._v("Save changes")]
+                      )
+                    ])
+                  ])
+                ]
+              )
+            ]
+          )
         ])
       ]),
       _vm._v(" "),
@@ -55889,8 +56024,8 @@ var user = Object(_helpers_auth__WEBPACK_IMPORTED_MODULE_0__["get_local_user"])(
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\Carl\pmis\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\Carl\pmis\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\DOH\Desktop\pmis\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\DOH\Desktop\pmis\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
