@@ -20,9 +20,9 @@ Route::group(['prefix' => 'auth'], function ($router) {
     Route::post('me', 'AuthController@me');
 });
 
-    Route::get('item', 'ItemCtr@index');
+    Route::get('items', 'ItemCtr@index');
     Route::post('item', 'ItemCtr@store');
-    Route::put('item', 'ItemCtr@update');
+    Route::put('item/{id}', 'ItemCtr@update');
     Route::delete('item/{id}', 'ItemCtr@destroy');
 
     Route::get('departments', 'DepartmentCtr@index');

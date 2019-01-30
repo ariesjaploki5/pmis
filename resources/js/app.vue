@@ -2,21 +2,23 @@
     <div>
         <div  v-if="!current_user">
             <guestbar></guestbar>
+            <router-view></router-view>
         </div>
         <div v-else>
-            <headerbar></headerbar>
-            <sidebar></sidebar>
-        </div>
-        
-        <div class="content-wrapper">
-            <div class="content">
-              <div class="container-fluid">
-                <div class="row">
-                  <div class="col-lg-10 mt-4">
-                    <router-view></router-view>
-                  </div>
+            <div class="wrapper">
+                <headerbar></headerbar>
+                <sidebar></sidebar>
+                <div class="content-wrapper">
+                    <div class="content">
+                        <div class="container-fluid">
+                            <div class="row justify-content-center">
+                            <div class="col-lg-10 mt-4">
+                                <router-view></router-view>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
             </div>
         </div>
     </div>

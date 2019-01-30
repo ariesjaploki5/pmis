@@ -4,14 +4,14 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Unit_of_issue extends Model
+class Category extends Model
 {
     protected $fillable = [
         'description',
     ];
 
-    public function request_items()
+    public function pap_code()
     {
-        return $this->belongsToMany('App\Model\Request_item');
+    	return $this->belongsToMany('App\Model\Pap_code');
     }
 }

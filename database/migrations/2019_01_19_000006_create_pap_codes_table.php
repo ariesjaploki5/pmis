@@ -15,9 +15,13 @@ class CreatePapCodesTable extends Migration
     {
         Schema::create('pap_codes', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('code');
+            $table->string('code');
             $table->string('description');
             $table->timestamps();
+
+            $table->unsignedInteger('category_id')->nullable();
+            $table->foreign('category_id')->references('id')->on('categories');
+
         });
     }
 

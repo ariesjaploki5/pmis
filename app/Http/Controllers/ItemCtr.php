@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use JWTAuth;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use App\Model\Item;
 use App\User;
 
@@ -14,27 +15,21 @@ class ItemCtr extends Controller
     public function index(Request $request)
     {
 
-        $user = JWTAuth::parseToken()->toUser();
-        
-
-
-        $items = Item::with('pap_code')->orderBy('id')->get();
-        
-        return response()->json($items);
+        $items = Item::latest()->paginate(10)->jsonSerialize();
+        return response($items, Response::HTTP_OK);
     }
 
     public function store(Request $request)
     {
         $item = Item::create($request->all());
-
         return response()->json($item);
     }
 
     public function update(Request $request, $id)
     {
-        $item = Item::find($id);
+        $item = Item::findOrFail($id);
         $input = $request->all();
-        $item->fill($input)->save();
+        $item->update($input);
 
         return response()->json($item);
     }

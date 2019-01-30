@@ -1,8 +1,16 @@
 <template>
     <div class="card">
-        <div class="card-header">Departments</div>
-
         <div class="card-body">
+			<div class="row">
+				<div class="col">
+					<div class="card-title">Heads</div>
+				</div>
+				<div class="col">
+					<div class="card-tools text-right">
+						<button class="btn btn-primary btn-sm">Add</button>
+					</div>
+				</div>
+			</div>
            <table class="table">
            		<thead>
            			<tr>
@@ -24,6 +32,16 @@
 </template>
 <script>
     export default {
+		data() {
+			return{
 
+			}
+		},
+		methods: {
+
+		},
+		created(){
+
+		}
     }
 </script>

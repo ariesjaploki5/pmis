@@ -21,6 +21,7 @@ class CreateRequestItemsTable extends Migration
             $table->unsignedInteger('purchase_request_id')->nullable();
 
             $table->timestamps();
+            
             $table->foreign('item_id')->references('id')->on('items');
             $table->foreign('purchase_request_id')->references('id')->on('purchase_requests');
             $table->foreign('unit_of_issue_id')->references('id')->on('unit_of_issues');

@@ -6,7 +6,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ml-auto" v-if="!current_user">
+                <!-- <ul class="navbar-nav ml-auto" v-if="!current_user">
                     <li>
                         <router-link to="/login" class="nav-link">Login</router-link>
                     </li>
@@ -27,7 +27,7 @@
                             <a href="#!" @click.prevent="logout" class="dropdown-item">Logout</a>
                         </div>
                     </li>
-                </ul>
+                </ul> -->
             </div>
         </div>
     </nav>

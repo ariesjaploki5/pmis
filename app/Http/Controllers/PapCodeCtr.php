@@ -17,13 +17,16 @@ class PapCodeCtr extends Controller
     public function store(Request $request)
     {
         $pap_code = Pap_code::create($request->all());
-
-        return response()->json();
+        return response($pap_code, Response::HTTP_CREATED);
     }
 
-    public function update()
+    public function update(Request $request, $id)
     {
-
+        $pap_code = Pap_code::findOrFail($id);
+        $input = $request->all();
+        $pap_code->update($input);
+        
+        return response($pap_code, Response::HTTP_OK);
     }
 
     public function destroy()

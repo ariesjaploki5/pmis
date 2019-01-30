@@ -15,7 +15,7 @@ class CreateUnitOfIssuesTable extends Migration
     {
         Schema::create('unit_of_issues', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('descriptions');
+            $table->string('description');
             $table->timestamps();
         });
     }

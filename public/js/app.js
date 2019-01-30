@@ -1793,6 +1793,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'app-header',
   methods: {
@@ -1819,19 +1820,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -1959,6 +1947,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 
@@ -2050,6 +2040,9 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _helpers_auth__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../helpers/auth */ "./resources/js/helpers/auth.js");
+//
+//
+//
 //
 //
 //
@@ -2336,7 +2329,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = ({});
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {};
+  },
+  methods: {},
+  created: function created() {}
+});
 
 /***/ }),
 
@@ -2429,23 +2436,100 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       role_id: '',
       editmode: false,
       form: new Form({
-        id: ''
-      })
+        id: '',
+        item_code: '',
+        item_description: '',
+        item_total_quantity: '',
+        account_code: '',
+        pap_code_id: ''
+      }),
+      items: {},
+      pap_codes: {}
     };
   },
   methods: {
-    load_page: function load_page() {},
     load_all: function load_all() {
-      this.load_role();
+      this.get_items();
+      this.get_pap_codes();
     },
-    load_role: function load_role() {
-      this.role_id = this.current_user.role_id;
+    get_pap_codes: function get_pap_codes() {
+      var _this = this;
+
+      axios.get('api/pap_codes').then(function (_ref) {
+        var data = _ref.data;
+        return _this.pap_codes = data;
+      });
+    },
+    get_items: function get_items() {
+      var _this2 = this;
+
+      axios.get('api/items').then(function (_ref2) {
+        var data = _ref2.data;
+        return _this2.items = data;
+      });
+    },
+    pages_items: function pages_items() {
+      var _this3 = this;
+
+      axios.get('api/items?page=' + page).then(function (response) {
+        _this3.items = response.data;
+      });
+    },
+    create_item: function create_item() {
+      this.editmode = false;
+      this.form.reset();
+      $('#item_modal').modal('show');
+    },
+    store_item: function store_item() {
+      var _this4 = this;
+
+      this.$Progress.start();
+      this.form.post('api/item').then(function () {
+        Fire.$emit('success');
+        $('#item_modal').modal('hide');
+        toast({
+          type: 'success',
+          title: 'Added Successfully'
+        });
+
+        _this4.$Progress.finish();
+      }).catch(function () {
+        _this4.$Progress.fail();
+      });
+    },
+    edit_item: function edit_item(item) {
+      this.editmode = true;
+      this.form.reset();
+      $('#item_modal').modal('show');
+      this.form.fill(item);
+    },
+    update_item: function update_item() {
+      var _this5 = this;
+
+      this.$Progress.start();
+      this.form.put('api/item/' + this.form.id).then(function () {
+        Fire.$emit('success');
+        $('#item_modal').modal('hide');
+        toast({
+          type: 'success',
+          title: 'Updated Successfully'
+        });
+
+        _this5.$Progress.finish();
+      }).catch(function () {
+        _this5.$Progress.fail();
+      });
     }
   },
   computed: {
@@ -2457,7 +2541,12 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   created: function created() {
+    var _this6 = this;
+
     this.load_all();
+    Fire.$on('success', function () {
+      _this6.load_all();
+    });
   }
 });
 
@@ -2552,7 +2641,7 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    loadall: function loadall() {
+    load_all: function load_all() {
       this.get_pap_codes();
     },
     get_pap_codes: function get_pap_codes() {
@@ -2561,7 +2650,7 @@ __webpack_require__.r(__webpack_exports__);
       axios.get('api/pap_codes').then(function (_ref) {
         var data = _ref.data;
         return _this.pap_codes = data;
-      }).catch(function () {});
+      });
     },
     pages_pap_codes: function pages_pap_codes() {
       var _this2 = this;
@@ -2578,10 +2667,11 @@ __webpack_require__.r(__webpack_exports__);
 
       this.$Progress.start();
       this.form.post('api/pap_code').then(function () {
+        Fire.$emit('success');
         $('#pap_code_modal').modal('hide');
         toast({
           type: 'success',
-          title: 'Pap Code Added Successfully'
+          title: 'Added Successfully'
         });
 
         _this3.$Progress.finish();
@@ -2591,16 +2681,34 @@ __webpack_require__.r(__webpack_exports__);
     },
     edit_pap_code: function edit_pap_code(pap_code) {
       this.editmode = true;
+      this.form.reset();
       $('#pap_code_modal').modal('show');
+      this.form.fill(pap_code);
     },
-    update_pap_code: function update_pap_code() {}
+    update_pap_code: function update_pap_code() {
+      var _this4 = this;
+
+      this.$Progress.start();
+      this.form.put('api/pap_code/' + this.form.id).then(function () {
+        Fire.$emit('success');
+        $('#pap_code_modal').modal('hide');
+        toast({
+          type: 'success',
+          title: 'Updated Successfully'
+        });
+
+        _this4.$Progress.finish();
+      }).catch(function () {
+        _this4.$Progress.fail();
+      });
+    }
   },
   created: function created() {
-    var _this4 = this;
+    var _this5 = this;
 
-    this.loadall();
+    this.load_all();
     Fire.$on('success', function () {
-      _this4.loadall();
+      _this5.load_all();
     });
   }
 });
@@ -35998,8 +36106,6 @@ var map = {
 	"./dv.js": "./node_modules/moment/locale/dv.js",
 	"./el": "./node_modules/moment/locale/el.js",
 	"./el.js": "./node_modules/moment/locale/el.js",
-	"./en-SG": "./node_modules/moment/locale/en-SG.js",
-	"./en-SG.js": "./node_modules/moment/locale/en-SG.js",
 	"./en-au": "./node_modules/moment/locale/en-au.js",
 	"./en-au.js": "./node_modules/moment/locale/en-au.js",
 	"./en-ca": "./node_modules/moment/locale/en-ca.js",
@@ -36038,8 +36144,6 @@ var map = {
 	"./fr.js": "./node_modules/moment/locale/fr.js",
 	"./fy": "./node_modules/moment/locale/fy.js",
 	"./fy.js": "./node_modules/moment/locale/fy.js",
-	"./ga": "./node_modules/moment/locale/ga.js",
-	"./ga.js": "./node_modules/moment/locale/ga.js",
 	"./gd": "./node_modules/moment/locale/gd.js",
 	"./gd.js": "./node_modules/moment/locale/gd.js",
 	"./gl": "./node_modules/moment/locale/gl.js",
@@ -36063,8 +36167,6 @@ var map = {
 	"./is": "./node_modules/moment/locale/is.js",
 	"./is.js": "./node_modules/moment/locale/is.js",
 	"./it": "./node_modules/moment/locale/it.js",
-	"./it-ch": "./node_modules/moment/locale/it-ch.js",
-	"./it-ch.js": "./node_modules/moment/locale/it-ch.js",
 	"./it.js": "./node_modules/moment/locale/it.js",
 	"./ja": "./node_modules/moment/locale/ja.js",
 	"./ja.js": "./node_modules/moment/locale/ja.js",
@@ -38018,12 +38120,6 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
     var months = 'leden_únor_březen_duben_květen_červen_červenec_srpen_září_říjen_listopad_prosinec'.split('_'),
         monthsShort = 'led_úno_bře_dub_kvě_čvn_čvc_srp_zář_říj_lis_pro'.split('_');
-
-    var monthsParse = [/^led/i, /^úno/i, /^bře/i, /^dub/i, /^kvě/i, /^(čvn|červen$|června)/i, /^(čvc|červenec|července)/i, /^srp/i, /^zář/i, /^říj/i, /^lis/i, /^pro/i];
-    // NOTE: 'červen' is substring of 'červenec'; therefore 'červenec' must precede 'červen' in the regex to be fully matched.
-    // Otherwise parser matches '1. červenec' as '1. červen' + 'ec'.
-    var monthsRegex = /^(leden|únor|březen|duben|květen|červenec|července|červen|června|srpen|září|říjen|listopad|prosinec|led|úno|bře|dub|kvě|čvn|čvc|srp|zář|říj|lis|pro)/i;
-
     function plural(n) {
         return (n > 1) && (n < 5) && (~~(n / 10) !== 1);
     }
@@ -38090,15 +38186,28 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
     var cs = moment.defineLocale('cs', {
         months : months,
         monthsShort : monthsShort,
-        monthsRegex : monthsRegex,
-        monthsShortRegex : monthsRegex,
-        // NOTE: 'červen' is substring of 'červenec'; therefore 'červenec' must precede 'červen' in the regex to be fully matched.
-        // Otherwise parser matches '1. červenec' as '1. červen' + 'ec'.
-        monthsStrictRegex : /^(leden|ledna|února|únor|březen|března|duben|dubna|květen|května|červenec|července|červen|června|srpen|srpna|září|říjen|října|listopadu|listopad|prosinec|prosince)/i,
-        monthsShortStrictRegex : /^(led|úno|bře|dub|kvě|čvn|čvc|srp|zář|říj|lis|pro)/i,
-        monthsParse : monthsParse,
-        longMonthsParse : monthsParse,
-        shortMonthsParse : monthsParse,
+        monthsParse : (function (months, monthsShort) {
+            var i, _monthsParse = [];
+            for (i = 0; i < 12; i++) {
+                // use custom parser to solve problem with July (červenec)
+                _monthsParse[i] = new RegExp('^' + months[i] + '$|^' + monthsShort[i] + '$', 'i');
+            }
+            return _monthsParse;
+        }(months, monthsShort)),
+        shortMonthsParse : (function (monthsShort) {
+            var i, _shortMonthsParse = [];
+            for (i = 0; i < 12; i++) {
+                _shortMonthsParse[i] = new RegExp('^' + monthsShort[i] + '$', 'i');
+            }
+            return _shortMonthsParse;
+        }(monthsShort)),
+        longMonthsParse : (function (months) {
+            var i, _longMonthsParse = [];
+            for (i = 0; i < 12; i++) {
+                _longMonthsParse[i] = new RegExp('^' + months[i] + '$', 'i');
+            }
+            return _longMonthsParse;
+        }(months)),
         weekdays : 'neděle_pondělí_úterý_středa_čtvrtek_pátek_sobota'.split('_'),
         weekdaysShort : 'ne_po_út_st_čt_pá_so'.split('_'),
         weekdaysMin : 'ne_po_út_st_čt_pá_so'.split('_'),
@@ -38875,81 +38984,6 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/en-SG.js":
-/*!*********************************************!*\
-  !*** ./node_modules/moment/locale/en-SG.js ***!
-  \*********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-//! moment.js locale configuration
-
-;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
-   undefined
-}(this, (function (moment) { 'use strict';
-
-
-    var enSG = moment.defineLocale('en-SG', {
-        months : 'January_February_March_April_May_June_July_August_September_October_November_December'.split('_'),
-        monthsShort : 'Jan_Feb_Mar_Apr_May_Jun_Jul_Aug_Sep_Oct_Nov_Dec'.split('_'),
-        weekdays : 'Sunday_Monday_Tuesday_Wednesday_Thursday_Friday_Saturday'.split('_'),
-        weekdaysShort : 'Sun_Mon_Tue_Wed_Thu_Fri_Sat'.split('_'),
-        weekdaysMin : 'Su_Mo_Tu_We_Th_Fr_Sa'.split('_'),
-        longDateFormat : {
-            LT : 'HH:mm',
-            LTS : 'HH:mm:ss',
-            L : 'DD/MM/YYYY',
-            LL : 'D MMMM YYYY',
-            LLL : 'D MMMM YYYY HH:mm',
-            LLLL : 'dddd, D MMMM YYYY HH:mm'
-        },
-        calendar : {
-            sameDay : '[Today at] LT',
-            nextDay : '[Tomorrow at] LT',
-            nextWeek : 'dddd [at] LT',
-            lastDay : '[Yesterday at] LT',
-            lastWeek : '[Last] dddd [at] LT',
-            sameElse : 'L'
-        },
-        relativeTime : {
-            future : 'in %s',
-            past : '%s ago',
-            s : 'a few seconds',
-            ss : '%d seconds',
-            m : 'a minute',
-            mm : '%d minutes',
-            h : 'an hour',
-            hh : '%d hours',
-            d : 'a day',
-            dd : '%d days',
-            M : 'a month',
-            MM : '%d months',
-            y : 'a year',
-            yy : '%d years'
-        },
-        dayOfMonthOrdinalParse: /\d{1,2}(st|nd|rd|th)/,
-        ordinal : function (number) {
-            var b = number % 10,
-                output = (~~(number % 100 / 10) === 1) ? 'th' :
-                (b === 1) ? 'st' :
-                (b === 2) ? 'nd' :
-                (b === 3) ? 'rd' : 'th';
-            return number + output;
-        },
-        week : {
-            dow : 1, // Monday is the first day of the week.
-            doy : 4  // The week that contains Jan 4th is the first week of the year.
-        }
-    });
-
-    return enSG;
-
-})));
-
-
-/***/ }),
-
 /***/ "./node_modules/moment/locale/en-au.js":
 /*!*********************************************!*\
   !*** ./node_modules/moment/locale/en-au.js ***!
@@ -39195,7 +39229,7 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
         longDateFormat : {
             LT : 'HH:mm',
             LTS : 'HH:mm:ss',
-            L : 'DD/MM/YYYY',
+            L : 'DD-MM-YYYY',
             LL : 'D MMMM YYYY',
             LLL : 'D MMMM YYYY HH:mm',
             LLLL : 'dddd D MMMM YYYY HH:mm'
@@ -39588,9 +39622,6 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
     var monthsShortDot = 'ene._feb._mar._abr._may._jun._jul._ago._sep._oct._nov._dic.'.split('_'),
         monthsShort = 'ene_feb_mar_abr_may_jun_jul_ago_sep_oct_nov_dic'.split('_');
 
-    var monthsParse = [/^ene/i, /^feb/i, /^mar/i, /^abr/i, /^may/i, /^jun/i, /^jul/i, /^ago/i, /^sep/i, /^oct/i, /^nov/i, /^dic/i];
-    var monthsRegex = /^(enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre|ene\.?|feb\.?|mar\.?|abr\.?|may\.?|jun\.?|jul\.?|ago\.?|sep\.?|oct\.?|nov\.?|dic\.?)/i;
-
     var esUs = moment.defineLocale('es-us', {
         months : 'enero_febrero_marzo_abril_mayo_junio_julio_agosto_septiembre_octubre_noviembre_diciembre'.split('_'),
         monthsShort : function (m, format) {
@@ -39602,13 +39633,7 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
                 return monthsShortDot[m.month()];
             }
         },
-        monthsRegex: monthsRegex,
-        monthsShortRegex: monthsRegex,
-        monthsStrictRegex: /^(enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre)/i,
-        monthsShortStrictRegex: /^(ene\.?|feb\.?|mar\.?|abr\.?|may\.?|jun\.?|jul\.?|ago\.?|sep\.?|oct\.?|nov\.?|dic\.?)/i,
-        monthsParse: monthsParse,
-        longMonthsParse: monthsParse,
-        shortMonthsParse: monthsParse,
+        monthsParseExact : true,
         weekdays : 'domingo_lunes_martes_miércoles_jueves_viernes_sábado'.split('_'),
         weekdaysShort : 'dom._lun._mar._mié._jue._vie._sáb.'.split('_'),
         weekdaysMin : 'do_lu_ma_mi_ju_vi_sá'.split('_'),
@@ -39617,9 +39642,9 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
             LT : 'h:mm A',
             LTS : 'h:mm:ss A',
             L : 'MM/DD/YYYY',
-            LL : 'D [de] MMMM [de] YYYY',
-            LLL : 'D [de] MMMM [de] YYYY h:mm A',
-            LLLL : 'dddd, D [de] MMMM [de] YYYY h:mm A'
+            LL : 'MMMM [de] D [de] YYYY',
+            LLL : 'MMMM [de] D [de] YYYY h:mm A',
+            LLLL : 'dddd, MMMM [de] D [de] YYYY h:mm A'
         },
         calendar : {
             sameDay : function () {
@@ -40205,13 +40230,13 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
             past : '%s síðani',
             s : 'fá sekund',
             ss : '%d sekundir',
-            m : 'ein minuttur',
+            m : 'ein minutt',
             mm : '%d minuttir',
             h : 'ein tími',
             hh : '%d tímar',
             d : 'ein dagur',
             dd : '%d dagar',
-            M : 'ein mánaður',
+            M : 'ein mánaði',
             MM : '%d mánaðir',
             y : 'eitt ár',
             yy : '%d ár'
@@ -40573,91 +40598,6 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/ga.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/ga.js ***!
-  \******************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-//! moment.js locale configuration
-
-;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
-   undefined
-}(this, (function (moment) { 'use strict';
-
-
-
-    var months = [
-        'Eanáir', 'Feabhra', 'Márta', 'Aibreán', 'Bealtaine', 'Méitheamh', 'Iúil', 'Lúnasa', 'Meán Fómhair', 'Deaireadh Fómhair', 'Samhain', 'Nollaig'
-    ];
-
-    var monthsShort = ['Eaná', 'Feab', 'Márt', 'Aibr', 'Beal', 'Méit', 'Iúil', 'Lúna', 'Meán', 'Deai', 'Samh', 'Noll'];
-
-    var weekdays = ['Dé Domhnaigh', 'Dé Luain', 'Dé Máirt', 'Dé Céadaoin', 'Déardaoin', 'Dé hAoine', 'Dé Satharn'];
-
-    var weekdaysShort = ['Dom', 'Lua', 'Mái', 'Céa', 'Déa', 'hAo', 'Sat'];
-
-    var weekdaysMin = ['Do', 'Lu', 'Má', 'Ce', 'Dé', 'hA', 'Sa'];
-
-    var ga = moment.defineLocale('ga', {
-        months: months,
-        monthsShort: monthsShort,
-        monthsParseExact: true,
-        weekdays: weekdays,
-        weekdaysShort: weekdaysShort,
-        weekdaysMin: weekdaysMin,
-        longDateFormat: {
-            LT: 'HH:mm',
-            LTS: 'HH:mm:ss',
-            L: 'DD/MM/YYYY',
-            LL: 'D MMMM YYYY',
-            LLL: 'D MMMM YYYY HH:mm',
-            LLLL: 'dddd, D MMMM YYYY HH:mm'
-        },
-        calendar: {
-            sameDay: '[Inniu ag] LT',
-            nextDay: '[Amárach ag] LT',
-            nextWeek: 'dddd [ag] LT',
-            lastDay: '[Inné aig] LT',
-            lastWeek: 'dddd [seo caite] [ag] LT',
-            sameElse: 'L'
-        },
-        relativeTime: {
-            future: 'i %s',
-            past: '%s ó shin',
-            s: 'cúpla soicind',
-            ss: '%d soicind',
-            m: 'nóiméad',
-            mm: '%d nóiméad',
-            h: 'uair an chloig',
-            hh: '%d uair an chloig',
-            d: 'lá',
-            dd: '%d lá',
-            M: 'mí',
-            MM: '%d mí',
-            y: 'bliain',
-            yy: '%d bliain'
-        },
-        dayOfMonthOrdinalParse: /\d{1,2}(d|na|mh)/,
-        ordinal: function (number) {
-            var output = number === 1 ? 'd' : number % 10 === 2 ? 'na' : 'mh';
-            return number + output;
-        },
-        week: {
-            dow: 1, // Monday is the first day of the week.
-            doy: 4  // The week that contains Jan 4th is the first week of the year.
-        }
-    });
-
-    return ga;
-
-})));
-
-
-/***/ }),
-
 /***/ "./node_modules/moment/locale/gd.js":
 /*!******************************************!*\
   !*** ./node_modules/moment/locale/gd.js ***!
@@ -40848,8 +40788,8 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
             'ss': [number + ' secondanim', number + ' second'],
             'm': ['eka mintan', 'ek minute'],
             'mm': [number + ' mintanim', number + ' mintam'],
-            'h': ['eka voran', 'ek vor'],
-            'hh': [number + ' voranim', number + ' voram'],
+            'h': ['eka horan', 'ek hor'],
+            'hh': [number + ' horanim', number + ' horam'],
             'd': ['eka disan', 'ek dis'],
             'dd': [number + ' disanim', number + ' dis'],
             'M': ['eka mhoinean', 'ek mhoino'],
@@ -41940,83 +41880,6 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/it-ch.js":
-/*!*********************************************!*\
-  !*** ./node_modules/moment/locale/it-ch.js ***!
-  \*********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-//! moment.js locale configuration
-
-;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
-   undefined
-}(this, (function (moment) { 'use strict';
-
-
-    var itCh = moment.defineLocale('it-ch', {
-        months : 'gennaio_febbraio_marzo_aprile_maggio_giugno_luglio_agosto_settembre_ottobre_novembre_dicembre'.split('_'),
-        monthsShort : 'gen_feb_mar_apr_mag_giu_lug_ago_set_ott_nov_dic'.split('_'),
-        weekdays : 'domenica_lunedì_martedì_mercoledì_giovedì_venerdì_sabato'.split('_'),
-        weekdaysShort : 'dom_lun_mar_mer_gio_ven_sab'.split('_'),
-        weekdaysMin : 'do_lu_ma_me_gi_ve_sa'.split('_'),
-        longDateFormat : {
-            LT : 'HH:mm',
-            LTS : 'HH:mm:ss',
-            L : 'DD.MM.YYYY',
-            LL : 'D MMMM YYYY',
-            LLL : 'D MMMM YYYY HH:mm',
-            LLLL : 'dddd D MMMM YYYY HH:mm'
-        },
-        calendar : {
-            sameDay: '[Oggi alle] LT',
-            nextDay: '[Domani alle] LT',
-            nextWeek: 'dddd [alle] LT',
-            lastDay: '[Ieri alle] LT',
-            lastWeek: function () {
-                switch (this.day()) {
-                    case 0:
-                        return '[la scorsa] dddd [alle] LT';
-                    default:
-                        return '[lo scorso] dddd [alle] LT';
-                }
-            },
-            sameElse: 'L'
-        },
-        relativeTime : {
-            future : function (s) {
-                return ((/^[0-9].+$/).test(s) ? 'tra' : 'in') + ' ' + s;
-            },
-            past : '%s fa',
-            s : 'alcuni secondi',
-            ss : '%d secondi',
-            m : 'un minuto',
-            mm : '%d minuti',
-            h : 'un\'ora',
-            hh : '%d ore',
-            d : 'un giorno',
-            dd : '%d giorni',
-            M : 'un mese',
-            MM : '%d mesi',
-            y : 'un anno',
-            yy : '%d anni'
-        },
-        dayOfMonthOrdinalParse : /\d{1,2}º/,
-        ordinal: '%dº',
-        week : {
-            dow : 1, // Monday is the first day of the week.
-            doy : 4  // The week that contains Jan 4th is the first week of the year.
-        }
-    });
-
-    return itCh;
-
-})));
-
-
-/***/ }),
-
 /***/ "./node_modules/moment/locale/it.js":
 /*!******************************************!*\
   !*** ./node_modules/moment/locale/it.js ***!
@@ -42110,7 +41973,7 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 
     var ja = moment.defineLocale('ja', {
-        months : '一月_二月_三月_四月_五月_六月_七月_八月_九月_十月_十一月_十二月'.split('_'),
+        months : '1月_2月_3月_4月_5月_6月_7月_8月_9月_10月_11月_12月'.split('_'),
         monthsShort : '1月_2月_3月_4月_5月_6月_7月_8月_9月_10月_11月_12月'.split('_'),
         weekdays : '日曜日_月曜日_火曜日_水曜日_木曜日_金曜日_土曜日'.split('_'),
         weekdaysShort : '日_月_火_水_木_金_土'.split('_'),
@@ -45241,8 +45104,8 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 
     var ptBr = moment.defineLocale('pt-br', {
-        months : 'Janeiro_Fevereiro_Março_Abril_Maio_Junho_Julho_Agosto_Setembro_Outubro_Novembro_Dezembro'.split('_'),
-        monthsShort : 'Jan_Fev_Mar_Abr_Mai_Jun_Jul_Ago_Set_Out_Nov_Dez'.split('_'),
+        months : 'janeiro_fevereiro_março_abril_maio_junho_julho_agosto_setembro_outubro_novembro_dezembro'.split('_'),
+        monthsShort : 'jan_fev_mar_abr_mai_jun_jul_ago_set_out_nov_dez'.split('_'),
         weekdays : 'Domingo_Segunda-feira_Terça-feira_Quarta-feira_Quinta-feira_Sexta-feira_Sábado'.split('_'),
         weekdaysShort : 'Dom_Seg_Ter_Qua_Qui_Sex_Sáb'.split('_'),
         weekdaysMin : 'Do_2ª_3ª_4ª_5ª_6ª_Sá'.split('_'),
@@ -45310,8 +45173,8 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 
     var pt = moment.defineLocale('pt', {
-        months : 'Janeiro_Fevereiro_Março_Abril_Maio_Junho_Julho_Agosto_Setembro_Outubro_Novembro_Dezembro'.split('_'),
-        monthsShort : 'Jan_Fev_Mar_Abr_Mai_Jun_Jul_Ago_Set_Out_Nov_Dez'.split('_'),
+        months : 'janeiro_fevereiro_março_abril_maio_junho_julho_agosto_setembro_outubro_novembro_dezembro'.split('_'),
+        monthsShort : 'jan_fev_mar_abr_mai_jun_jul_ago_set_out_nov_dez'.split('_'),
         weekdays : 'Domingo_Segunda-feira_Terça-feira_Quarta-feira_Quinta-feira_Sexta-feira_Sábado'.split('_'),
         weekdaysShort : 'Dom_Seg_Ter_Qua_Qui_Sex_Sáb'.split('_'),
         weekdaysMin : 'Do_2ª_3ª_4ª_5ª_6ª_Sá'.split('_'),
@@ -46945,8 +46808,8 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 
     var te = moment.defineLocale('te', {
-        months : 'జనవరి_ఫిబ్రవరి_మార్చి_ఏప్రిల్_మే_జూన్_జులై_ఆగస్టు_సెప్టెంబర్_అక్టోబర్_నవంబర్_డిసెంబర్'.split('_'),
-        monthsShort : 'జన._ఫిబ్ర._మార్చి_ఏప్రి._మే_జూన్_జులై_ఆగ._సెప్._అక్టో._నవ._డిసె.'.split('_'),
+        months : 'జనవరి_ఫిబ్రవరి_మార్చి_ఏప్రిల్_మే_జూన్_జూలై_ఆగస్టు_సెప్టెంబర్_అక్టోబర్_నవంబర్_డిసెంబర్'.split('_'),
+        monthsShort : 'జన._ఫిబ్ర._మార్చి_ఏప్రి._మే_జూన్_జూలై_ఆగ._సెప్._అక్టో._నవ._డిసె.'.split('_'),
         monthsParseExact : true,
         weekdays : 'ఆదివారం_సోమవారం_మంగళవారం_బుధవారం_గురువారం_శుక్రవారం_శనివారం'.split('_'),
         weekdaysShort : 'ఆది_సోమ_మంగళ_బుధ_గురు_శుక్ర_శని'.split('_'),
@@ -48005,9 +47868,6 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
             'genitive': 'неділі_понеділка_вівторка_середи_четверга_п’ятниці_суботи'.split('_')
         };
 
-        if (m === true) {
-            return weekdays['nominative'].slice(1, 7).concat(weekdays['nominative'].slice(0, 1));
-        }
         if (!m) {
             return weekdays['nominative'];
         }
@@ -50081,36 +49941,22 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
     function createDate (y, m, d, h, M, s, ms) {
         // can't just apply() to create a date:
         // https://stackoverflow.com/q/181348
-        var date;
-        // the date constructor remaps years 0-99 to 1900-1999
-        if (y < 100 && y >= 0) {
-            // preserve leap years using a full 400 year cycle, then reset
-            date = new Date(y + 400, m, d, h, M, s, ms);
-            if (isFinite(date.getFullYear())) {
-                date.setFullYear(y);
-            }
-        } else {
-            date = new Date(y, m, d, h, M, s, ms);
-        }
+        var date = new Date(y, m, d, h, M, s, ms);
 
+        // the date constructor remaps years 0-99 to 1900-1999
+        if (y < 100 && y >= 0 && isFinite(date.getFullYear())) {
+            date.setFullYear(y);
+        }
         return date;
     }
 
     function createUTCDate (y) {
-        var date;
-        // the Date.UTC function remaps years 0-99 to 1900-1999
-        if (y < 100 && y >= 0) {
-            var args = Array.prototype.slice.call(arguments);
-            // preserve leap years using a full 400 year cycle, then reset
-            args[0] = y + 400;
-            date = new Date(Date.UTC.apply(null, args));
-            if (isFinite(date.getUTCFullYear())) {
-                date.setUTCFullYear(y);
-            }
-        } else {
-            date = new Date(Date.UTC.apply(null, arguments));
-        }
+        var date = new Date(Date.UTC.apply(null, arguments));
 
+        // the Date.UTC function remaps years 0-99 to 1900-1999
+        if (y < 100 && y >= 0 && isFinite(date.getUTCFullYear())) {
+            date.setUTCFullYear(y);
+        }
         return date;
     }
 
@@ -50321,28 +50167,25 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
     }
 
     // LOCALES
-    function shiftWeekdays (ws, n) {
-        return ws.slice(n, 7).concat(ws.slice(0, n));
-    }
 
     var defaultLocaleWeekdays = 'Sunday_Monday_Tuesday_Wednesday_Thursday_Friday_Saturday'.split('_');
     function localeWeekdays (m, format) {
-        var weekdays = isArray(this._weekdays) ? this._weekdays :
-            this._weekdays[(m && m !== true && this._weekdays.isFormat.test(format)) ? 'format' : 'standalone'];
-        return (m === true) ? shiftWeekdays(weekdays, this._week.dow)
-            : (m) ? weekdays[m.day()] : weekdays;
+        if (!m) {
+            return isArray(this._weekdays) ? this._weekdays :
+                this._weekdays['standalone'];
+        }
+        return isArray(this._weekdays) ? this._weekdays[m.day()] :
+            this._weekdays[this._weekdays.isFormat.test(format) ? 'format' : 'standalone'][m.day()];
     }
 
     var defaultLocaleWeekdaysShort = 'Sun_Mon_Tue_Wed_Thu_Fri_Sat'.split('_');
     function localeWeekdaysShort (m) {
-        return (m === true) ? shiftWeekdays(this._weekdaysShort, this._week.dow)
-            : (m) ? this._weekdaysShort[m.day()] : this._weekdaysShort;
+        return (m) ? this._weekdaysShort[m.day()] : this._weekdaysShort;
     }
 
     var defaultLocaleWeekdaysMin = 'Su_Mo_Tu_We_Th_Fr_Sa'.split('_');
     function localeWeekdaysMin (m) {
-        return (m === true) ? shiftWeekdays(this._weekdaysMin, this._week.dow)
-            : (m) ? this._weekdaysMin[m.day()] : this._weekdaysMin;
+        return (m) ? this._weekdaysMin[m.day()] : this._weekdaysMin;
     }
 
     function handleStrictParse$1(weekdayName, format, strict) {
@@ -52037,7 +51880,7 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
     }
 
     function positiveMomentsDifference(base, other) {
-        var res = {};
+        var res = {milliseconds: 0, months: 0};
 
         res.months = other.month() - base.month() +
             (other.year() - base.year()) * 12;
@@ -52375,130 +52218,62 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
         return this._locale;
     }
 
-    var MS_PER_SECOND = 1000;
-    var MS_PER_MINUTE = 60 * MS_PER_SECOND;
-    var MS_PER_HOUR = 60 * MS_PER_MINUTE;
-    var MS_PER_400_YEARS = (365 * 400 + 97) * 24 * MS_PER_HOUR;
-
-    // actual modulo - handles negative numbers (for dates before 1970):
-    function mod$1(dividend, divisor) {
-        return (dividend % divisor + divisor) % divisor;
-    }
-
-    function localStartOfDate(y, m, d) {
-        // the date constructor remaps years 0-99 to 1900-1999
-        if (y < 100 && y >= 0) {
-            // preserve leap years using a full 400 year cycle, then reset
-            return new Date(y + 400, m, d) - MS_PER_400_YEARS;
-        } else {
-            return new Date(y, m, d).valueOf();
-        }
-    }
-
-    function utcStartOfDate(y, m, d) {
-        // Date.UTC remaps years 0-99 to 1900-1999
-        if (y < 100 && y >= 0) {
-            // preserve leap years using a full 400 year cycle, then reset
-            return Date.UTC(y + 400, m, d) - MS_PER_400_YEARS;
-        } else {
-            return Date.UTC(y, m, d);
-        }
-    }
-
     function startOf (units) {
-        var time;
         units = normalizeUnits(units);
-        if (units === undefined || units === 'millisecond' || !this.isValid()) {
-            return this;
-        }
-
-        var startOfDate = this._isUTC ? utcStartOfDate : localStartOfDate;
-
+        // the following switch intentionally omits break keywords
+        // to utilize falling through the cases.
         switch (units) {
             case 'year':
-                time = startOfDate(this.year(), 0, 1);
-                break;
+                this.month(0);
+                /* falls through */
             case 'quarter':
-                time = startOfDate(this.year(), this.month() - this.month() % 3, 1);
-                break;
             case 'month':
-                time = startOfDate(this.year(), this.month(), 1);
-                break;
+                this.date(1);
+                /* falls through */
             case 'week':
-                time = startOfDate(this.year(), this.month(), this.date() - this.weekday());
-                break;
             case 'isoWeek':
-                time = startOfDate(this.year(), this.month(), this.date() - (this.isoWeekday() - 1));
-                break;
             case 'day':
             case 'date':
-                time = startOfDate(this.year(), this.month(), this.date());
-                break;
+                this.hours(0);
+                /* falls through */
             case 'hour':
-                time = this._d.valueOf();
-                time -= mod$1(time + (this._isUTC ? 0 : this.utcOffset() * MS_PER_MINUTE), MS_PER_HOUR);
-                break;
+                this.minutes(0);
+                /* falls through */
             case 'minute':
-                time = this._d.valueOf();
-                time -= mod$1(time, MS_PER_MINUTE);
-                break;
+                this.seconds(0);
+                /* falls through */
             case 'second':
-                time = this._d.valueOf();
-                time -= mod$1(time, MS_PER_SECOND);
-                break;
+                this.milliseconds(0);
         }
 
-        this._d.setTime(time);
-        hooks.updateOffset(this, true);
+        // weeks are a special case
+        if (units === 'week') {
+            this.weekday(0);
+        }
+        if (units === 'isoWeek') {
+            this.isoWeekday(1);
+        }
+
+        // quarters are also special
+        if (units === 'quarter') {
+            this.month(Math.floor(this.month() / 3) * 3);
+        }
+
         return this;
     }
 
     function endOf (units) {
-        var time;
         units = normalizeUnits(units);
-        if (units === undefined || units === 'millisecond' || !this.isValid()) {
+        if (units === undefined || units === 'millisecond') {
             return this;
         }
 
-        var startOfDate = this._isUTC ? utcStartOfDate : localStartOfDate;
-
-        switch (units) {
-            case 'year':
-                time = startOfDate(this.year() + 1, 0, 1) - 1;
-                break;
-            case 'quarter':
-                time = startOfDate(this.year(), this.month() - this.month() % 3 + 3, 1) - 1;
-                break;
-            case 'month':
-                time = startOfDate(this.year(), this.month() + 1, 1) - 1;
-                break;
-            case 'week':
-                time = startOfDate(this.year(), this.month(), this.date() - this.weekday() + 7) - 1;
-                break;
-            case 'isoWeek':
-                time = startOfDate(this.year(), this.month(), this.date() - (this.isoWeekday() - 1) + 7) - 1;
-                break;
-            case 'day':
-            case 'date':
-                time = startOfDate(this.year(), this.month(), this.date() + 1) - 1;
-                break;
-            case 'hour':
-                time = this._d.valueOf();
-                time += MS_PER_HOUR - mod$1(time + (this._isUTC ? 0 : this.utcOffset() * MS_PER_MINUTE), MS_PER_HOUR) - 1;
-                break;
-            case 'minute':
-                time = this._d.valueOf();
-                time += MS_PER_MINUTE - mod$1(time, MS_PER_MINUTE) - 1;
-                break;
-            case 'second':
-                time = this._d.valueOf();
-                time += MS_PER_SECOND - mod$1(time, MS_PER_SECOND) - 1;
-                break;
+        // 'date' is an alias for 'day', so it should be considered as such.
+        if (units === 'date') {
+            units = 'day';
         }
 
-        this._d.setTime(time);
-        hooks.updateOffset(this, true);
-        return this;
+        return this.startOf(units).add(1, (units === 'isoWeek' ? 'week' : units)).subtract(1, 'ms');
     }
 
     function valueOf () {
@@ -53204,14 +52979,10 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
         units = normalizeUnits(units);
 
-        if (units === 'month' || units === 'quarter' || units === 'year') {
-            days = this._days + milliseconds / 864e5;
+        if (units === 'month' || units === 'year') {
+            days   = this._days   + milliseconds / 864e5;
             months = this._months + daysToMonths(days);
-            switch (units) {
-                case 'month':   return months;
-                case 'quarter': return months / 3;
-                case 'year':    return months / 12;
-            }
+            return units === 'month' ? months : months / 12;
         } else {
             // handle milliseconds separately because of floating point math errors (issue #1867)
             days = this._days + Math.round(monthsToDays(this._months));
@@ -53254,7 +53025,6 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
     var asDays         = makeAs('d');
     var asWeeks        = makeAs('w');
     var asMonths       = makeAs('M');
-    var asQuarters     = makeAs('Q');
     var asYears        = makeAs('y');
 
     function clone$1 () {
@@ -53446,7 +53216,6 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
     proto$2.asDays         = asDays;
     proto$2.asWeeks        = asWeeks;
     proto$2.asMonths       = asMonths;
-    proto$2.asQuarters     = asQuarters;
     proto$2.asYears        = asYears;
     proto$2.valueOf        = valueOf$1;
     proto$2._bubble        = bubble;
@@ -53491,7 +53260,7 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
     // Side effect imports
 
 
-    hooks.version = '2.24.0';
+    hooks.version = '2.23.0';
 
     setHookCallback(createLocal);
 
@@ -53555,7 +53324,7 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 __webpack_require__.r(__webpack_exports__);
 /* WEBPACK VAR INJECTION */(function(global) {/**!
  * @fileOverview Kickass library to create and place poppers near their reference elements.
- * @version 1.14.7
+ * @version 1.14.6
  * @license
  * Copyright (c) 2016 Federico Zivolo and contributors
  *
@@ -54123,11 +53892,7 @@ function isFixed(element) {
   if (getStyleComputedProperty(element, 'position') === 'fixed') {
     return true;
   }
-  var parentNode = getParentNode(element);
-  if (!parentNode) {
-    return false;
-  }
-  return isFixed(parentNode);
+  return isFixed(getParentNode(element));
 }
 
 /**
@@ -54783,23 +54548,18 @@ function getRoundedOffsets(data, shouldRound) {
   var _data$offsets = data.offsets,
       popper = _data$offsets.popper,
       reference = _data$offsets.reference;
-  var round = Math.round,
-      floor = Math.floor;
 
+
+  var isVertical = ['left', 'right'].indexOf(data.placement) !== -1;
+  var isVariation = data.placement.indexOf('-') !== -1;
+  var sameWidthOddness = reference.width % 2 === popper.width % 2;
+  var bothOddWidth = reference.width % 2 === 1 && popper.width % 2 === 1;
   var noRound = function noRound(v) {
     return v;
   };
 
-  var referenceWidth = round(reference.width);
-  var popperWidth = round(popper.width);
-
-  var isVertical = ['left', 'right'].indexOf(data.placement) !== -1;
-  var isVariation = data.placement.indexOf('-') !== -1;
-  var sameWidthParity = referenceWidth % 2 === popperWidth % 2;
-  var bothOddWidth = referenceWidth % 2 === 1 && popperWidth % 2 === 1;
-
-  var horizontalToInteger = !shouldRound ? noRound : isVertical || isVariation || sameWidthParity ? round : floor;
-  var verticalToInteger = !shouldRound ? noRound : round;
+  var horizontalToInteger = !shouldRound ? noRound : isVertical || isVariation || sameWidthOddness ? Math.round : Math.floor;
+  var verticalToInteger = !shouldRound ? noRound : Math.round;
 
   return {
     left: horizontalToInteger(bothOddWidth && !isVariation && shouldRound ? popper.left - 1 : popper.left),
@@ -61024,7 +60784,9 @@ var render = function() {
                     "router-link",
                     { staticClass: "nav-link", attrs: { to: "/dashboard" } },
                     [
-                      _c("i", { staticClass: "nav-icon fa fa-th" }),
+                      _c("i", {
+                        staticClass: "nav-icon fas fa-tachometer-alt"
+                      }),
                       _vm._v(" "),
                       _c("p", [_vm._v("Dashboard")])
                     ]
@@ -61056,26 +60818,6 @@ var render = function() {
                 [
                   _c(
                     "router-link",
-                    {
-                      staticClass: "nav-link",
-                      attrs: { to: "/account_codes" }
-                    },
-                    [
-                      _c("i", { staticClass: "nav-icon fa fa-th" }),
-                      _vm._v(" "),
-                      _c("p", [_vm._v("Account Codes")])
-                    ]
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "li",
-                { staticClass: "nav-item" },
-                [
-                  _c(
-                    "router-link",
                     { staticClass: "nav-link", attrs: { to: "/pap_codes" } },
                     [
                       _c("i", { staticClass: "nav-icon fa fa-th" }),
@@ -61093,26 +60835,9 @@ var render = function() {
                 [
                   _c(
                     "router-link",
-                    { staticClass: "nav-link", attrs: { to: "/supplies" } },
-                    [
-                      _c("i", { staticClass: "nav-icon fa fa-th" }),
-                      _vm._v(" "),
-                      _c("p", [_vm._v("Supplies")])
-                    ]
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "li",
-                { staticClass: "nav-item" },
-                [
-                  _c(
-                    "router-link",
                     { staticClass: "nav-link", attrs: { to: "/heads" } },
                     [
-                      _c("i", { staticClass: "nav-icon fa fa-th" }),
+                      _c("i", { staticClass: "nav-icon fas fa-user" }),
                       _vm._v(" "),
                       _c("p", [_vm._v("Heads")])
                     ]
@@ -61163,7 +60888,7 @@ var render = function() {
                     "router-link",
                     { staticClass: "nav-link", attrs: { to: "/employees" } },
                     [
-                      _c("i", { staticClass: "nav-icon fa fa-th" }),
+                      _c("i", { staticClass: "nav-icon fas fa-users" }),
                       _vm._v(" "),
                       _c("p", [_vm._v("Employees")])
                     ]
@@ -61220,18 +60945,34 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     !_vm.current_user
-      ? _c("div", [_c("guestbar")], 1)
-      : _c("div", [_c("headerbar"), _vm._v(" "), _c("sidebar")], 1),
-    _vm._v(" "),
-    _c("div", { staticClass: "content-wrapper" }, [
-      _c("div", { staticClass: "content" }, [
-        _c("div", { staticClass: "container-fluid" }, [
-          _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-lg-10 mt-4" }, [_c("router-view")], 1)
-          ])
+      ? _c("div", [_c("guestbar"), _vm._v(" "), _c("router-view")], 1)
+      : _c("div", [
+          _c(
+            "div",
+            { staticClass: "wrapper" },
+            [
+              _c("headerbar"),
+              _vm._v(" "),
+              _c("sidebar"),
+              _vm._v(" "),
+              _c("div", { staticClass: "content-wrapper" }, [
+                _c("div", { staticClass: "content" }, [
+                  _c("div", { staticClass: "container-fluid" }, [
+                    _c("div", { staticClass: "row justify-content-center" }, [
+                      _c(
+                        "div",
+                        { staticClass: "col-lg-10 mt-4" },
+                        [_c("router-view")],
+                        1
+                      )
+                    ])
+                  ])
+                ])
+              ])
+            ],
+            1
+          )
         ])
-      ])
-    ])
   ])
 }
 var staticRenderFns = []
@@ -61272,106 +61013,10 @@ var render = function() {
           _vm._v(" "),
           _vm._m(0),
           _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "collapse navbar-collapse",
-              attrs: { id: "navbarSupportedContent" }
-            },
-            [
-              !_vm.current_user
-                ? _c("ul", { staticClass: "navbar-nav ml-auto" }, [
-                    _c(
-                      "li",
-                      [
-                        _c(
-                          "router-link",
-                          { staticClass: "nav-link", attrs: { to: "/login" } },
-                          [_vm._v("Login")]
-                        )
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "li",
-                      [
-                        _c(
-                          "router-link",
-                          {
-                            staticClass: "nav-link",
-                            attrs: { to: "/register" }
-                          },
-                          [_vm._v("Register")]
-                        )
-                      ],
-                      1
-                    )
-                  ])
-                : _c("ul", { staticClass: "navbar-nav ml-auto" }, [
-                    _c(
-                      "li",
-                      [
-                        _c(
-                          "router-link",
-                          { staticClass: "nav-link", attrs: { to: "/home" } },
-                          [_vm._v("Home")]
-                        )
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c("li", { staticClass: "nav-item dropdown" }, [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "nav-link dropdown-toggle",
-                          attrs: {
-                            id: "navbarDropdown",
-                            href: "#",
-                            role: "button",
-                            "data-toggle": "dropdown",
-                            "aria-expanded": "false",
-                            "aria-haspopup": "true"
-                          }
-                        },
-                        [
-                          _vm._v(
-                            "\n                        " +
-                              _vm._s(_vm.current_user.username) +
-                              " "
-                          ),
-                          _c("span", { staticClass: "caret" })
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        {
-                          staticClass: "dropdown-menu",
-                          attrs: { "aria-labelledby": "navbarDropdown" }
-                        },
-                        [
-                          _c(
-                            "a",
-                            {
-                              staticClass: "dropdown-item",
-                              attrs: { href: "#!" },
-                              on: {
-                                click: function($event) {
-                                  $event.preventDefault()
-                                  return _vm.logout($event)
-                                }
-                              }
-                            },
-                            [_vm._v("Logout")]
-                          )
-                        ]
-                      )
-                    ])
-                  ])
-            ]
-          )
+          _c("div", {
+            staticClass: "collapse navbar-collapse",
+            attrs: { id: "navbarSupportedContent" }
+          })
         ],
         1
       )
@@ -61423,10 +61068,12 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "login row justify-content-center mt-3" }, [
     _c("div", { staticClass: "col-md-4" }, [
-      _c("div", { staticClass: "card" }, [
-        _c("div", { staticClass: "card-header" }, [_vm._v("Login")]),
-        _vm._v(" "),
+      _c("div", { staticClass: "card rounded-0" }, [
         _c("div", { staticClass: "card-body" }, [
+          _c("div", { staticClass: "card-title text-center" }, [
+            _vm._v("\n                    Login\n                ")
+          ]),
+          _vm._v(" "),
           _c(
             "form",
             {
@@ -61438,9 +61085,9 @@ var render = function() {
               }
             },
             [
-              _c("div", { staticClass: "form-group row" }, [
+              _c("div", { staticClass: "form-group" }, [
                 _c("label", { attrs: { for: "username" } }, [
-                  _vm._v("Username:")
+                  _vm._v("Username")
                 ]),
                 _vm._v(" "),
                 _c("input", {
@@ -61452,7 +61099,7 @@ var render = function() {
                       expression: "form.username"
                     }
                   ],
-                  staticClass: "form-control",
+                  staticClass: "form-control rounded-0",
                   attrs: {
                     type: "username",
                     placeholder: "Username",
@@ -61471,9 +61118,9 @@ var render = function() {
                 })
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "form-group row" }, [
+              _c("div", { staticClass: "form-group" }, [
                 _c("label", { attrs: { for: "password" } }, [
-                  _vm._v("Password:")
+                  _vm._v("Password")
                 ]),
                 _vm._v(" "),
                 _c("input", {
@@ -61485,7 +61132,7 @@ var render = function() {
                       expression: "form.password"
                     }
                   ],
-                  staticClass: "form-control",
+                  staticClass: "form-control rounded-0",
                   attrs: {
                     type: "password",
                     placeholder: "Password",
@@ -61516,9 +61163,9 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group row" }, [
+    return _c("div", { staticClass: "form-group text-center" }, [
       _c("input", {
-        staticClass: "btn btn-primary btn-md",
+        staticClass: "btn btn-primary btn-sm rounded-0",
         attrs: { type: "submit", value: "Login" }
       })
     ])
@@ -61858,9 +61505,21 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "card" }, [
-      _c("div", { staticClass: "card-header" }, [_vm._v("Departments")]),
-      _vm._v(" "),
       _c("div", { staticClass: "card-body" }, [
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col" }, [
+            _c("div", { staticClass: "card-title" }, [_vm._v("Heads")])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col" }, [
+            _c("div", { staticClass: "card-tools text-right" }, [
+              _c("button", { staticClass: "btn btn-primary btn-sm" }, [
+                _vm._v("Add")
+              ])
+            ])
+          ])
+        ]),
+        _vm._v(" "),
         _c("table", { staticClass: "table" }, [
           _c("thead", [
             _c("tr", [
@@ -61901,16 +61560,16 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "card" }, [
-    _c("div", { staticClass: "card-header" }, [
+  return _c("div", { staticClass: "card rounded-0" }, [
+    _c("div", { staticClass: "card-body" }, [
       _c("div", { staticClass: "row" }, [
         _vm._m(0),
         _vm._v(" "),
-        _c("div", { staticClass: "col-4" }, [
+        _c("div", { staticClass: "col text-right" }, [
           _c(
             "button",
             {
-              staticClass: "btn btn-primary",
+              staticClass: "btn btn-primary btn-sm",
               on: {
                 click: function($event) {
                   _vm.create_item()
@@ -61918,225 +61577,311 @@ var render = function() {
               }
             },
             [_vm._v("Add")]
-          )
-        ]),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            staticClass: "modal fade",
-            attrs: {
-              id: "item_modal",
-              tabindex: "-1",
-              role: "dialog",
-              "aria-labelledby": "item_modal_label",
-              "aria-hidden": "true"
-            }
-          },
-          [
-            _c(
-              "div",
-              { staticClass: "modal-dialog", attrs: { role: "document" } },
-              [
-                _c("div", { staticClass: "modal-content" }, [
-                  _c("div", { staticClass: "modal-header" }, [
-                    _c(
-                      "h5",
-                      {
-                        directives: [
-                          {
-                            name: "show",
-                            rawName: "v-show",
-                            value: !_vm.editmode,
-                            expression: "!editmode"
-                          }
-                        ],
-                        staticClass: "modal-title",
-                        attrs: { id: "item_modal_label" }
-                      },
-                      [_vm._v("Add New Item")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "h5",
-                      {
-                        directives: [
-                          {
-                            name: "show",
-                            rawName: "v-show",
-                            value: _vm.editmode,
-                            expression: "editmode"
-                          }
-                        ],
-                        staticClass: "modal-title",
-                        attrs: { id: "item_modal_label" }
-                      },
-                      [_vm._v("Update Item")]
-                    ),
-                    _vm._v(" "),
-                    _vm._m(1)
-                  ]),
-                  _vm._v(" "),
-                  _c("form", { attrs: { action: "" } }, [
-                    _c("div", { staticClass: "modal-body" }, [
-                      _c("div", { staticClass: "form-group" }, [
-                        _c("label", { attrs: { for: "item_code" } }, [
-                          _vm._v("Code")
-                        ]),
-                        _vm._v(" "),
-                        _c("input", {
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "modal fade",
+              attrs: {
+                id: "item_modal",
+                tabindex: "-1",
+                role: "dialog",
+                "aria-labelledby": "item_modal_label",
+                "aria-hidden": "true"
+              }
+            },
+            [
+              _c(
+                "div",
+                { staticClass: "modal-dialog", attrs: { role: "document" } },
+                [
+                  _c("div", { staticClass: "modal-content" }, [
+                    _c("div", { staticClass: "modal-header" }, [
+                      _c(
+                        "h5",
+                        {
                           directives: [
                             {
-                              name: "model",
-                              rawName: "v-model",
-                              value: this.form.item_code,
-                              expression: "this.form.item_code"
+                              name: "show",
+                              rawName: "v-show",
+                              value: !_vm.editmode,
+                              expression: "!editmode"
                             }
                           ],
-                          staticClass: "form-control-sm",
-                          attrs: { type: "text" },
-                          domProps: { value: this.form.item_code },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                this.form,
-                                "item_code",
-                                $event.target.value
-                              )
-                            }
-                          }
-                        })
-                      ]),
+                          staticClass: "modal-title",
+                          attrs: { id: "item_modal_label" }
+                        },
+                        [_vm._v("Add New Item")]
+                      ),
                       _vm._v(" "),
-                      _c("div", { staticClass: "form-group" }, [
-                        _c("label", { attrs: { for: "item_description" } }, [
-                          _vm._v("Description")
-                        ]),
-                        _vm._v(" "),
-                        _c("input", {
+                      _c(
+                        "h5",
+                        {
                           directives: [
                             {
-                              name: "model",
-                              rawName: "v-model",
-                              value: this.form.item_description,
-                              expression: "this.form.item_description"
+                              name: "show",
+                              rawName: "v-show",
+                              value: _vm.editmode,
+                              expression: "editmode"
                             }
                           ],
-                          staticClass: "form-control-sm",
-                          attrs: { type: "text" },
-                          domProps: { value: this.form.item_description },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                this.form,
-                                "item_description",
-                                $event.target.value
-                              )
-                            }
-                          }
-                        })
-                      ]),
+                          staticClass: "modal-title",
+                          attrs: { id: "item_modal_label" }
+                        },
+                        [_vm._v("Update Item")]
+                      ),
                       _vm._v(" "),
-                      _c("div", { staticClass: "form-group" }, [
-                        _c("label", { attrs: { for: "item_total_quantity" } }, [
-                          _vm._v("Total")
-                        ]),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: this.form.item_total_quantity,
-                              expression: "this.form.item_total_quantity"
-                            }
-                          ],
-                          staticClass: "form-control-sm",
-                          attrs: { type: "text" },
-                          domProps: { value: this.form.item_total_quantity },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                this.form,
-                                "item_total_quantity",
-                                $event.target.value
-                              )
-                            }
-                          }
-                        })
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "form-group" }, [
-                        _c("label", { attrs: { for: "pap_code_id" } }, [
-                          _vm._v("Pap Code")
-                        ]),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: this.form.pap_code_id,
-                              expression: "this.form.pap_code_id"
-                            }
-                          ],
-                          staticClass: "form-control-sm",
-                          attrs: { type: "text" },
-                          domProps: { value: this.form.pap_code_id },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                this.form,
-                                "pap_code_id",
-                                $event.target.value
-                              )
-                            }
-                          }
-                        })
-                      ])
+                      _vm._m(1)
                     ]),
                     _vm._v(" "),
-                    _vm._m(2)
+                    _c(
+                      "form",
+                      {
+                        staticClass: "text-left",
+                        on: {
+                          submit: function($event) {
+                            $event.preventDefault()
+                            _vm.editmode ? _vm.update_item() : _vm.store_item()
+                          }
+                        }
+                      },
+                      [
+                        _c("div", { staticClass: "modal-body" }, [
+                          _c("div", { staticClass: "form-group" }, [
+                            _c("label", { attrs: { for: "item_code" } }, [
+                              _vm._v("Code")
+                            ]),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.form.item_code,
+                                  expression: "form.item_code"
+                                }
+                              ],
+                              staticClass: "form-control form-control-sm",
+                              attrs: { type: "text" },
+                              domProps: { value: _vm.form.item_code },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.form,
+                                    "item_code",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            })
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "form-group" }, [
+                            _c(
+                              "label",
+                              { attrs: { for: "item_description" } },
+                              [_vm._v("Description")]
+                            ),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.form.item_description,
+                                  expression: "form.item_description"
+                                }
+                              ],
+                              staticClass: "form-control form-control-sm",
+                              attrs: { type: "text" },
+                              domProps: { value: _vm.form.item_description },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.form,
+                                    "item_description",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            })
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "form-group" }, [
+                            _c(
+                              "label",
+                              { attrs: { for: "item_total_quantity" } },
+                              [_vm._v("Total")]
+                            ),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.form.item_total_quantity,
+                                  expression: "form.item_total_quantity"
+                                }
+                              ],
+                              staticClass: "form-control form-control-sm",
+                              attrs: { type: "text" },
+                              domProps: { value: _vm.form.item_total_quantity },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.form,
+                                    "item_total_quantity",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            })
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "form-group" }, [
+                            _c(
+                              "label",
+                              { attrs: { for: "item_total_quantity" } },
+                              [_vm._v("Account Code")]
+                            ),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.form.account_code,
+                                  expression: "form.account_code"
+                                }
+                              ],
+                              staticClass: "form-control form-control-sm",
+                              attrs: { type: "text" },
+                              domProps: { value: _vm.form.account_code },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.form,
+                                    "account_code",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            })
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "form-group" }, [
+                            _c("label", { attrs: { for: "pap_code_id" } }, [
+                              _vm._v("Pap Code")
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "select",
+                              {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.form.pap_code_id,
+                                    expression: "form.pap_code_id"
+                                  }
+                                ],
+                                staticClass: "form-control form-control-sm",
+                                attrs: { name: "", id: "" },
+                                on: {
+                                  change: function($event) {
+                                    var $$selectedVal = Array.prototype.filter
+                                      .call($event.target.options, function(o) {
+                                        return o.selected
+                                      })
+                                      .map(function(o) {
+                                        var val =
+                                          "_value" in o ? o._value : o.value
+                                        return val
+                                      })
+                                    _vm.$set(
+                                      _vm.form,
+                                      "pap_code_id",
+                                      $event.target.multiple
+                                        ? $$selectedVal
+                                        : $$selectedVal[0]
+                                    )
+                                  }
+                                }
+                              },
+                              _vm._l(_vm.pap_codes.data, function(pap_code) {
+                                return _c(
+                                  "option",
+                                  {
+                                    key: pap_code.id,
+                                    domProps: { value: pap_code.id }
+                                  },
+                                  [_vm._v(_vm._s(pap_code.description))]
+                                )
+                              }),
+                              0
+                            )
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _vm._m(2)
+                      ]
+                    )
                   ])
-                ])
-              ]
-            )
-          ]
-        )
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "card-body" }, [
+                ]
+              )
+            ]
+          )
+        ])
+      ]),
+      _vm._v(" "),
       _c("table", { staticClass: "table" }, [
         _vm._m(3),
         _vm._v(" "),
         _c(
           "tbody",
-          _vm._l(_vm.items, function(item) {
+          _vm._l(_vm.items.data, function(item) {
             return _c("tr", { key: item.id }, [
               _c("td", [_vm._v(_vm._s(item.id))]),
               _vm._v(" "),
               _c("td", [_vm._v(_vm._s(item.item_code))]),
               _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(item.item_descriptions))]),
+              _c("td", [_vm._v(_vm._s(item.item_description))]),
               _vm._v(" "),
               _c("td", [_vm._v(_vm._s(item.pap_code_id))]),
               _vm._v(" "),
               _c("td", [_vm._v(_vm._s(item.account_code))]),
               _vm._v(" "),
-              _vm._m(4, true)
+              _c("td", [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-sm btn-success",
+                    on: {
+                      click: function($event) {
+                        _vm.edit_item(item)
+                      }
+                    }
+                  },
+                  [_vm._v("Edit")]
+                ),
+                _vm._v(" "),
+                _c("button", { staticClass: "btn btn-sm btn-danger" }, [
+                  _vm._v("Delete")
+                ])
+              ])
             ])
           }),
           0
@@ -62150,7 +61895,7 @@ var render = function() {
       [
         _c("pagination", {
           attrs: { data: _vm.items },
-          on: { "pagination-change-page": _vm.load_page }
+          on: { "pagination-change-page": _vm.pages_items }
         })
       ],
       1
@@ -62162,8 +61907,8 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-8" }, [
-      _c("div", { staticClass: "card-title" }, [_vm._v("Items")])
+    return _c("div", { staticClass: "col" }, [
+      _c("div", { staticClass: "card-title" }, [_vm._v("Item List")])
     ])
   },
   function() {
@@ -62223,16 +61968,6 @@ var staticRenderFns = [
         _c("th", [_vm._v("Action")])
       ])
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [
-      _c("button", { staticClass: "btn btn-sm btn-success" }, [_vm._v("Edit")]),
-      _vm._v(" "),
-      _c("button", { staticClass: "btn btn-sm btn-danger" }, [_vm._v("Delete")])
-    ])
   }
 ]
 render._withStripped = true
@@ -62261,7 +61996,7 @@ var render = function() {
       _c("div", { staticClass: "row" }, [
         _vm._m(0),
         _vm._v(" "),
-        _c("div", { staticClass: "col-4" }, [
+        _c("div", { staticClass: "col-4 text-right" }, [
           _c(
             "button",
             {
@@ -62334,6 +62069,7 @@ var render = function() {
                     _c(
                       "form",
                       {
+                        staticClass: "text-left",
                         on: {
                           submit: function($event) {
                             $event.preventDefault()
@@ -79166,8 +78902,8 @@ var user = Object(_helpers_auth__WEBPACK_IMPORTED_MODULE_0__["get_local_user"])(
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\DOH\Desktop\pmis\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\DOH\Desktop\pmis\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! F:\xampp\htdocs\pmis\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! F:\xampp\htdocs\pmis\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

@@ -8,7 +8,11 @@ class Item extends Model
 {
     //
     protected $fillable = [
-        'item_code', 'item_description', 'item_total_quantity', 'account_code', 'pap_code_id',
+        'code', 
+        'description', 
+        'total_quantity', 
+        'account_code',
+        'pap_code_id',
     ];
 
     public function request_items()
