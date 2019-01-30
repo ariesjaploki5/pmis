@@ -48,7 +48,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="pap_code in pap_codes" :key="pap_code.id">
+                <tr v-for="pap_code in pap_codes.data" :key="pap_code.id">
                     <td>{{ pap_code.id }}</td>
                     <td>{{ pap_code.code }}</td>
                     <td>{{ pap_code.description }}</td>
@@ -61,19 +61,12 @@
         </table>
     </div>
     <div class="card-footer">
-        
+        <pagination :data="pap_codes" @pagination-change-page="pages_pap_codes"></pagination>
     </div>
 </div> 
 </template>
 <script>
 export default {
-    mounted() {
-        if (this.pap_codes.length) {
-                return;
-            }
-            
-            this.$store.dispatch('get_pap_codes');
-    },
     data(){
         return{
             editmode: false,
@@ -82,14 +75,24 @@ export default {
                 code: '',
                 description: '',
             }),
-        }
-    },
-    computed: {
-        pap_codes() {
-            return this.$store.getters.pap_codes;
+            pap_codes: {},
         }
     },
     methods: {
+        loadall(){
+            this.get_pap_codes();
+        },
+        get_pap_codes(){
+            axios.get('api/pap_codes')
+            .then(({data}) => (this.pap_codes = data))
+            .catch(() => {});
+        },
+        pages_pap_codes(){
+            axios.get('api/pap_codes?page=' + page)
+                    .then(response => {
+                        this.pap_codes = response.data;
+                    });
+        },
         create_pap_code(){
             $('#pap_code_modal').modal('show');
         },
@@ -113,13 +116,13 @@ export default {
         update_pap_code(){
 
         },
-        pap_code_pages()
-        {
-
-        },
     },
     created(){
-
+        this.loadall();
+            Fire.$on('success',() => {
+                this.loadall();
+                
+            });
     },
 }
 </script>

@@ -2434,7 +2434,6 @@ __webpack_require__.r(__webpack_exports__);
     return {
       role_id: '',
       editmode: false,
-      items: {},
       form: new Form({
         id: ''
       })
@@ -2541,13 +2540,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mounted: function mounted() {
-    if (this.pap_codes.length) {
-      return;
-    }
-
-    this.$store.dispatch('get_pap_codes');
-  },
   data: function data() {
     return {
       editmode: false,
@@ -2555,20 +2547,34 @@ __webpack_require__.r(__webpack_exports__);
         id: '',
         code: '',
         description: ''
-      })
+      }),
+      pap_codes: {}
     };
   },
-  computed: {
-    pap_codes: function pap_codes() {
-      return this.$store.getters.pap_codes;
-    }
-  },
   methods: {
+    loadall: function loadall() {
+      this.get_pap_codes();
+    },
+    get_pap_codes: function get_pap_codes() {
+      var _this = this;
+
+      axios.get('api/pap_codes').then(function (_ref) {
+        var data = _ref.data;
+        return _this.pap_codes = data;
+      }).catch(function () {});
+    },
+    pages_pap_codes: function pages_pap_codes() {
+      var _this2 = this;
+
+      axios.get('api/pap_codes?page=' + page).then(function (response) {
+        _this2.pap_codes = response.data;
+      });
+    },
     create_pap_code: function create_pap_code() {
       $('#pap_code_modal').modal('show');
     },
     store_pap_code: function store_pap_code() {
-      var _this = this;
+      var _this3 = this;
 
       this.$Progress.start();
       this.form.post('api/pap_code').then(function () {
@@ -2578,19 +2584,25 @@ __webpack_require__.r(__webpack_exports__);
           title: 'Pap Code Added Successfully'
         });
 
-        _this.$Progress.finish();
+        _this3.$Progress.finish();
       }).catch(function () {
-        _this.$Progress.fail();
+        _this3.$Progress.fail();
       });
     },
     edit_pap_code: function edit_pap_code(pap_code) {
       this.editmode = true;
       $('#pap_code_modal').modal('show');
     },
-    update_pap_code: function update_pap_code() {},
-    pap_code_pages: function pap_code_pages() {}
+    update_pap_code: function update_pap_code() {}
   },
-  created: function created() {}
+  created: function created() {
+    var _this4 = this;
+
+    this.loadall();
+    Fire.$on('success', function () {
+      _this4.loadall();
+    });
+  }
 });
 
 /***/ }),
@@ -62418,7 +62430,7 @@ var render = function() {
         _vm._v(" "),
         _c(
           "tbody",
-          _vm._l(_vm.pap_codes, function(pap_code) {
+          _vm._l(_vm.pap_codes.data, function(pap_code) {
             return _c("tr", { key: pap_code.id }, [
               _c("td", [_vm._v(_vm._s(pap_code.id))]),
               _vm._v(" "),
@@ -62451,7 +62463,17 @@ var render = function() {
       ])
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "card-footer" })
+    _c(
+      "div",
+      { staticClass: "card-footer" },
+      [
+        _c("pagination", {
+          attrs: { data: _vm.pap_codes },
+          on: { "pagination-change-page": _vm.pages_pap_codes }
+        })
+      ],
+      1
+    )
   ])
 }
 var staticRenderFns = [
@@ -79080,13 +79102,7 @@ var user = Object(_helpers_auth__WEBPACK_IMPORTED_MODULE_0__["get_local_user"])(
 /* harmony default export */ __webpack_exports__["default"] = ({
   state: {
     current_user: user,
-    isLoggedIn: !!user,
-    pap_codes: [],
-    departments: {},
-    divisions: {},
-    employees: {},
-    heads: {},
-    users: {}
+    isLoggedIn: !!user
   },
   getters: {
     isLoading: function isLoading(state) {
@@ -79097,21 +79113,6 @@ var user = Object(_helpers_auth__WEBPACK_IMPORTED_MODULE_0__["get_local_user"])(
     },
     current_user: function current_user(state) {
       return state.current_user;
-    },
-    pap_codes: function pap_codes(state) {
-      return state.pap_codes;
-    },
-    departments: function departments(state) {
-      return state.departments;
-    },
-    divisions: function divisions(state) {
-      return state.divisions;
-    },
-    heads: function heads(state) {
-      return state.heads;
-    },
-    users: function users(state) {
-      return state.users;
     }
   },
   mutations: {
@@ -79136,51 +79137,11 @@ var user = Object(_helpers_auth__WEBPACK_IMPORTED_MODULE_0__["get_local_user"])(
       localStorage.removeItem("user");
       state.isLoggedIn = false;
       state.current_user = null;
-    },
-    update_pap_codes: function update_pap_codes(state) {
-      state.pap_codes = payload;
-    },
-    update_departments: function update_departments(state) {
-      state.departments = payload;
-    },
-    update_divisions: function update_divisions(state) {
-      state.divisions = payload;
-    },
-    update_heads: function update_heads(state) {
-      state.heads = payload;
-    },
-    update_users: function update_users(state) {
-      state.users = payload;
     }
   },
   actions: {
     login: function login(context) {
       context.commit("login");
-    },
-    get_pap_codes: function get_pap_codes(context) {
-      axios.get('/api/pap_codes').then(function (response) {
-        context.commit('update_pap_codes', response.data.pap_codes);
-      }).catch(function () {});
-    },
-    get_departments: function get_departments(context) {
-      axios.get('/api/departments').then(function (response) {
-        context.commit('update_departments', response.data.departments);
-      }).catch(function () {});
-    },
-    get_divisions: function get_divisions(context) {
-      axios.get('/api/divisions').then(function (response) {
-        context.commit('update_divisions', response.data.divisions);
-      }).catch(function () {});
-    },
-    get_heads: function get_heads(context) {
-      axios.get('/api/heads').then(function (response) {
-        context.commit('update_heads', response.data.heads);
-      }).catch(function () {});
-    },
-    get_users: function get_users(context) {
-      axios.get('/api/users').then(function (response) {
-        context.commit('update_users', response.data.users);
-      }).catch(function () {});
     }
   }
 });

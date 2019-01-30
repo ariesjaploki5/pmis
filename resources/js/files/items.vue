@@ -84,7 +84,6 @@
             return {
                 role_id: '',
                 editmode: false,
-                items : {},
                 form: new Form({
                     id:'',
 
@@ -108,7 +107,7 @@
             },
             user_id(){
                 return this.$store.getters.current_user.id;
-            }
+            },
         },
         created(){
             this.load_all();
