@@ -10,7 +10,8 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="item_modal_label">New Item</h5>
+                        <h5 v-show="!editmode" class="modal-title" id="item_modal_label">Add New Item</h5>
+                        <h5 v-show="editmode" class="modal-title" id="item_modal_label">Update Item</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                         </button>
@@ -104,6 +105,9 @@
         computed: {
             current_user() {
                 return this.$store.getters.current_user;
+            },
+            user_id(){
+                return this.$store.getters.current_user.id;
             }
         },
         created(){

@@ -15,7 +15,8 @@ class CreatePapCodesTable extends Migration
     {
         Schema::create('pap_codes', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('pap_code');
+            $table->integer('code');
+            $table->string('description');
             $table->timestamps();
         });
     }

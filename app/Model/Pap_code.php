@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Pap_code extends Model
 {
     protected $fillable = [
-        'pap_code',
+        'code', 'description'
     ];
 
     public function items()
