@@ -19,7 +19,7 @@ import pap_codes from './files/pap_codes.vue';
 import requests from './files/requests.vue';
 import items from './files/items.vue';
 import users from './files/users.vue';
-
+import categories from './files/categories.vue';
 
     
 export const routes = [
@@ -85,6 +85,13 @@ export const routes = [
     {
         path: '/pap_codes',
         component: pap_codes,
+        meta: {
+            requiresAuth: true
+        }
+    },
+    {
+        path: '/categories',
+        component: categories,
         meta: {
             requiresAuth: true
         }

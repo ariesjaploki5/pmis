@@ -19,6 +19,6 @@ class Pap_code extends Model
 
     public function category()
     {
-        return $this->hasOne('App\Model\Category');
+        return $this->belongsTo('App\Model\Category');
     }
 }

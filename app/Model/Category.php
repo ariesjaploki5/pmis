@@ -8,12 +8,14 @@ class Category extends Model
 {
     protected $table = 'dex.pams_categories';
 
+    public $timestamps = false;
+    
     protected $fillable = [
         'description',
     ];
 
-    public function pap_code()
+    public function pap_codes()
     {
-    	return $this->belongsToMany('App\Model\Pap_code');
+    	return $this->hasMany('App\Model\Pap_code');
     }
 }

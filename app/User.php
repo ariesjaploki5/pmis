@@ -13,7 +13,7 @@ class User extends Authenticatable implements JWTSubject
 
     protected $table = 'dbo.user_acc';
     protected $primaryKey = 'employeeid';
-
+    
 
     protected $hidden = [
         'user_pass',

@@ -65,6 +65,10 @@ Route::group(['prefix' => 'auth'], function ($router) {
     Route::put('unit_of_issue/{id}', 'UnitOfIssueCtr@update');
     Route::delete('unit_of_issue/{id}', 'UnitOfIssueCtr@destroy');
 
+    Route::get('categories', 'CategoryCtr@index');
+    Route::post('category', 'CategoryCtr@store');
+    Route::put('category/{id}', 'CategoryCtr@update');
+    Route::delete('category/{id}', 'CategoryCtr@destroy');
 
 
 

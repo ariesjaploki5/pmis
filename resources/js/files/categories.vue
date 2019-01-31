@@ -2,35 +2,25 @@
 <div class="card">
     <div class="card-header">
         <div class="row">
-            <div class="col-8"><div class="card-title">Items</div></div>
+            <div class="col-8"><div class="card-title">Categories</div></div>
             <div class="col-4 text-right">
-                <button class="btn btn-primary" @click="create_pap_code()">Add</button>
-                <div class="modal fade" id="pap_code_modal" tabindex="-1" role="dialog" aria-labelledby="pap_code_modal_label" aria-hidden="true">
+                <button class="btn btn-primary" @click="create_category()">Add</button>
+                <div class="modal fade" id="category_modal" tabindex="-1" role="dialog" aria-labelledby="category_modal_label" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 v-show="!editmode" class="modal-title" id="pap_code_modal_label">Add New Pap Code</h5>
-                                <h5 v-show="editmode" class="modal-title" id="pap_code_modal_label">Update Pap Code</h5>
+                                <h5 v-show="!editmode" class="modal-title" id="category_modal_label">Add New Categories</h5>
+                                <h5 v-show="editmode" class="modal-title" id="category_modal_label">Update Categories</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <form @submit.prevent="editmode ? update_pap_code() : store_pap_code()" class="text-left">
+                            <form @submit.prevent="editmode ? update_category() : store_category()" class="text-left">
                                 <div class="modal-body">
-                                    <div class="form-group">
-                                        <label for="item_code">Code</label>
-                                        <input type="text" class="form-control form-control-sm" v-model="form.code">
-                                    </div>
+
                                     <div class="form-group">
                                         <label for="item_description">Description</label>
                                         <input type="text" class="form-control form-control-sm" v-model="form.description">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="item_description">Category</label>
-                                        <select name="category" id="category" v-model="form.category_id" class="form-control from-control-sm">
-                                            <option hidden disabled>Please Select</option>
-                                            <option v-for="category in categories.data" :key="category.id" :value="category.id">{{category.description}}</option>
-                                        </select>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
@@ -49,20 +39,16 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Pap Code</th>
                     <th>Description</th>
-                    <th>Category</th>
                     <th>Action</th>
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="pap_code in pap_codes.data" :key="pap_code.id">
-                    <td>{{ pap_code.id }}</td>
-                    <td>{{ pap_code.code }}</td>
-                    <td>{{ pap_code.description }}</td>
-                    <td>{{ pap_code.category.description }}</td>
+                <tr v-for="category in categories.data" :key="category.id">
+                    <td>{{ category.id }}</td>
+                    <td>{{ category.description }}</td>
                     <td>
-                        <button class="btn btn-success btn-sm" @click="edit_pap_code(pap_code)">Edit</button>
+                        <button class="btn btn-success btn-sm" @click="edit_category(category)">Edit</button>
                         <button class="btn btn-danger btn-sm">Delete</button>
                     </td>
                 </tr>
@@ -70,7 +56,7 @@
         </table>
     </div>
     <div class="card-footer">
-        <pagination :data="pap_codes" @pagination-change-page="pages_pap_codes"></pagination>
+        <pagination :data="categories" @pagination-change-page="pages_categories"></pagination>
     </div>
 </div> 
 </template>
@@ -81,39 +67,31 @@ export default {
             editmode: false,
             form: new Form({
                 id: '',
-                code: '',
                 description: '',
-                category_id: '',
             }),
-            pap_codes: {},
             categories: {},
         }
     },
     methods: {
         load_all(){
-            this.get_pap_codes();
             this.get_categories();
         },
         get_categories(){
             axios.get('api/categories')
             .then(({data}) => (this.categories = data));
         },
-        get_pap_codes(){
-            axios.get('api/pap_codes')
-            .then(({data}) => (this.pap_codes = data));
+        pages_categories(page = 1){
+            axios.get('api/categories?page=' + page)
+            .then(response => {this.categories = response.data;});
         },
-        pages_pap_codes(page = 1){
-            axios.get('api/pap_codes?page=' + page)
-            .then(response => {this.pap_codes = response.data;});
+        create_category(){
+            $('#category_modal').modal('show');
         },
-        create_pap_code(){
-            $('#pap_code_modal').modal('show');
-        },
-        store_pap_code(){
+        store_category(){
             this.$Progress.start();
-            this.form.post('api/pap_code').then(() => {
+            this.form.post('api/category').then(() => {
                 Fire.$emit('success');
-                $('#pap_code_modal').modal('hide');
+                $('#category_modal').modal('hide');
                     toast({
                         type: 'success',
                         title: 'Added Successfully'
@@ -123,18 +101,18 @@ export default {
                 this.$Progress.fail();
             })
         },
-        edit_pap_code(pap_code){
+        edit_category(category){
             this.editmode = true;
             this.form.reset();
-            $('#pap_code_modal').modal('show');
-            this.form.fill(pap_code);
+            $('#category_modal').modal('show');
+            this.form.fill(category);
 
         },
-        update_pap_code(){
+        update_category(){
             this.$Progress.start();
-            this.form.put('api/pap_code/'+this.form.id).then(() => {
+            this.form.put('api/category/'+this.form.id).then(() => {
                 Fire.$emit('success');
-                $('#pap_code_modal').modal('hide');
+                $('#category_modal').modal('hide');
                     toast({
                         type: 'success',
                         title: 'Updated Successfully'
