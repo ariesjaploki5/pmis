@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use DB;
 use App\User;
+use App\Model\Employee;
 
 class AuthController extends Controller
 {
@@ -17,20 +18,19 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $username = $request->username;
-        $selected_password = DB::select("Select top 1 * from hospital.dbo.user_acc where user_name = '$username'");
+        $password = $request->password;
 
-        $selected_password = User::where('user_name', $username);
-        return $selected_password;
-
-        // $credentials = request([$username, $password]);
+        $select = DB::select("Select top 1 employeeid from hospital.dbo.user_acc where user_name = '$username' and user_pass = webapp.dbo.ufn_crypto('$password',1)");
+        $user = $select[0];
+        $employee = Employee::where('employeeid', $user->employeeid)->select('firstname', 'lastname', 'middlename', 'employeeid')->first();
+        
+        // $credentials = request($user[0]->user_name, $user[0]->user_pass);
 
         // if (! $token = auth('api')->attempt($credentials)) {
         //     return response()->json(['error' => 'Unauthorized'], 401);
         // }
 
-        // return $this->respondWithToken($token);
-
-        
+        return $this->respondWithToken($employee);
     }
 
     public function me()

@@ -8,14 +8,14 @@ use Illuminate\Http\Response;
 use App\Model\Item;
 use App\User;
 
+use DB;
 
 class ItemCtr extends Controller
 {
 
     public function index(Request $request)
     {
-
-        $items = Item::latest()->paginate(10)->jsonSerialize();
+        $items = Item::orderBy('id')->paginate(10)->jsonSerialize();
         return response($items, Response::HTTP_OK);
     }
 

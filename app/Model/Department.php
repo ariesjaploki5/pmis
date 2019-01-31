@@ -6,8 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Department extends Model
 {
+    protected $table = 'dex.departments';
+
     protected $fillable = [
-        'descriptions', 'division_id'
+        'description', 'division_id'
     ];
 
     public function division()

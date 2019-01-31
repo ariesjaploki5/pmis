@@ -68,3 +68,4 @@ Route::group(['prefix' => 'auth'], function ($router) {
 
 
 
+    Route::get('/users', 'UserCtr@index');

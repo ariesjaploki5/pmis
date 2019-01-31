@@ -10,9 +10,8 @@ class UserCtr extends Controller
 {
     public function index()
     {
-        $users = User::orderBy('empid')->paginate(10)->jsonSerialize();
+        $users = User::orderBy('employeeid')->paginate(10)->jsonSerialize();
 
-        
         return response($users, Response::HTTP_OK);
     }
 

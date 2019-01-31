@@ -10,7 +10,7 @@ class PapCodeCtr extends Controller
 {
     public function index()
     {
-        $pap_codes = Pap_code::latest()->paginate(10)->jsonSerialize();
+        $pap_codes = Pap_code::orderBy('id')->paginate(10)->jsonSerialize();
         return response($pap_codes, Response::HTTP_OK);
     }
 

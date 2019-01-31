@@ -11,10 +11,8 @@ class User extends Authenticatable implements JWTSubject
 {
     use Notifiable;
 
-    protected $table = 'hospital.dbo.user_acc';
+    protected $table = 'dbo.user_acc';
     protected $primaryKey = 'employeeid';
-    public $incrementing = false;
-    public $timestamps = false;
 
 
     protected $hidden = [

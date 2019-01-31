@@ -14,8 +14,7 @@
               <!-- <img src="" class="img-circle elevation-2" alt="User Image"> -->
             </div>
             <div class="info text-center">
-                
-                <router-link to="#" class="d-block">{{ current_user.username }}</router-link>
+                <router-link to="#" class="d-block">{{ current_user.token.firstname }} {{ current_user.token.middlename }}. {{ current_user.token.lastname }}</router-link>
             </div>
           </div>
           <!-- Sidebar Menu -->

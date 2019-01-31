@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Head extends Model
 {
+    protected $table = 'dex.heads';
+
     protected $fillable = [
         'employee_id', 'division_id',
     ];

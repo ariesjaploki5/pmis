@@ -86,7 +86,7 @@ export default {
             axios.get('api/pap_codes')
             .then(({data}) => (this.pap_codes = data));
         },
-        pages_pap_codes(){
+        pages_pap_codes(page = 1){
             axios.get('api/pap_codes?page=' + page)
             .then(response => {this.pap_codes = response.data;});
         },
