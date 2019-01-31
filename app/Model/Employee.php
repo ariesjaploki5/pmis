@@ -6,9 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Employee extends Model
 {
-    protected $fillable = [
-        'employee_id', 'user_id', 'department_id'
-    ];
+    protected $table = 'hospital.dbo.hpersonal';
+    protected $primaryKey = 'employeeid';
+    public $incrementing = false;
+    public $timestamps = false;
 
     public function user()
     {

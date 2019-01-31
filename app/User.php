@@ -11,14 +11,14 @@ class User extends Authenticatable implements JWTSubject
 {
     use Notifiable;
 
-    protected $table = 'webapp.dbo.user_account';
-    protected $primaryKey = 'empid';
+    protected $table = 'hospital.dbo.user_acc';
+    protected $primaryKey = 'employeeid';
     public $incrementing = false;
     public $timestamps = false;
 
 
     protected $hidden = [
-        'password',
+        'user_pass',
     ];
 
      public function getJWTIdentifier()
@@ -35,7 +35,4 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasOne('App/Model/Employee');
     }
-
-
-
 }

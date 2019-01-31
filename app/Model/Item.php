@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Item extends Model
 {
-    //
+    protected $table = 'hospital.dex.pams.items';
+
     protected $fillable = [
         'code', 
         'description', 
