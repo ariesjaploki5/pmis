@@ -11,13 +11,14 @@ class User extends Authenticatable implements JWTSubject
 {
     use Notifiable;
 
-    
-    protected $fillable = [
-        'username', 'password', 'role'
-    ];
+    protected $table = 'webapp.dbo.user_account';
+    protected $primaryKey = 'empid';
+    public $incrementing = false;
+    public $timestamps = false;
+
 
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
     ];
 
      public function getJWTIdentifier()
