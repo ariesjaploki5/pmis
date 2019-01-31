@@ -8,12 +8,14 @@ class Department extends Model
 {
     protected $table = 'dex.departments';
 
+    public $timestamps = false;
+
     protected $fillable = [
         'description', 'division_id'
     ];
 
     public function division()
     {
-    	return $this->hasOne('App\Model\Division');
+    	return $this->belongsTO('App\Model\Division');
     }
 }

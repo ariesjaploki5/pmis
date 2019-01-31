@@ -18,7 +18,7 @@ class UserCtr extends Controller
     public function store()
     {
         
-    }
+    }   
 
     public function update()
     {

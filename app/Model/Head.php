@@ -7,18 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 class Head extends Model
 {
     protected $table = 'dex.heads';
+    public $timestamps = false;
 
     protected $fillable = [
-        'employee_id', 'division_id',
+        'employeeid', 'division_id',
     ];
 
-    public function employee()
-    {
-    	return $this->hasOne('App\Model\Employee');
-    }
 
     public function division()
     {
-    	return $this->hasOne('App\Model\Division');
+    	return $this->belongsTo('App\Model\Division');
     }
 }

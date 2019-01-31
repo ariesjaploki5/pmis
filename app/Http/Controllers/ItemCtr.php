@@ -15,7 +15,7 @@ class ItemCtr extends Controller
 
     public function index(Request $request)
     {
-        $items = Item::orderBy('id')->paginate(10)->jsonSerialize();
+        $items = Item::with('unit', 'pap_code')->orderBy('id')->paginate(10)->jsonSerialize();
         return response($items, Response::HTTP_OK);
     }
 

@@ -11,13 +11,4 @@ class Employee extends Model
     public $incrementing = false;
     public $timestamps = false;
 
-    public function user()
-    {
-        return $this->hasOne('App\User');
-    }
-
-    public function department()
-    {
-    	return $this->hasOne('App\Model\Department');
-    }
 }

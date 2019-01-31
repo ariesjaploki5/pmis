@@ -14,6 +14,12 @@ class PapCodeCtr extends Controller
         return response($pap_codes, Response::HTTP_OK);
     }
 
+    public function all()
+    {
+        $pap_codes = Pap_code::with('category')->orderBy('id')->get()->jsonSerialize();
+        return response($pap_codes, Response::HTTP_OK);
+    }
+
     public function store(Request $request)
     {
         $pap_code = Pap_code::create($request->all());

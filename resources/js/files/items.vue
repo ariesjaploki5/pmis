@@ -21,15 +21,25 @@
                                 <div class="modal-body">
                                     <div class="form-group">
                                         <label for="item_code">Code</label>
-                                        <input type="text" class="form-control form-control-sm" v-model="form.item_code">
+                                        <input type="text" class="form-control form-control-sm" v-model="form.code">
                                     </div>
                                     <div class="form-group">
                                         <label for="item_description">Description</label>
-                                        <input type="text" class="form-control form-control-sm" v-model="form.item_description">
+                                        <input type="text" class="form-control form-control-sm" v-model="form.description">
                                     </div>
                                     <div class="form-group">
-                                        <label for="item_total_quantity">Total</label>
-                                        <input type="text" class="form-control form-control-sm" v-model="form.item_total_quantity">
+                                        <label for="pap_code_id">Unit Description</label>
+                                        <select name="" v-model="form.unit_id" id="" class="form-control form-control-sm">
+                                            <option v-for="unit in units" :key="unit.id" :value="unit.id">{{ unit.description }}</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="item_total_quantity">Cost per Unit</label>
+                                        <input type="text" class="form-control form-control-sm" v-model="form.cost"> 
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="item_total_quantity">Total Quantity</label>
+                                        <input type="text" class="form-control form-control-sm" v-model="form.total_quantity"> 
                                     </div>
                                     <div class="form-group">
                                         <label for="item_total_quantity">Account Code</label>
@@ -38,7 +48,7 @@
                                     <div class="form-group">
                                         <label for="pap_code_id">Pap Code</label>
                                         <select name="" v-model="form.pap_code_id" id="" class="form-control form-control-sm">
-                                            <option v-for="pap_code in pap_codes.data" :key="pap_code.id" :value="pap_code.id">{{ pap_code.description }}</option>
+                                            <option v-for="pap_code in pap_codes" :key="pap_code.id" :value="pap_code.id">{{ pap_code.description }}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -56,23 +66,34 @@
            		<thead>
            			<tr>
            				<th>ID</th>
-           				<th>Item Code</th>
-           				<th>Item Descriptions</th>
+           				<th>Code</th>
+           				<th>Descriptions</th>
+                        <th>Unit Cost</th>
+                        <th>Unit Description</th>
            				<th>Pap Code</th>
                         <th>Account Code</th>
-                        <th>Action</th>
+                        <th></th>
            			</tr>
            		</thead>
            		<tbody>
-           			<tr v-for="item in items.data" :key="item.id">
+           			<tr v-for="item in items.data" :key="item.id" class="my-auto py-auto">
                         <td>{{ item.id }}</td>
-                        <td>{{ item.item_code }}</td>
-           				<td>{{ item.item_description }}</td>
-           				<td>{{ item.pap_code_id }}</td>
+                        <td>{{ item.code }}</td>
+           				<td>{{ item.description }}</td>
+                        <td>{{ item.cost }}</td>
+                        <td><p v-if="item.unit_id !== null">{{ item.unit.description }}</p></td>
+           				<td>{{ item.pap_code.code }}</td>
            				<td>{{ item.account_code }}</td>
            				<td>
-                            <button class="btn btn-sm btn-success" @click="edit_item(item)">Edit</button>
-                            <button class="btn btn-sm btn-danger">Delete</button>
+                            <div class="btn-group dropleft">
+                                <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Action
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" @click="edit_item(item)">Edit</a>
+                                    <a class="dropdown-item">Delete</a>
+                                </div>
+                            </div>
                         </td>
            			</tr>
            		</tbody>
@@ -91,15 +112,18 @@
                 editmode: false,
                 form: new Form({
                     id:'',
-                    item_code:'',
-                    item_description: '',
-                    item_total_quantity: '',
+                    code:'',
+                    description: '',
+                    total_quantity: '',
+                    cost: '',
                     account_code: '',
                     pap_code_id: '',
+                    unit_id: '',
 
                 }),
                 items: {},
                 pap_codes: {},
+                units: {},
 
             }
         },
@@ -108,16 +132,21 @@
             load_all(){
                 this.get_items();
                 this.get_pap_codes();
+                this.get_units();
+            },
+            get_units(){
+                axios.get('api/all_units')
+                .then(({data}) => (this.units = data));
             },
             get_pap_codes(){
-                axios.get('api/pap_codes')
+                axios.get('api/all_pap_codes')
                 .then(({data}) => (this.pap_codes = data));
             },
             get_items(){
                 axios.get('api/items')
                 .then(({data}) => (this.items = data));
             },
-            pages_items(){
+            pages_items(page = 1){
                 axios.get('api/items?page=' + page)
                 .then(response => {this.items = response.data;});
             },
@@ -167,8 +196,8 @@
             current_user() {
                 return this.$store.getters.current_user;
             },
-            user_id(){
-                return this.$store.getters.current_user.id;
+            employeeid(){
+                return this.$store.getters.current_user.token.employeeid;
             },
         },
         created(){

@@ -47,6 +47,12 @@
                 </router-link>
               </li>
               <li class="nav-item">
+                <router-link to='/units' class="nav-link">
+                    <i class="nav-icon fa fa-th"></i>
+                    <p>Units</p>
+                </router-link>
+              </li>
+              <li class="nav-item">
                 <router-link to='/heads' class="nav-link">
                     <i class="nav-icon fas fa-user"></i>
                     <p>Heads</p>

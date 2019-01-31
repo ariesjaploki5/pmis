@@ -4,17 +4,16 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Unit_of_issue extends Model
+class Unit extends Model
 {
-
+    protected $table = 'dex.pams_units';
     public $timestamps = false;
-    
     protected $fillable = [
         'description',
     ];
 
-    public function request_items()
+    public function items()
     {
-        return $this->belongsToMany('App\Model\Request_item');
+        return $this->hasMany('App\Model\Item');
     }
 }

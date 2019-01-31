@@ -7,9 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class Division extends Model
 {
     protected $table = 'dex.divisions';
-
+    public $timestamps = false;
+    
     protected $fillable = [
-        'descriptions',
+        'description',
     ];
 
     public function departments()

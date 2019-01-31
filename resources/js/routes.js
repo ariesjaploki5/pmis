@@ -20,7 +20,7 @@ import requests from './files/requests.vue';
 import items from './files/items.vue';
 import users from './files/users.vue';
 import categories from './files/categories.vue';
-
+import units from './files/units.vue';
     
 export const routes = [
 
@@ -43,6 +43,13 @@ export const routes = [
     {
         path: '/dashboard',
         component: dashboard,
+        meta: {
+            requiresAuth: true
+        }
+    },
+    {
+        path: '/units',
+        component: units,
         meta: {
             requiresAuth: true
         }

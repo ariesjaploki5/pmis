@@ -6,7 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Request_item extends Model
 {
-    //
+    
+
+    public $timestamps = false;
+    
     protected $fillable = [
         'request_quantity', 'item_id', 'unit_of_issue_id', 'purchase_request_id'
     ];

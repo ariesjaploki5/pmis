@@ -3,7 +3,7 @@ te<template>
         <div class="card-body">
 			<div class="row">
 				<div class="col">
-					<div class="card-title">Heads</div>
+					<div class="card-title">Units</div>
 				</div>
 				<div class="col">
 					<div class="card-tools text-right">
@@ -15,18 +15,16 @@ te<template>
            		<thead>
            			<tr>
            				<th>ID</th>
-						<th>Employee ID</th>
-						<th>Division</th>
+						<th>Description</th>
            				<th>Action</th>
            			</tr>
            		</thead>
            		<tbody>
-           			<tr v-for="head in heads.data" :key="head.id">
-           				<td>{{ head.id }}</td>
-           				<td>{{ head.employeeid }}</td>
-						<td>{{ head.division.description }}</td>
+           			<tr v-for="unit in units.data" :key="unit.id">
+           				<td>{{ unit.id }}</td>
+           				<td>{{ unit.description }}</td>
            				<td>
-                              
+                               <button class="btn btn-sm btn-success" @click="edit_unit(unit)">Edit</button>
                         </td>
            			</tr>
            		</tbody>
@@ -38,22 +36,21 @@ te<template>
     export default {
 		data() {
 			return{
-                heads: {},
+                units: {},
                 form: new Form({
                     id: '',
-					employeeid: '',
-					division_id: '',
+                    description: '',
                 }),
                 
 			}
 		},
 		methods: {
             load_all(){
-                this.get_heads();
+                this.get_units();
             },
-            get_heads(){
-                axios.get('api/heads')
-                .then(({data}) => (this.heads = data));
+            get_units(){
+                axios.get('api/units')
+                .then(({data}) => (this.units = data));
             },
             create_unit(){
                 

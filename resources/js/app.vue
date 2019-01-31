@@ -11,8 +11,8 @@
                 <div class="content-wrapper">
                     <div class="content">
                         <div class="container-fluid">
-                            <div class="row justify-content-center">
-                            <div class="col-lg-10 mt-4">
+                            <div class="row">
+                            <div class="col-md-12 mt-4">
                                 <router-view></router-view>
                             </div>
                             </div>
