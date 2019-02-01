@@ -16,12 +16,12 @@ import divisions from './files/divisions.vue';
 import employees from './files/employees.vue';
 import heads from './files/heads.vue';
 import pap_codes from './files/pap_codes.vue';
-import requests from './files/requests.vue';
 import items from './files/items.vue';
 import users from './files/users.vue';
 import categories from './files/categories.vue';
 import units from './files/units.vue';
-    
+import purchase_requests from './files/purchase_requests.vue';
+
 export const routes = [
 
     {
@@ -50,6 +50,13 @@ export const routes = [
     {
         path: '/units',
         component: units,
+        meta: {
+            requiresAuth: true
+        }
+    },
+    {
+        path: '/purchase_requests',
+        component: purchase_requests,
         meta: {
             requiresAuth: true
         }
@@ -103,13 +110,7 @@ export const routes = [
             requiresAuth: true
         }
     },
-    {
-        path: '/requests',
-        component: requests,
-        meta: {
-            requiresAuth: true
-        }
-    },
+
     {
         path: '/users',
         component: users,

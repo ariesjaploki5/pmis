@@ -29,6 +29,12 @@
                 </router-link>
               </li>
               <li class="nav-item">
+                <router-link to='/purchase_requests' class="nav-link">
+                    <i class="nav-icon fa fa-th"></i>
+                    <p>Purchase Request</p>
+                </router-link>
+              </li>
+              <li class="nav-item">
                 <router-link to='/items' class="nav-link">
                     <i class="nav-icon fa fa-th"></i>
                     <p>Items</p>
