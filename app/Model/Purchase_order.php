@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Purchase_order extends Model
 {
-    protected $table = 'dex.pams_purchase_orders';
+    protected $table = 'j10.pams_purchase_orders';
     public $incrementing = false;
     public $timestamps = false;
 

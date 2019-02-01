@@ -109,7 +109,6 @@
 				}),
 				item_form:[],
 
-
 			}
 		},
 		methods: {
@@ -130,19 +129,29 @@
                 $('#pruchase_request_modal').modal('show');
 			},
 			add_new_item(){
-				this.item_form.push({
-					id: '', quantity: ''
-				});
-
-			},
-			store_purchase_request(){
 				
-				this.pr_form.post('api/purchase_request').then(() => {
-					$('#pruchase_request_modal').modal('hide');
-				}).catch(() => {
+				this.item_form.push({ id:'', quantity: ''});
+			},
+			store_purchase_request(){	
+				this.pr_form.post('api/purchase_request').then(({data}) => {
+
+
+					this.item_form.post('api/pruchase_request_items/'+data).then(() => {
+						console.log('success');
+						
+					});
+					
+					
+                }).catch(() => {
 
 				});
+            },
+            store_items(){	
+				this.pr_form.post('api/purchase_request_item').then(() => {
+					$('#pruchase_request_modal').modal('hide');
+                });
 			},
+			
 			edit_purchase_request(pr){
 
 			},
@@ -154,7 +163,6 @@
 				});
 			}
 
-			
 		},
 		computed:{
 			get: function() {

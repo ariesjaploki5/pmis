@@ -89,5 +89,8 @@ Route::group(['prefix' => 'auth'], function ($router) {
 
     Route::get('/purchase_requests', 'PurchaseRequestCtr@index');
     Route::post('/purchase_request', 'PurchaseRequestCtr@store');
+
+    Route::post('/purchase_request_items/{id}', 'PurchaseRequestCtr@store_items');
+
     Route::put('/purchase_request/{id}', 'PurchaseRequestCtr@update');
     Route::delete('/purchase_request/{id}', 'PurchaseRequestCtr@destroy');

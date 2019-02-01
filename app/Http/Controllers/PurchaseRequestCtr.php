@@ -16,19 +16,28 @@ class PurchaseRequestCtr extends Controller
 
     public function store(Request $request)
     {
-        $object = $request->items;
-        $ob = response()->json($object);
-        $obj = (array)$ob;
+        $pr = PR::create([
+            'purpose' => $request->purpose,
+        ]);
 
-        return $obj->id;
-        // $pr = PR::create([
-        //     'purpose' => $request->purpose,
-        // ]);
+        $count = count($request->item);
 
-        
+        foreach($request->item as $item){
+            
+        }
 
-        // return response($pr, Response::HTTP_CREATED);
+        return response($pr->id, Response::HTTP_CREATED);
     }
+
+    public function store_items(Request $request,$id)
+    {
+        $pr = PR::findOrFail($id);
+        foreach($data as $datas){
+            $pr->items()->attach($datas['id'], ['quantity', $datas['quantity']]);
+        }
+        return response($pr, Response::HTTP_CREATED);
+    }
+
 
     public function update(Request $request, $id)
     {

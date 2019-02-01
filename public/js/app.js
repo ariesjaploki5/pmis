@@ -3253,9 +3253,20 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     store_purchase_request: function store_purchase_request() {
-      this.pr_form.post('api/purchase_request').then(function () {
-        $('#pruchase_request_modal').modal('hide');
+      var _this3 = this;
+
+      this.pr_form.post('api/purchase_request').then(function (_ref3) {
+        var data = _ref3.data;
+
+        _this3.item_form.post('api/pruchase_request_items/' + data).then(function () {
+          console.log('success');
+        });
       }).catch(function () {});
+    },
+    store_items: function store_items() {
+      this.pr_form.post('api/purchase_request_item').then(function () {
+        $('#pruchase_request_modal').modal('hide');
+      });
     },
     edit_purchase_request: function edit_purchase_request(pr) {},
     update_purchase_request: function update_purchase_request() {
@@ -61701,15 +61712,7 @@ var render = function() {
               _c(
                 "router-link",
                 { staticClass: "d-block", attrs: { to: "#" } },
-                [
-                  _vm._v(
-                    _vm._s(_vm.current_user.token.firstname) +
-                      " " +
-                      _vm._s(_vm.current_user.token.middlename) +
-                      ". " +
-                      _vm._s(_vm.current_user.token.lastname)
-                  )
-                ]
+                [_vm._v(_vm._s(_vm.current_user.username))]
               )
             ],
             1

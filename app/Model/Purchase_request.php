@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Purchase_request extends Model
 {
     
-    protected $table = 'dex.pams_purchase_requests';
+    protected $table = 'j10.pams_purchase_requests';
     public $timestamps = false;
 
     protected $fillable = [

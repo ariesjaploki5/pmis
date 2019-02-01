@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Model\Purchase_order as PO;
 
+
 class PurchaseOrderCtr extends Controller
 {
     public function index()
@@ -31,6 +32,15 @@ class PurchaseOrderCtr extends Controller
 
     public function destroy()
     {
+
+    }
+
+    public function archived($id)
+    {
+        
+        $po = PO::findOrFail($id);
+        $po->archived = date;
+        $po->save();
 
     }
 }

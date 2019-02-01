@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\Auth;
 use DB;
 use App\User;
 use App\Model\Employee;
+use App\Model\Access_Level;
+use Illuminate\Support\Facades\Hash;
+
 
 class AuthController extends Controller
 {
@@ -14,23 +17,61 @@ class AuthController extends Controller
     {
         $this->middleware('auth:api', ['except' => ['login']]);
     }
- 
+    
+
+    public function error()
+    {
+        return response()->json(['error' => 'Unauthorized'], 401);
+    }
+
+    public function cred($user_account) {
+        
+    }
+
+    public function check_access_level($employee)
+    {   
+        if($employee->deptcode == 'nurse'){
+            $al = 1;
+        }
+        return $this->select_access_level($al);
+    }
+
+    public function select_access_level($al)
+    {
+        $access_level = Access_level::where('id', $al)->first();
+        return response()->json($access_level);
+    }
+
     public function login(Request $request)
     {
         $username = $request->username;
         $password = $request->password;
 
         $select = DB::select("Select top 1 employeeid from hospital.dbo.user_acc where user_name = '$username' and user_pass = webapp.dbo.ufn_crypto('$password',1)");
-        $user = $select[0];
-        $employee = Employee::where('employeeid', $user->employeeid)->select('firstname', 'lastname', 'middlename', 'employeeid')->first();
         
-        // $credentials = request($user[0]->user_name, $user[0]->user_pass);
+        $user_account = $select[0];
+        $employee = Employee::where('employeeid', $user_account->employeeid)->select('firstname', 'lastname', 'middlename', 'employeeid')->first();
 
-        // if (! $token = auth('api')->attempt($credentials)) {
-        //     return response()->json(['error' => 'Unauthorized'], 401);
-        // }
+        if($employee === null){
+            return $this->error();
+        }
 
-        return $this->respondWithToken($employee);
+        $user = User::where('employee_id', $employee->employeeid)->first();
+        if($user === null){
+            // $al = $this->check_access_level($employee);
+            $new = new User;
+            $new->username = $username;
+            $new->password = Hash::make($password);
+            $new->employee_id = $employee->employeeid;
+            // $new->access_level_id = $al;
+            $new->save();
+            $credentials = request($new->username, $new->password);
+            if (! $token = auth('api')->attempt($credentials)) {
+                return $this->error();
+            } else{
+                return $this->respondWithToken($token);
+            }
+        }
     }
 
     public function me()
@@ -58,6 +99,7 @@ class AuthController extends Controller
             'expires_in' => auth('api')->factory()->getTTL() * 60
         ]);
     }
+
     public function guard() {
         return \Auth::Guard('api');
     }
