@@ -11,7 +11,7 @@
           <!-- Sidebar user panel (optional) -->
           <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-              <!-- <img src="" class="img-circle elevation-2" alt="User Image"> -->
+              <img :src="'/img/user.png'" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info text-center">
                 <router-link to="#" class="d-block">{{ current_user.token.firstname }} {{ current_user.token.middlename }}. {{ current_user.token.lastname }}</router-link>

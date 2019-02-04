@@ -2210,48 +2210,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-/* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {
-    return {
-      departments: {},
-      form: new Form({
-        id: '',
-        description: '',
-        division_id: ''
-      })
-    };
-  },
-  methods: {
-    load_all: function load_all() {
-      this.get_departments();
-    },
-    get_departments: function get_departments() {
-      var _this = this;
-
-      axios.get('api/departments').then(function (_ref) {
-        var data = _ref.data;
-        return _this.departments = data;
-      });
-    },
-    create_unit: function create_unit() {},
-    store_unit: function store_unit() {},
-    edit_unit: function edit_unit(unit) {},
-    update_unit: function update_unit() {}
-  },
-  created: function created() {
-    this.load_all();
-  }
-});
+/* harmony default export */ __webpack_exports__["default"] = ({});
 
 /***/ }),
 
@@ -2288,47 +2247,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-/* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {
-    return {
-      divisions: {},
-      form: new Form({
-        id: '',
-        description: ''
-      })
-    };
-  },
-  methods: {
-    load_all: function load_all() {
-      this.get_divisions();
-    },
-    get_divisions: function get_divisions() {
-      var _this = this;
-
-      axios.get('api/divisions').then(function (_ref) {
-        var data = _ref.data;
-        return _this.divisions = data;
-      });
-    },
-    create_unit: function create_unit() {},
-    store_unit: function store_unit() {},
-    edit_unit: function edit_unit(unit) {},
-    update_unit: function update_unit() {}
-  },
-  created: function created() {
-    this.load_all();
-  }
-});
+/* harmony default export */ __webpack_exports__["default"] = ({});
 
 /***/ }),
 
@@ -2371,53 +2290,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {
-    return {
-      employees: {},
-      form: new Form({
-        id: '',
-        firstname: '',
-        lastname: ''
-      })
-    };
-  },
-  methods: {
-    load_all: function load_all() {
-      this.get_employees();
-    },
-    get_employees: function get_employees() {
-      var _this = this;
-
-      axios.get('api/employees').then(function (_ref) {
-        var data = _ref.data;
-        return _this.employees = data;
-      });
-    },
-    pages_employees: function pages_employees() {
-      var _this2 = this;
-
-      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-      axios.get('api/employees?page=' + page).then(function (response) {
-        _this2.employees = response.data;
-      });
-    },
-    create_unit: function create_unit() {},
-    store_unit: function store_unit() {},
-    edit_unit: function edit_unit(unit) {},
-    update_unit: function update_unit() {}
-  },
-  created: function created() {
-    this.load_all();
-  }
+  data: function data() {},
+  methods: {},
+  created: function created() {}
 });
 
 /***/ }),
@@ -2463,41 +2339,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
-    return {
-      heads: {},
-      form: new Form({
-        id: '',
-        employeeid: '',
-        division_id: ''
-      })
-    };
+    return {};
   },
-  methods: {
-    load_all: function load_all() {
-      this.get_heads();
-    },
-    get_heads: function get_heads() {
-      var _this = this;
-
-      axios.get('api/heads').then(function (_ref) {
-        var data = _ref.data;
-        return _this.heads = data;
-      });
-    },
-    create_unit: function create_unit() {},
-    store_unit: function store_unit() {},
-    edit_unit: function edit_unit(unit) {},
-    update_unit: function update_unit() {}
-  },
-  created: function created() {
-    this.load_all();
-  }
+  methods: {},
+  created: function created() {}
 });
 
 /***/ }),
@@ -2783,15 +2630,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2799,47 +2637,36 @@ __webpack_require__.r(__webpack_exports__);
       form: new Form({
         id: '',
         code: '',
-        description: '',
-        category_id: ''
+        description: ''
       }),
-      pap_codes: {},
-      categories: {}
+      pap_codes: {}
     };
   },
   methods: {
     load_all: function load_all() {
       this.get_pap_codes();
-      this.get_categories();
-    },
-    get_categories: function get_categories() {
-      var _this = this;
-
-      axios.get('api/categories').then(function (_ref) {
-        var data = _ref.data;
-        return _this.categories = data;
-      });
     },
     get_pap_codes: function get_pap_codes() {
-      var _this2 = this;
+      var _this = this;
 
-      axios.get('api/pap_codes').then(function (_ref2) {
-        var data = _ref2.data;
-        return _this2.pap_codes = data;
+      axios.get('api/pap_codes').then(function (_ref) {
+        var data = _ref.data;
+        return _this.pap_codes = data;
       });
     },
     pages_pap_codes: function pages_pap_codes() {
-      var _this3 = this;
+      var _this2 = this;
 
       var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
       axios.get('api/pap_codes?page=' + page).then(function (response) {
-        _this3.pap_codes = response.data;
+        _this2.pap_codes = response.data;
       });
     },
     create_pap_code: function create_pap_code() {
       $('#pap_code_modal').modal('show');
     },
     store_pap_code: function store_pap_code() {
-      var _this4 = this;
+      var _this3 = this;
 
       this.$Progress.start();
       this.form.post('api/pap_code').then(function () {
@@ -2850,9 +2677,9 @@ __webpack_require__.r(__webpack_exports__);
           title: 'Added Successfully'
         });
 
-        _this4.$Progress.finish();
+        _this3.$Progress.finish();
       }).catch(function () {
-        _this4.$Progress.fail();
+        _this3.$Progress.fail();
       });
     },
     edit_pap_code: function edit_pap_code(pap_code) {
@@ -2862,7 +2689,7 @@ __webpack_require__.r(__webpack_exports__);
       this.form.fill(pap_code);
     },
     update_pap_code: function update_pap_code() {
-      var _this5 = this;
+      var _this4 = this;
 
       this.$Progress.start();
       this.form.put('api/pap_code/' + this.form.id).then(function () {
@@ -2873,18 +2700,18 @@ __webpack_require__.r(__webpack_exports__);
           title: 'Updated Successfully'
         });
 
-        _this5.$Progress.finish();
+        _this4.$Progress.finish();
       }).catch(function () {
-        _this5.$Progress.fail();
+        _this4.$Progress.fail();
       });
     }
   },
   created: function created() {
-    var _this6 = this;
+    var _this5 = this;
 
     this.load_all();
     Fire.$on('success', function () {
-      _this6.load_all();
+      _this5.load_all();
     });
   }
 });
@@ -61274,7 +61101,12 @@ var render = function() {
       _vm._v(" "),
       _c("div", { staticClass: "sidebar" }, [
         _c("div", { staticClass: "user-panel mt-3 pb-3 mb-3 d-flex" }, [
-          _c("div", { staticClass: "image" }),
+          _c("div", { staticClass: "image" }, [
+            _c("img", {
+              staticClass: "img-circle elevation-2",
+              attrs: { src: "/img/user.png", alt: "User Image" }
+            })
+          ]),
           _vm._v(" "),
           _c(
             "div",
@@ -61850,77 +61682,42 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "card" }, [
-    _c("div", { staticClass: "card-body" }, [
-      _vm._m(0),
-      _vm._v(" "),
-      _c("table", { staticClass: "table" }, [
-        _vm._m(1),
-        _vm._v(" "),
-        _c(
-          "tbody",
-          _vm._l(_vm.departments.data, function(department) {
-            return _c("tr", { key: department.id }, [
-              _c("td", [_vm._v(_vm._s(department.id))]),
-              _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(department.description))]),
-              _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(department.division.description))]),
-              _vm._v(" "),
-              _c("td", [
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-sm btn-success",
-                    on: {
-                      click: function($event) {
-                        _vm.edit_unit(department)
-                      }
-                    }
-                  },
-                  [_vm._v("Edit")]
-                )
-              ])
-            ])
-          }),
-          0
-        )
-      ])
-    ])
-  ])
+  return _vm._m(0)
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col" }, [
-        _c("div", { staticClass: "card-title" }, [_vm._v("Departments")])
-      ]),
+    return _c("div", { staticClass: "card" }, [
+      _c("div", { staticClass: "card-header" }, [_vm._v("Departments")]),
       _vm._v(" "),
-      _c("div", { staticClass: "col" }, [
-        _c("div", { staticClass: "card-tools text-right" }, [
-          _c("button", { staticClass: "btn btn-primary btn-sm" }, [
-            _vm._v("Add")
+      _c("div", { staticClass: "card-body" }, [
+        _c("table", { staticClass: "table" }, [
+          _c("thead", [
+            _c("tr", [
+              _c("th", [_vm._v("ID")]),
+              _vm._v(" "),
+              _c("th", [_vm._v("Departments")]),
+              _vm._v(" "),
+              _c("th", [_vm._v("Divisions")]),
+              _vm._v(" "),
+              _c("th", [_vm._v("Action")])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("tbody", [
+            _c("tr", [
+              _c("td"),
+              _vm._v(" "),
+              _c("td"),
+              _vm._v(" "),
+              _c("td"),
+              _vm._v(" "),
+              _c("td")
+            ])
           ])
         ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("th", [_vm._v("ID")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Description")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Division")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Action")])
       ])
     ])
   }
@@ -61946,60 +61743,32 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "card" }, [
-    _c("div", { staticClass: "card-body" }, [
-      _vm._m(0),
-      _vm._v(" "),
-      _c("table", { staticClass: "table" }, [
-        _vm._m(1),
-        _vm._v(" "),
-        _c(
-          "tbody",
-          _vm._l(_vm.divisions.data, function(division) {
-            return _c("tr", { key: division.id }, [
-              _c("td", [_vm._v(_vm._s(division.id))]),
-              _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(division.description))]),
-              _vm._v(" "),
-              _c("td")
-            ])
-          }),
-          0
-        )
-      ])
-    ])
-  ])
+  return _vm._m(0)
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col" }, [
-        _c("div", { staticClass: "card-title" }, [_vm._v("Divisions")])
-      ]),
+    return _c("div", { staticClass: "card" }, [
+      _c("div", { staticClass: "card-header" }, [_vm._v("Divisions")]),
       _vm._v(" "),
-      _c("div", { staticClass: "col" }, [
-        _c("div", { staticClass: "card-tools text-right" }, [
-          _c("button", { staticClass: "btn btn-primary btn-sm" }, [
-            _vm._v("Add")
+      _c("div", { staticClass: "card-body" }, [
+        _c("table", { staticClass: "table" }, [
+          _c("thead", [
+            _c("tr", [
+              _c("th", [_vm._v("ID")]),
+              _vm._v(" "),
+              _c("th", [_vm._v("Divisions")]),
+              _vm._v(" "),
+              _c("th", [_vm._v("Action")])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("tbody", [
+            _c("tr", [_c("td"), _vm._v(" "), _c("td"), _vm._v(" "), _c("td")])
           ])
         ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("th", [_vm._v("ID")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Description")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Action")])
       ])
     ])
   }
@@ -62025,78 +61794,50 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "card" }, [
-    _c("div", { staticClass: "card-body" }, [
-      _vm._m(0),
-      _vm._v(" "),
-      _c("table", { staticClass: "table" }, [
-        _vm._m(1),
-        _vm._v(" "),
-        _c(
-          "tbody",
-          _vm._l(_vm.employees.data, function(employee) {
-            return _c("tr", { key: employee.id }, [
-              _c("td", [_vm._v(_vm._s(employee.employeeid))]),
-              _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(employee.firstname))]),
-              _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(employee.lastname))]),
-              _vm._v(" "),
-              _c("td")
-            ])
-          }),
-          0
-        )
-      ])
-    ]),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "card-footer" },
-      [
-        _c("pagination", {
-          attrs: { data: _vm.employees },
-          on: { "pagination-change-page": _vm.pages_employees }
-        })
-      ],
-      1
-    )
-  ])
+  return _vm._m(0)
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col" }, [
-        _c("div", { staticClass: "card-title" }, [_vm._v("Employe")])
-      ]),
+    return _c("div", { staticClass: "card" }, [
+      _c("div", { staticClass: "card-header" }, [_vm._v("Employees")]),
       _vm._v(" "),
-      _c("div", { staticClass: "col" }, [
-        _c("div", { staticClass: "card-tools text-right" }, [
-          _c("button", { staticClass: "btn btn-primary btn-sm" }, [
-            _vm._v("Add")
+      _c("div", { staticClass: "card-body" }, [
+        _c("table", { staticClass: "table" }, [
+          _c("thead", [
+            _c("tr", [
+              _c("th", [_vm._v("ID")]),
+              _vm._v(" "),
+              _c("th", [_vm._v("Firstname")]),
+              _vm._v(" "),
+              _c("th", [_vm._v("Lastname")]),
+              _vm._v(" "),
+              _c("th", [_vm._v("Department")]),
+              _vm._v(" "),
+              _c("th", [_vm._v("Division")]),
+              _vm._v(" "),
+              _c("th", [_vm._v("Action")])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("tbody", [
+            _c("tr", [
+              _c("td"),
+              _vm._v(" "),
+              _c("td"),
+              _vm._v(" "),
+              _c("td"),
+              _vm._v(" "),
+              _c("td"),
+              _vm._v(" "),
+              _c("td"),
+              _vm._v(" "),
+              _c("td")
+            ])
           ])
         ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("th", [_vm._v("Employee ID")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Firstname")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Lastname")]),
-        _vm._v(" "),
-        _c("th"),
-        _vm._v(" "),
-        _c("th")
       ])
     ])
   }
@@ -62122,64 +61863,44 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "card" }, [
-    _c("div", { staticClass: "card-body" }, [
-      _vm._m(0),
-      _vm._v(" "),
-      _c("table", { staticClass: "table" }, [
-        _vm._m(1),
-        _vm._v(" "),
-        _c(
-          "tbody",
-          _vm._l(_vm.heads.data, function(head) {
-            return _c("tr", { key: head.id }, [
-              _c("td", [_vm._v(_vm._s(head.id))]),
-              _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(head.employeeid))]),
-              _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(head.division.description))]),
-              _vm._v(" "),
-              _c("td")
-            ])
-          }),
-          0
-        )
-      ])
-    ])
-  ])
+  return _vm._m(0)
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col" }, [
-        _c("div", { staticClass: "card-title" }, [_vm._v("Heads")])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col" }, [
-        _c("div", { staticClass: "card-tools text-right" }, [
-          _c("button", { staticClass: "btn btn-primary btn-sm" }, [
-            _vm._v("Add")
+    return _c("div", { staticClass: "card" }, [
+      _c("div", { staticClass: "card-body" }, [
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col" }, [
+            _c("div", { staticClass: "card-title" }, [_vm._v("Heads")])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col" }, [
+            _c("div", { staticClass: "card-tools text-right" }, [
+              _c("button", { staticClass: "btn btn-primary btn-sm" }, [
+                _vm._v("Add")
+              ])
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("table", { staticClass: "table" }, [
+          _c("thead", [
+            _c("tr", [
+              _c("th", [_vm._v("ID")]),
+              _vm._v(" "),
+              _c("th", [_vm._v("Heads")]),
+              _vm._v(" "),
+              _c("th", [_vm._v("Action")])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("tbody", [
+            _c("tr", [_c("td"), _vm._v(" "), _c("td"), _vm._v(" "), _c("td")])
           ])
         ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("th", [_vm._v("ID")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Employee ID")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Division")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Action")])
       ])
     ])
   }
@@ -62790,69 +62511,6 @@ var render = function() {
                                 }
                               }
                             })
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "form-group" }, [
-                            _c(
-                              "label",
-                              { attrs: { for: "item_description" } },
-                              [_vm._v("Category")]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "select",
-                              {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.form.category_id,
-                                    expression: "form.category_id"
-                                  }
-                                ],
-                                staticClass: "form-control from-control-sm",
-                                attrs: { name: "category", id: "category" },
-                                on: {
-                                  change: function($event) {
-                                    var $$selectedVal = Array.prototype.filter
-                                      .call($event.target.options, function(o) {
-                                        return o.selected
-                                      })
-                                      .map(function(o) {
-                                        var val =
-                                          "_value" in o ? o._value : o.value
-                                        return val
-                                      })
-                                    _vm.$set(
-                                      _vm.form,
-                                      "category_id",
-                                      $event.target.multiple
-                                        ? $$selectedVal
-                                        : $$selectedVal[0]
-                                    )
-                                  }
-                                }
-                              },
-                              [
-                                _c(
-                                  "option",
-                                  { attrs: { hidden: "", disabled: "" } },
-                                  [_vm._v("Please Select")]
-                                ),
-                                _vm._v(" "),
-                                _vm._l(_vm.categories.data, function(category) {
-                                  return _c(
-                                    "option",
-                                    {
-                                      key: category.id,
-                                      domProps: { value: category.id }
-                                    },
-                                    [_vm._v(_vm._s(category.description))]
-                                  )
-                                })
-                              ],
-                              2
-                            )
                           ])
                         ]),
                         _vm._v(" "),
@@ -62881,8 +62539,6 @@ var render = function() {
               _c("td", [_vm._v(_vm._s(pap_code.code))]),
               _vm._v(" "),
               _c("td", [_vm._v(_vm._s(pap_code.description))]),
-              _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(pap_code.category.description))]),
               _vm._v(" "),
               _c("td", [
                 _c(
@@ -62980,8 +62636,6 @@ var staticRenderFns = [
         _c("th", [_vm._v("Pap Code")]),
         _vm._v(" "),
         _c("th", [_vm._v("Description")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Category")]),
         _vm._v(" "),
         _c("th", [_vm._v("Action")])
       ])
