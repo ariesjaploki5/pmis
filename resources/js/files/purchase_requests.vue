@@ -35,7 +35,7 @@
 												</tr>
 											</thead>
 											<tbody id="t1">
-												<tr v-for="it in item_form" :key="it.id">
+												<tr v-for="it in form.items" :key="it.id">
 													<td>
 														<select class="form-control form-control-sm" v-model="it.id">
 															<option v-for="item in items" :key="item.id" :value="item.id">{{ item.description }}</option>
@@ -108,7 +108,6 @@
 					purpose: '',
 					items: [],
 				}),
-				item_form:[],
 
 			}
 		},
@@ -131,20 +130,13 @@
 			},
 			add_new_item(){
 				
-				this.item_form.push({ id:'', quantity: ''});
+				this.form.items.push({ id:'', quantity: ''});
 			},
 			store_purchase_request(){	
-				this.form.post('api/purchase_request').then(({data}) => {
+				this.form.post('api/purchase_request').then(() => {
 
-
-					this.item_form.post('api/pruchase_request_items/'+data).then(() => {
-						console.log('success');
-						
-					});
-					
-					
-                }).catch(() => {
-
+                }).catch((error) => {
+					console.log(error);
 				});
             },
             store_items(){	

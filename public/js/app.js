@@ -3227,8 +3227,7 @@ __webpack_require__.r(__webpack_exports__);
         id: '',
         purpose: '',
         items: []
-      }),
-      item_form: []
+      })
     };
   },
   methods: {
@@ -3258,21 +3257,15 @@ __webpack_require__.r(__webpack_exports__);
       $('#pruchase_request_modal').modal('show');
     },
     add_new_item: function add_new_item() {
-      this.item_form.push({
+      this.form.items.push({
         id: '',
         quantity: ''
       });
     },
     store_purchase_request: function store_purchase_request() {
-      var _this3 = this;
-
-      this.form.post('api/purchase_request').then(function (_ref3) {
-        var data = _ref3.data;
-
-        _this3.item_form.post('api/pruchase_request_items/' + data).then(function () {
-          console.log('success');
-        });
-      }).catch(function () {});
+      this.form.post('api/purchase_request').then(function () {}).catch(function (error) {
+        console.log(error);
+      });
     },
     store_items: function store_items() {
       this.form.post('api/purchase_request_item').then(function () {
@@ -63749,7 +63742,7 @@ var render = function() {
                               _c(
                                 "tbody",
                                 { attrs: { id: "t1" } },
-                                _vm._l(_vm.item_form, function(it) {
+                                _vm._l(_vm.form.items, function(it) {
                                   return _c("tr", { key: it.id }, [
                                     _c("td", [
                                       _c(

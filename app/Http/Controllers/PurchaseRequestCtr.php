@@ -16,14 +16,19 @@ class PurchaseRequestCtr extends Controller
 
     public function store(Request $request)
     {
+        
+
         $pr = PR::create([
             'purpose' => $request->purpose,
         ]);
 
-        $count = count($request->item);
+        $count = count($request->items);
 
-        foreach($request->item as $item){
-            
+        foreach($request->items as $item){
+            $it = explode('id:', ', ' ,'quantity: ', $item);
+            $item_id = $it[0];
+            $item_quantity = $it[1];
+            $pr->items()->attach($pr->id, ['item_id', $item_id, 'quantity' => $item_quantity]);
         }
 
         return response($pr->id, Response::HTTP_CREATED);
