@@ -77,7 +77,10 @@
                 </router-link>
               </li>
               <li class="nav-item">
-                  <a href="#!" @click.prevent="logout" class="dropdown-item">Logout</a>
+                  <router-link to="#!" @click.prevent="logout" class="btn">
+                      <i class="nav-icon fas fa-power-off"></i>
+                    <p>Logout</p>
+                  </router-link>
               </li>
             </ul>
           </nav>
