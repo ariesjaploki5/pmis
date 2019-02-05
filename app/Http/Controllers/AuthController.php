@@ -24,9 +24,6 @@ class AuthController extends Controller
         return response()->json(['error' => 'Unauthorized'], 401);
     }
 
-    public function cred($user_account) {
-        
-    }
 
     public function check_access_level($employee)
     {   
@@ -45,6 +42,8 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
+        $credentials = request(['username', 'password']);
+
         $username = $request->username;
         $password = $request->password;
 
@@ -55,29 +54,25 @@ class AuthController extends Controller
 
         if($employee === null){
             return $this->error();
-        }
+        } else {
+            $user = User::where('employee_id', $employee->employeeid)->first();
 
-        $user = User::where('employee_id', $employee->employeeid)->first();
-        if($user === null){
-            // $al = $this->check_access_level($employee);
-            $new = new User;
-            $new->username = $username;
-            $new->password = Hash::make($password);
-            $new->employee_id = $employee->employeeid;
-            // $new->access_level_id = $al;
-            $new->save();
-
-            $credentials = request($request->username, $request->password);
-
+            if($user === null){
+                // $al = $this->check_access_level($employee);
+                $new = new User;
+                $new->username = $username;
+                $new->password = Hash::make($password);
+                $new->employee_id = $employee->employeeid;
+                // $new->access_level_id = $al;
+                $new->save();
+            } 
             if (! $token = auth('api')->attempt($credentials)) {
-                return $this->error();
-            } else{
-                return $this->respondWithToken('token');
+            return response()->json(['error' => 'Unauthorized'], 401);
             }
+            return $this->respondWithToken($token);
         }
     }
 
-    
 
     public function me()
     {
@@ -102,7 +97,7 @@ class AuthController extends Controller
             'user' => $this->guard()->user(),
             'token_type' => 'bearer',
             'expires_in' => auth('api')->factory()->getTTL() * 60
-        ]);
+            ]);
     }
 
     public function guard() {

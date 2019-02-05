@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use App\Model\ModeOfProcurement as MOP;
 class ModeOfProcurementCtr extends Controller
 {
@@ -10,7 +11,7 @@ class ModeOfProcurementCtr extends Controller
     {
         $mops = MOP::paginate(10)->jsonSerialize();
 
-        return response($mops, Reponse::HTTP_OK);
+        return response($mops, Response::HTTP_OK);
     }
 
     public function all()
@@ -20,17 +21,24 @@ class ModeOfProcurementCtr extends Controller
         return response()->json($mops);
     }
 
-    public function store()
+    public function store(Request $request)
     {
-
+        $mop = MOP::create($request->all());
+        return response()->json($mop);
     }
 
-    public function update()
+    public function update(Request $request, $id)
     {
+        $mop = MOP::findOrFail($id);
+        $mop->update($request->all());
 
+        return response()->json($mop);
     }
-    public function destroy()
+    public function destroy($id)
     {
-        
+        $mop = MOP::where('id', $id)->first();
+        $mop->delete();
+
+        return response()->json($mop);
     }
 }

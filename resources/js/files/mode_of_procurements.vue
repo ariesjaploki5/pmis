@@ -49,8 +49,15 @@
                     <td>{{ mop.id }}</td>
                     <td>{{ mop.description }}</td>
                     <td>
-                        <button class="btn btn-success btn-sm" @click="edit_mop(mop)">Edit</button>
-                        <button class="btn btn-danger btn-sm">Delete</button>
+                        <div class="btn-group dropleft">
+                            <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Action
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" @click="edit_mop(mop)">Edit</a>
+                                <a class="dropdown-item" @click="delete_mop(mop.id)">Delete</a>
+                            </div>
+                        </div>
                     </td>
                 </tr>
             </tbody>
@@ -125,9 +132,8 @@ export default {
             })
         },
         delete_mop(id){
-
-            axios.delete('api/mop/'+id).then(() =>{
-
+            axios.delete('api/mop/'+id+'/delete').then(() =>{
+                Fire.$emit('success');
             }).catch(() => {
 
             });

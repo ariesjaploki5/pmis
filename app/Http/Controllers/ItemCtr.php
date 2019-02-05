@@ -43,6 +43,8 @@ class ItemCtr extends Controller
     public function destroy($id)
     {
         $item = Item::where('id', $id)->first();
+        $item->purchase_requests()->detach();
+        
         $item->delete();
         return response()->json($item);
     }

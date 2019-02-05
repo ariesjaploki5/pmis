@@ -13,14 +13,23 @@ class User extends Authenticatable implements JWTSubject
 
     protected $table = 'hospital_e.j10.pams_users';
     public $timestamps = false;
-
     protected $fillable = [
         'username', 'password', 'access_level_id', 'employee_id'
     ];
 
     protected $hidden = [
-        'password',
+        'password', 'remember_token'
     ];
+
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
 
     public function access_level()
     {
@@ -32,15 +41,6 @@ class User extends Authenticatable implements JWTSubject
         return $this->belongsTo('App/Model/Employee', 'employee_id', 'employeeid');
     }
 
-     public function getJWTIdentifier()
-    {
-        return $this->getKey();
-    }
-
-    public function getJWTCustomClaims()
-    {
-        return [];
-    }
-
+   
     
 }

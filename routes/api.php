@@ -71,20 +71,28 @@ Route::group(['prefix' => 'auth'], function ($router) {
     Route::put('category/{id}', 'CategoryCtr@update');
     Route::delete('category/{id}/delete', 'CategoryCtr@destroy');
 
-
-
     Route::get('/users', 'UserCtr@index');
 
 
     Route::get('/units', 'UnitCtr@index');
+    Route::post('/unit', 'UnitCtr@store');
+    Route::put('/unit/{id}', 'UnitCtr@update');
     Route::get('/all_units', 'UnitCtr@all');
+
+    Route::get('/pmos', 'PmoCtr@index');
+    Route::post('/pmo', 'PmoCtr@store');
+    Route::put('/pmo/{id}', 'PmoCtr@update');
+    Route::delete('/pmo/{id}/delete', 'PmoCtr@destroy');
+    Route::get('/all_pmos', 'PmoCtr@all');
 
     Route::get('/purchase_orders', 'PurchaseOrderCtr@index');
     Route::post('/purchase_order', 'PurchaseOrderCtr@store');
     Route::put('/purchase_order', 'PurchaseOrderCtr@update');
     
-    Route::get('/mode_of_procurements', 'ModeOfProcurementCtr@index');
-    Route::post('/mode_of_procurement', 'ModeOfProcurementCtr@store');
+    Route::get('/mops', 'ModeOfProcurementCtr@index');
+    Route::post('/mop', 'ModeOfProcurementCtr@store');
+    Route::put('/mop/{id}', 'ModeOfProcurementCtr@update');
+    Route::delete('/mop/{id}/delete', 'ModeOfProcurementCtr@destroy');
 
     Route::get('/purchase_requests', 'PurchaseRequestCtr@index');
     Route::post('/purchase_request', 'PurchaseRequestCtr@store');

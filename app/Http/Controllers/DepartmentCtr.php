@@ -10,7 +10,7 @@ class DepartmentCtr extends Controller
 {
     public function index()
     {
-        $departments = Department::with('division')->orderBy('id')->paginate(10)->jsonSerialize();
+        $departments = Department::with('division')->orderBy('id')->paginate(100)->jsonSerialize();
         return response($departments, Response::HTTP_OK);
     }
 

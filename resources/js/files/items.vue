@@ -20,11 +20,11 @@
                             <form @submit.prevent="editmode ? update_item() : store_item()" class="text-left">
                                 <div class="modal-body">
                                     <div class="form-group">
-                                        <label for="item_code">Code</label>
+                                        <label for="item_code">Item Code</label>
                                         <input type="text" class="form-control form-control-sm" v-model="form.code">
                                     </div>
                                     <div class="form-group">
-                                        <label for="item_description">Description</label>
+                                        <label for="item_description">Item Description</label>
                                         <input type="text" class="form-control form-control-sm" v-model="form.description">
                                     </div>
                                     <div class="form-group" v-show="!editmode">
@@ -48,7 +48,7 @@
                                     <div class="form-group">
                                         <label for="pap_code_id">Pap Code</label>
                                         <select name="" v-model="form.pap_code_id" id="" class="form-control form-control-sm">
-                                            <option v-for="pap_code in pap_codes" :key="pap_code.id" :value="pap_code.id">{{ pap_code.description }}</option>
+                                            <option v-for="pap_code in pap_codes" :key="pap_code.id" :value="pap_code.id"><p v-show="pap_code.code !== null">{{pap_code.code}} - </p><p>{{ pap_code.description }}</p></option>
                                         </select>
                                     </div>
                                 </div>
@@ -207,7 +207,7 @@
             },
             delete_item(id){
                 this.$Progress.start();
-                axios.delete('api/item/'+id).then(() => {
+                axios.delete('api/item/'+id+'/delete').then(() => {
                     Fire.$emit('success');
                     $('#item_modal').modal('hide');
                         toast({

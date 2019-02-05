@@ -10,7 +10,7 @@ class UnitCtr extends Controller
 {
     public function index()
     {
-        $units = Unit::orderBy('id')->paginate(10)->jsonSerialize();
+        $units = Unit::orderBy('id')->paginate(30)->jsonSerialize();
 
         return response($units, Response::HTTP_OK);
     }

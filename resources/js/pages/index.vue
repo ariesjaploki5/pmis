@@ -12,9 +12,9 @@
                     <div class="content">
                         <div class="container-fluid">
                             <div class="row">
-                            <div class="col-md-12 mt-4">
-                                <router-view></router-view>
-                            </div>
+                                <div class="col-md-12 mt-4">
+                                    <router-view></router-view>
+                                </div>
                             </div>
                         </div>
                     </div>

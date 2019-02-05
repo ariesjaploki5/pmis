@@ -62,8 +62,15 @@
                     <td>{{ pap_code.description }}</td>
                     <td>{{ pap_code.category.description }}</td>
                     <td>
-                        <button class="btn btn-success btn-sm" @click="edit_pap_code(pap_code)">Edit</button>
-                        <button class="btn btn-danger btn-sm">Delete</button>
+                        <div class="btn-group dropleft">
+                            <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Action
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" @click="edit_pap_code(pap_code)">Edit</a>
+                                <a class="dropdown-item" @click="delete_pap_code(pap_code.id)">Delete</a>
+                            </div>
+                        </div>
                     </td>
                 </tr>
             </tbody>

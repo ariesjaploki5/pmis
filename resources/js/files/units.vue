@@ -48,8 +48,15 @@ te<template>
            				<td>{{ unit.id }}</td>
            				<td>{{ unit.description }}</td>
            				<td>
-                               <button class="btn btn-sm btn-success" @click="edit_unit(unit)">Edit</button>
-							   <button class="btn btn-sm btn-success" @click="delete_unit(unit.id)">Delete</button>
+                               <div class="btn-group dropleft">
+                                <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Action
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" @click="edit_unit(unit)">Edit</a>
+                                    <a class="dropdown-item" @click="delete_unit(unit.id)">Delete</a>
+                                </div>
+                            </div>
                         </td>
            			</tr>
            		</tbody>
@@ -83,11 +90,19 @@ te<template>
                 $('#unit_modal').modal('show');
             },
             store_unit(){
-				this.form.post('api/unit').then(() => {
-
-				}).catch(() => {
-
-				});
+                this.$Progress.start();
+                this.form.post('api/unit').then(() => {
+                    Fire.$emit('success');
+                    $('#unit_modal').modal('hide');
+                    this.form.reset();
+                        toast({
+                            type: 'success',
+                            title: 'Added Successfully'
+                        });
+                    this.$Progress.finish();
+                }).catch(() =>{
+                    this.$Progress.fail();
+                })
             },
             edit_unit(unit){
 				this.editmode = true;
@@ -112,6 +127,10 @@ te<template>
 		},
 		created(){
             this.load_all();
+            Fire.$on('success',() => {
+                this.load_all();
+                
+            });
 		}
     }
 </script>

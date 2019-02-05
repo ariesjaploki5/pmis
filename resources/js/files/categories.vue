@@ -86,9 +86,11 @@ export default {
             .then(response => {this.categories = response.data;});
         },
         create_category(){
+            this.form.reset();
             $('#category_modal').modal('show');
         },
         store_category(){
+            
             this.$Progress.start();
             this.form.post('api/category').then(() => {
                 Fire.$emit('success');
