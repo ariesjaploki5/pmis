@@ -21,7 +21,10 @@ import users from './files/users.vue';
 import categories from './files/categories.vue';
 import units from './files/units.vue';
 import purchase_requests from './files/purchase_requests.vue';
-
+import purchase_orders from './files/purchase_orders.vue';
+import mode_of_procurements from './files/mode_of_procurements.vue';
+import pmos from './files/pmos.vue';
+import source_of_funds from './files/source_of_funds.vue';
 export const routes = [
 
     {
@@ -57,6 +60,13 @@ export const routes = [
     {
         path: '/purchase_requests',
         component: purchase_requests,
+        meta: {
+            requiresAuth: true
+        }
+    },
+    {
+        path: '/purchase_orders',
+        component: purchase_orders,
         meta: {
             requiresAuth: true
         }
@@ -110,7 +120,27 @@ export const routes = [
             requiresAuth: true
         }
     },
-
+    {
+        path: '/source_of_funds',
+        component: source_of_funds,
+        meta: {
+            requiresAuth: true
+        }
+    },
+    {
+        path: '/mode_of_procurements',
+        component: mode_of_procurements,
+        meta: {
+            requiresAuth: true
+        }
+    },
+    {
+        path: '/pmos',
+        component: pmos,
+        meta: {
+            requiresAuth: true
+        }
+    },
     {
         path: '/users',
         component: users,

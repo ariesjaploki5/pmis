@@ -223,10 +223,10 @@
         },
         computed: {
             current_user() {
-                return this.$store.getters.current_user;
+                return this.$store.getters.current_user
             },
             employeeid(){
-                return this.$store.getters.current_user.token.employeeid;
+                return this.$store.getters.current_user.token.employeeid
             },
         },
         created(){

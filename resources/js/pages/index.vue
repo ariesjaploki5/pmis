@@ -36,7 +36,7 @@
         },
         computed: {
             current_user() {
-                return this.$store.getters.current_user
+                return this.$store.getters.current_user;
             }
         },
     };

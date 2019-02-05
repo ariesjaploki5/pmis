@@ -4,8 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use App\Model\Purchase_order as PO;
-
+use App\Model\PurchaseOrder as PO;
 
 class PurchaseOrderCtr extends Controller
 {

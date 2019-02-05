@@ -35,21 +35,21 @@
 												</tr>
 											</thead>
 											<tbody id="t1">
-												<tr v-for="it in form.items" :key="it.id">
+												<tr>
 													<td>
-														<select class="form-control form-control-sm" v-model="it.id">
+														<select class="form-control form-control-sm" v-model="form.item_id">
 															<option v-for="item in items" :key="item.id" :value="item.id">{{ item.description }}</option>
 														</select>
 													</td>
 													<td>
-														<input type="text" class="form-control form-contrl-sm" v-model="it.quantity">
+														<input type="number" class="form-control form-contrl-sm text-right" v-model="form.quantity">
 													</td>
 													<td></td>
 												</tr>
 											</tbody>
 										</table>
 
-										<a class="btn btn-primary" @click="add_new_item()"><i class="fas fa-plus-circle"></i></a>
+										
                                     </div>
                                 </div>
                                 <div class="modal-footer">
@@ -62,7 +62,6 @@
                     </div>
 				</div>
 			</div>
-			
            <table class="table">
            		<thead>
            			<tr>
@@ -84,10 +83,22 @@
 								<p>{{ item.description }}</p>
 							</div>
 						</td>
-           				<td></td>
-           				<td></td>
-           				<td></td>
-           				<td></td>
+           				<td>
+							   <div v-for="item in pr.items" :key="item.id">
+							<p>{{ item.pivot.quantity }}</p>
+							   </div>
+						</td>
+           				<td>
+							<div v-for="item in pr.items" :key="item.id">
+							<p>{{ item.cost }}</p>
+						</div>
+						</td>
+           				<td>
+							<div v-for="item in pr.items" :key="item.id">
+								<p>{{ item.pivot.total_cost }}</p>
+							</div>
+						</td>
+           				<td><button class="btn btn-sm btn-danger" @click="delete_purchase_request(pr.id)">Delete</button></td>
            				
            			</tr>
            		</tbody>
@@ -106,8 +117,10 @@
 				form: new Form({
 					id: '',
 					purpose: '',
-					items: [],
+					item_id: '',
+					quantity: '',
 				}),
+
 
 			}
 		},
@@ -128,22 +141,16 @@
 				this.form.reset();
                 $('#pruchase_request_modal').modal('show');
 			},
-			add_new_item(){
-				
-				this.form.items.push({ id:'', quantity: ''});
-			},
-			store_purchase_request(){	
-				this.form.post('api/purchase_request').then(() => {
 
-                }).catch((error) => {
-					console.log(error);
+			store_purchase_request(){	
+				this.form.post('api/purchase_request').then(({data}) => {
+
+					
+                }).catch(() => {
+
 				});
-            },
-            store_items(){	
-				this.form.post('api/purchase_request_item').then(() => {
-					$('#pruchase_request_modal').modal('hide');
-                });
 			},
+			
 			
 			edit_purchase_request(pr){
 
@@ -154,7 +161,18 @@
 				}).catch(() => {
 
 				});
-			}
+			},
+			delete_purchase_request(id){
+
+				axios.delete('api/purchase_request/'+id+'/delete').then(() => {
+					
+                    Fire.$emit('success');
+
+                
+				}).catch(() => {
+
+				});
+			},
 
 		},
 		computed:{
@@ -167,6 +185,10 @@
 		},
 		created(){
 			this.load_all();
+			Fire.$on('success',() => {
+                this.load_all();
+                
+            });
 		},
     }
 </script>

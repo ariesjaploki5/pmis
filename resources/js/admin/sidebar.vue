@@ -29,6 +29,12 @@
                 </router-link>
               </li>
               <li class="nav-item">
+                <router-link to='/purchase_orders' class="nav-link">
+                    <i class="nav-icon fa fa-th"></i>
+                    <p>Purchase Orders</p>
+                </router-link>
+              </li>
+              <li class="nav-item">
                 <router-link to='/purchase_requests' class="nav-link">
                     <i class="nav-icon fa fa-th"></i>
                     <p>Purchase Request</p>
@@ -50,6 +56,24 @@
                 <router-link to='/pap_codes' class="nav-link">
                     <i class="nav-icon fa fa-th"></i>
                     <p>Pap Codes</p>
+                </router-link>
+              </li>
+              <li class="nav-item">
+                <router-link to='/mode_of_procurements' class="nav-link">
+                    <i class="nav-icon fa fa-th"></i>
+                    <p>Mode of Procurements</p>
+                </router-link>
+              </li>
+              <li class="nav-item">
+                <router-link to='/pmos' class="nav-link">
+                    <i class="nav-icon fa fa-th"></i>
+                    <p>PMO/End-User</p>
+                </router-link>
+              </li>
+              <li class="nav-item">
+                <router-link to='/source_of_funds' class="nav-link">
+                    <i class="nav-icon fa fa-th"></i>
+                    <p>Source of Funds</p>
                 </router-link>
               </li>
               <li class="nav-item">

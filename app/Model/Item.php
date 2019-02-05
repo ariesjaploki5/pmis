@@ -21,7 +21,7 @@ class Item extends Model
 
     public function purchase_requests()
     {
-        return $this->belongsToMany('App\Model\Purchase_request', 'dex.pams_item_purchase_request', 'item_id', 'purchase_request_item')->withPivot('total_cost', 'quantity');
+        return $this->belongsToMany('App\Model\Purchase_request', 'j10.pams_item_purchase_request', 'item_id', 'purchase_request_item')->withPivot('total_cost', 'quantity');
     }
 
     public function pap_code()

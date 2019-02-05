@@ -2,20 +2,20 @@
 <div class="card">
     <div class="card-header">
         <div class="row">
-            <div class="col-8"><div class="card-title">Categories</div></div>
+            <div class="col-8"><div class="card-title">Mode of Procurements</div></div>
             <div class="col-4 text-right">
-                <button class="btn btn-primary" @click="create_category()">Add</button>
-                <div class="modal fade" id="category_modal" tabindex="-1" role="dialog" aria-labelledby="category_modal_label" aria-hidden="true">
+                <button class="btn btn-primary" @click="create_mop()">Add</button>
+                <div class="modal fade" id="mop_modal" tabindex="-1" role="dialog" aria-labelledby="mop_modal_label" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 v-show="!editmode" class="modal-title" id="category_modal_label">Add New Categories</h5>
-                                <h5 v-show="editmode" class="modal-title" id="category_modal_label">Update Categories</h5>
+                                <h5 v-show="!editmode" class="modal-title" id="mop_modal_label">Add New Mode of Procurements</h5>
+                                <h5 v-show="editmode" class="modal-title" id="mop_modal_label">Update Mode of Procurements</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <form @submit.prevent="editmode ? update_category() : store_category()" class="text-left">
+                            <form @submit.prevent="editmode ? update_mop() : store_mop()" class="text-left">
                                 <div class="modal-body">
 
                                     <div class="form-group">
@@ -45,11 +45,11 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="category in categories.data" :key="category.id">
-                    <td>{{ category.id }}</td>
-                    <td>{{ category.description }}</td>
+                <tr v-for="mop in mops.data" :key="mop.id">
+                    <td>{{ mop.id }}</td>
+                    <td>{{ mop.description }}</td>
                     <td>
-                        <button class="btn btn-success btn-sm" @click="edit_category(category)">Edit</button>
+                        <button class="btn btn-success btn-sm" @click="edit_mop(mop)">Edit</button>
                         <button class="btn btn-danger btn-sm">Delete</button>
                     </td>
                 </tr>
@@ -57,7 +57,7 @@
         </table>
     </div>
     <div class="card-footer">
-        <pagination :data="categories" @pagination-change-page="pages_categories"></pagination>
+        
     </div>
 </div> 
 </template>
@@ -70,29 +70,29 @@ export default {
                 id: '',
                 description: '',
             }),
-            categories: {},
+            mops: {},
         }
     },
     methods: {
         load_all(){
-            this.get_categories();
+            this.get_mops();
         },
-        get_categories(){
-            axios.get('api/categories')
-            .then(({data}) => (this.categories = data));
+        get_mops(){
+            axios.get('api/mops')
+            .then(({data}) => (this.mops = data));
         },
-        pages_categories(page = 1){
-            axios.get('api/categories?page=' + page)
-            .then(response => {this.categories = response.data;});
+        pages_mops(page = 1){
+            axios.get('api/mops?page=' + page)
+            .then(response => {this.mops = response.data;});
         },
-        create_category(){
-            $('#category_modal').modal('show');
+        create_mop(){
+            $('#mop_modal').modal('show');
         },
-        store_category(){
+        store_mop(){
             this.$Progress.start();
-            this.form.post('api/category').then(() => {
+            this.form.post('api/mop').then(() => {
                 Fire.$emit('success');
-                $('#category_modal').modal('hide');
+                $('#mop_modal').modal('hide');
                 this.form.reset();
                     toast({
                         type: 'success',
@@ -103,18 +103,18 @@ export default {
                 this.$Progress.fail();
             })
         },
-        edit_category(category){
+        edit_mop(mop){
             this.editmode = true;
             this.form.reset();
-            $('#category_modal').modal('show');
-            this.form.fill(category);
+            $('#mop_modal').modal('show');
+            this.form.fill(mop);
 
         },
-        update_category(){
+        update_mop(){
             this.$Progress.start();
-            this.form.put('api/category/'+this.form.id).then(() => {
+            this.form.put('api/mop/'+this.form.id).then(() => {
                 Fire.$emit('success');
-                $('#category_modal').modal('hide');
+                $('#mop_modal').modal('hide');
                     toast({
                         type: 'success',
                         title: 'Updated Successfully'
@@ -124,9 +124,9 @@ export default {
                 this.$Progress.fail();
             })
         },
-        delete_category(id){
+        delete_mop(id){
 
-            axios.delete('api/category/'+id).then(() =>{
+            axios.delete('api/mop/'+id).then(() =>{
 
             }).catch(() => {
 

@@ -4,7 +4,7 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Purchase_order extends Model
+class PurchaseOrder extends Model
 {
     protected $table = 'j10.pams_purchase_orders';
     public $incrementing = false;
@@ -16,6 +16,6 @@ class Purchase_order extends Model
 
     public function purchase_requests()
     {
-        return $this->hasMany('App\Model\Purchase_request');
+        return $this->hasMany('App\Model\PurchaseRequest');
     }
 }

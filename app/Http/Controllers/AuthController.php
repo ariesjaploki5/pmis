@@ -67,7 +67,8 @@ class AuthController extends Controller
             // $new->access_level_id = $al;
             $new->save();
 
-            $credentials = request($new->username, $new->password);
+            $credentials = request($request->username, $request->password);
+
             if (! $token = auth('api')->attempt($credentials)) {
                 return $this->error();
             } else{

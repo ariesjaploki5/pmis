@@ -4,9 +4,8 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Purchase_request extends Model
+class PurchaseRequest extends Model
 {
-    
     protected $table = 'j10.pams_purchase_requests';
     public $timestamps = false;
 
@@ -16,11 +15,11 @@ class Purchase_request extends Model
     
     public function purchase_order()
     {
-        return $this->belongsTo('App\Model\Purchase_order');
+        return $this->belongsTo('App\Model\PurchaseOrder');
     }
 
     public function items()
     {
-        return $this->belongsToMany('App\Model\Item', 'dex.pams_item_purchase_request', 'purchase_request_id', 'item_id')->withPivot('total_cost', 'quantity');
+        return $this->belongsToMany('App\Model\Item', 'j10.pams_item_purchase_request', 'purchase_request_id', 'item_id')->withPivot('total_cost', 'quantity');
     }
 }

@@ -1,4 +1,4 @@
-te<template>
+<template>
     <div class="card">
         <div class="card-body">
 			<div class="row">
@@ -15,7 +15,8 @@ te<template>
            		<thead>
            			<tr>
            				<th>ID</th>
-						<th>Description</th>
+						<th>Code</th>
+						<th>Name</th>
 						<th>Division</th>
            				<th>Action</th>
            			</tr>
@@ -23,6 +24,7 @@ te<template>
            		<tbody>
            			<tr v-for="department in departments.data" :key="department.id">
            				<td>{{ department.id }}</td>
+						<td>{{ department.code }}</td>
            				<td>{{ department.description }}</td>
 						<td>{{ department.division.description }}</td>
            				<td>
@@ -40,7 +42,8 @@ te<template>
 			return{
                 departments: {},
                 form: new Form({
-                    id: '',
+					id: '',
+					code: '',
 					description: '',
 					division_id: '',
                 }),
@@ -59,7 +62,7 @@ te<template>
                 
             },
             store_unit(){
-
+				this.form.post('');
             },
             edit_unit(unit){
 
