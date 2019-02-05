@@ -23,7 +23,7 @@
                                 <div class="modal-body">
                                     <div class="form-group">
                                         <label for="item_code">Purpose</label>
-										<textarea v-model="pr_form.purpose" class="form-control form-control-sm" rows="4"></textarea>
+										<textarea v-model="form.purpose" class="form-control form-control-sm" rows="4"></textarea>
                                     </div>
                                     <div class="form-group">
 										<table class="table">
@@ -103,9 +103,10 @@
 				prs: {},
 				items: {},
 
-				pr_form: new Form({
+				form: new Form({
 					id: '',
 					purpose: '',
+					items: [],
 				}),
 				item_form:[],
 
@@ -125,7 +126,7 @@
 			},
 			create_purchase_request(){
 				this.editmode = false;
-				this.pr_form.reset();
+				this.form.reset();
                 $('#pruchase_request_modal').modal('show');
 			},
 			add_new_item(){
@@ -133,7 +134,7 @@
 				this.item_form.push({ id:'', quantity: ''});
 			},
 			store_purchase_request(){	
-				this.pr_form.post('api/purchase_request').then(({data}) => {
+				this.form.post('api/purchase_request').then(({data}) => {
 
 
 					this.item_form.post('api/pruchase_request_items/'+data).then(() => {
@@ -147,7 +148,7 @@
 				});
             },
             store_items(){	
-				this.pr_form.post('api/purchase_request_item').then(() => {
+				this.form.post('api/purchase_request_item').then(() => {
 					$('#pruchase_request_modal').modal('hide');
                 });
 			},
@@ -156,7 +157,7 @@
 
 			},
 			update_purchase_request(){
-				this.pr_form.put('api/purchase_request/'+this.pr_form.id).then(() => {
+				this.form.put('api/purchase_request/'+this.form.id).then(() => {
 
 				}).catch(() => {
 

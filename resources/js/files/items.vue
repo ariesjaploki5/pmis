@@ -27,7 +27,7 @@
                                         <label for="item_description">Description</label>
                                         <input type="text" class="form-control form-control-sm" v-model="form.description">
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group" v-show="!editmode">
                                         <label for="pap_code_id">Unit Description</label>
                                         <select name="" v-model="form.unit_id" id="" class="form-control form-control-sm">
                                             <option v-for="unit in units" :key="unit.id" :value="unit.id">{{ unit.description }}</option>
@@ -53,8 +53,9 @@
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary btn-sm" v-show="!editmode">Submit</button>
+                                    <button type="submit" class="btn btn-success btn-sm" v-show="editmode">Update</button>
+                                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
                                 </div>
                             </form>
                             </div>
@@ -77,13 +78,27 @@
            		</thead>
            		<tbody>
            			<tr v-for="item in items.data" :key="item.id" class="my-auto py-auto">
-                        <td>{{ item.id }}</td>
-                        <td>{{ item.code }}</td>
-           				<td>{{ item.description }}</td>
-                        <td>{{ item.cost }}</td>
-                        <td><p v-if="item.unit_id !== null">{{ item.unit.description }}</p></td>
-           				<td>{{ item.pap_code.code }}</td>
-           				<td>{{ item.account_code }}</td>
+                        <td>
+                            <p></p>{{ item.id }}
+                        </td>
+                        <td>
+                            <p v-if="item.code">{{ item.code }}</p>
+                        </td>
+           				<td>
+                            <p v-if="item.description">{{ item.description }}</p>   
+                        </td>
+                        <td>
+                            <p v-if="item.cost">{{ item.cost }}</p>
+                        </td>
+                        <td>
+                            <p v-if="item.unit_id !== null">{{ item.unit.description }}</p>
+                        </td>
+           				<td>
+                            <p v-if="item.pap_code">{{ item.pap_code.code }}</p>
+                        </td>
+           				<td>
+                            <p v-if="item.account_code">{{ item.account_code }}</p>
+                        </td>
            				<td>
                             <div class="btn-group dropleft">
                                 <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -91,7 +106,7 @@
                                 </button>
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item" @click="edit_item(item)">Edit</a>
-                                    <a class="dropdown-item">Delete</a>
+                                    <a class="dropdown-item" @click="delete_item(item.id)">Delete</a>
                                 </div>
                             </div>
                         </td>
@@ -189,6 +204,20 @@
                 }).catch(() =>{
                     this.$Progress.fail();
                 })
+            },
+            delete_item(id){
+                this.$Progress.start();
+                axios.delete('api/item/'+id).then(() => {
+                    Fire.$emit('success');
+                    $('#item_modal').modal('hide');
+                        toast({
+                            type: 'danger',
+                            title: 'Deleted Successfully'
+                        });
+                    this.$Progress.finish();
+                }).catch(() => {
+
+                });
             },
 
         },

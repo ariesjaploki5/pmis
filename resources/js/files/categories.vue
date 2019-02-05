@@ -122,6 +122,14 @@ export default {
                 this.$Progress.fail();
             })
         },
+        delete_category(id){
+
+            axios.delete('api/category/'+id).then(() =>{
+
+            }).catch(() => {
+
+            });
+        }
     },
     created(){
         this.load_all();

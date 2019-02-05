@@ -42,6 +42,7 @@ class AuthController extends Controller
         return response()->json($access_level);
     }
 
+
     public function login(Request $request)
     {
         $username = $request->username;
@@ -65,14 +66,17 @@ class AuthController extends Controller
             $new->employee_id = $employee->employeeid;
             // $new->access_level_id = $al;
             $new->save();
+
             $credentials = request($new->username, $new->password);
             if (! $token = auth('api')->attempt($credentials)) {
                 return $this->error();
             } else{
-                return $this->respondWithToken($token);
+                return $this->respondWithToken('token');
             }
         }
     }
+
+    
 
     public function me()
     {

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Employee extends Model
 {
-    protected $table = 'dbo.hpersonal';
+    protected $table = 'hospital.dbo.hpersonal';
     protected $primaryKey = 'employeeid';
     public $incrementing = false;
     public $timestamps = false;

@@ -1,8 +1,7 @@
 <template>
     <div class="login row justify-content-center mt-3">
-        <div class="col-md-4">
+        <div class="col-lg-3 col-md-6 col-sm-8">
             <div class="card rounded-0">
-                
                 <div class="card-body">
                     <div class="card-title text-center">
                         Login
@@ -45,7 +44,7 @@
                 login(this.$data.form)
                     .then((res) => {
                         this.$store.commit("loginSuccess", res);
-                        this.$router.push({path: '/home'});
+                        this.$router.push({path: '/dashboard'});
                     })
                     .catch((error) => {
                         this.$store.commit("loginFailed", {error});

@@ -83,10 +83,10 @@
                 </router-link>
               </li>
               <li class="nav-item">
-                  <router-link to="#!" @click.prevent="logout" class="btn">
+                  <a href="logout" @click.prevent="logout" class="nav-link">
                       <i class="nav-icon fas fa-power-off"></i>
                     <p>Logout</p>
-                  </router-link>
+                  </a>
               </li>
             </ul>
           </nav>
@@ -101,7 +101,7 @@
         methods: {
             logout() {
                 this.$store.commit('logout');
-                this.$router.push('/login');
+                this.$router.push('/');
             }
         },
         computed: {

@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Item extends Model
 {
     protected $table = 'j10.pams_items';
-
+    public $timestamps = false;
+    
     protected $fillable = [
         'code', 
         'description', 

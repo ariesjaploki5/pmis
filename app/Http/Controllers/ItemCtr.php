@@ -21,9 +21,8 @@ class ItemCtr extends Controller
 
     public function all()
     {
-
-        $items = Item::orderBy('id')->get()->jsonSerialize();
-        return response($items, Response::HTTP_OK);
+        $items = Item::orderBy('id')->get();
+        return response()->json($items);
     }
 
     public function store(Request $request)

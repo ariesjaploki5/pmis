@@ -6,9 +6,9 @@ export function initialize(store, router) {
         const current_user = store.state.current_user;
     
         if(requiresAuth && !current_user) {
-            next('/login');
-        } else if(to.path == '/login' && current_user) {
-            next('/home');
+            next('/');
+        } else if(to.path == '/' && current_user) {
+            next('/dashboard');
         } else {
             next();
         }
@@ -17,7 +17,7 @@ export function initialize(store, router) {
     axios.interceptors.response.use(null, (error) => {{
         if (error.resposne.status == 401) 
             store.commit('logout');
-            router.push('/login');
+            router.push('/');
         }
 
         return Promise.reject(error);

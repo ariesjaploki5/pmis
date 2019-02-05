@@ -25,7 +25,7 @@ import purchase_requests from './files/purchase_requests.vue';
 export const routes = [
 
     {
-        path: '/login',
+        path: '/',
         component: login
     },
     {

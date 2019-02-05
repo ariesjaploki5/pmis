@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Head extends Model
 {
-    protected $table = 'j10.heads';
+    protected $table = 'j10.pams_heads';
     public $timestamps = false;
 
     protected $fillable = [
