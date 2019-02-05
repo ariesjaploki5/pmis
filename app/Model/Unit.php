@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Unit extends Model
 {
-    protected $table = 'dex.pams_units';
+    protected $table = 'j10.pams_units';
     public $timestamps = false;
     protected $fillable = [
         'description',

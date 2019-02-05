@@ -6,10 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
 {
-    protected $table = 'dex.pams_categories';
+    protected $table = 'j10.pams_categories';
 
-    public $timestamps = false;
-    
     protected $fillable = [
         'description',
     ];

@@ -21,6 +21,7 @@ Route::group(['prefix' => 'auth'], function ($router) {
 });
 
     Route::get('items', 'ItemCtr@index');
+    Route::get('all_items', 'ItemCtr@all');
     Route::post('item', 'ItemCtr@store');
     Route::put('item/{id}', 'ItemCtr@update');
     Route::delete('item/{id}', 'ItemCtr@destroy');
@@ -80,3 +81,16 @@ Route::group(['prefix' => 'auth'], function ($router) {
 
     Route::get('/units', 'UnitCtr@index');
     Route::get('/all_units', 'UnitCtr@all');
+
+    Route::get('/purchase_orders', 'PurchaseOrderCtr@index');
+    Route::post('/purchase_order', 'PurchaseOrderCtr@store');
+    Route::put('/purchase_order', 'PurchaseOrderCtr@update');
+    
+
+    Route::get('/purchase_requests', 'PurchaseRequestCtr@index');
+    Route::post('/purchase_request', 'PurchaseRequestCtr@store');
+
+    Route::post('/purchase_request_items/{id}', 'PurchaseRequestCtr@store_items');
+
+    Route::put('/purchase_request/{id}', 'PurchaseRequestCtr@update');
+    Route::delete('/purchase_request/{id}', 'PurchaseRequestCtr@destroy');

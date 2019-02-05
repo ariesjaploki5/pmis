@@ -11,13 +11,26 @@ class User extends Authenticatable implements JWTSubject
 {
     use Notifiable;
 
-    protected $table = 'dbo.user_acc';
-    protected $primaryKey = 'employeeid';
-    
+    protected $table = 'hospital_e.j10.pams_users';
+    public $timestamps = false;
+
+    protected $fillable = [
+        'username', 'password', 'access_level_id', 'employee_id'
+    ];
 
     protected $hidden = [
-        'user_pass',
+        'password',
     ];
+
+    public function access_level()
+    {
+        return $this->belongsTo('App\Model\Access_level');
+    }
+
+    public function employee()
+    {
+        return $this->belongsTo('App/Model/Employee', 'employee_id', 'employeeid');
+    }
 
      public function getJWTIdentifier()
     {
@@ -29,8 +42,5 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
 
-    public function employee()
-    {
-        return $this->hasOne('App/Model/Employee');
-    }
+    
 }

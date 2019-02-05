@@ -14,7 +14,7 @@
               <!-- <img src="" class="img-circle elevation-2" alt="User Image"> -->
             </div>
             <div class="info text-center">
-                <router-link to="#" class="d-block">{{ current_user.token.firstname }} {{ current_user.token.middlename }}. {{ current_user.token.lastname }}</router-link>
+                <router-link to="#" class="d-block">{{ current_user.username }}</router-link>
             </div>
           </div>
           <!-- Sidebar Menu -->
@@ -26,6 +26,12 @@
                 <router-link to='/dashboard' class="nav-link">
                     <i class="nav-icon fas fa-tachometer-alt"></i>
                     <p>Dashboard</p>
+                </router-link>
+              </li>
+              <li class="nav-item">
+                <router-link to='/purchase_requests' class="nav-link">
+                    <i class="nav-icon fa fa-th"></i>
+                    <p>Purchase Request</p>
                 </router-link>
               </li>
               <li class="nav-item">
@@ -100,7 +106,7 @@
         },
         computed: {
             current_user() {
-                return this.$store.getters.current_user
+                return this.$store.getters.current_user;
             }
         }
     }

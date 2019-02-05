@@ -6,9 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Division extends Model
 {
-    protected $table = 'dex.divisions';
-    public $timestamps = false;
-    
+    protected $table = 'j10.divisions';
+
     protected $fillable = [
         'description',
     ];

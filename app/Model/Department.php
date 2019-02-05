@@ -6,9 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Department extends Model
 {
-    protected $table = 'dex.departments';
-
-    public $timestamps = false;
+    protected $table = 'j10.departments';
 
     protected $fillable = [
         'description', 'division_id'
@@ -18,4 +16,5 @@ class Department extends Model
     {
     	return $this->belongsTO('App\Model\Division');
     }
+
 }

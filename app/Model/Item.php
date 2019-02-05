@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Item extends Model
 {
-    protected $table = 'dex.pams_items';
-    public $timestamps = false;
+    protected $table = 'j10.pams_items';
+
     protected $fillable = [
         'code', 
         'description', 
@@ -18,9 +18,9 @@ class Item extends Model
         'unit_id',
     ];
 
-    public function request_items()
+    public function purchase_requests()
     {
-        return $this->belongsToMany('App\Model\Request_item');
+        return $this->belongsToMany('App\Model\Purchase_request', 'dex.pams_item_purchase_request', 'item_id', 'purchase_request_item')->withPivot('total_cost', 'quantity');
     }
 
     public function pap_code()

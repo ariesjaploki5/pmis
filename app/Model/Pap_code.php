@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Pap_code extends Model
 {
-    protected $table = 'dex.pams_pap_codes';
+    protected $table = 'j10.pams_pap_codes';
     public $timestamps = false;
     protected $fillable = [
         'code', 'description', 'category_id'
