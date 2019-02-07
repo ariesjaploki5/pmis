@@ -12,9 +12,9 @@ class Employee extends Model
     public $timestamps = false;
 
 
-    public function users()
+    public function user()
     {
-        return $this->hasMany('App/User');
+        return $this->hasOne('App/User');
     }
 
 }

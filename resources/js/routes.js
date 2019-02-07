@@ -25,6 +25,23 @@ import purchase_orders from './files/purchase_orders.vue';
 import mode_of_procurements from './files/mode_of_procurements.vue';
 import pmos from './files/pmos.vue';
 import source_of_funds from './files/source_of_funds.vue';
+
+import ppmp from './files/ppmp.vue';
+import access_levels from './files/access_levels.vue';
+
+
+import inventory from './files/inventory.vue';
+import accountable_forms from './files/inventory/accountable_forms.vue';
+import drugs_and_medicines from './files/inventory/drugs_and_medicines.vue';
+import ict_supplies from './files/inventory/ict_supplies.vue';
+import medical_dental_and_laboratory_supplies from './files/inventory/medical_dental_and_laboratory_supplies.vue';
+import other_maintenance_operating_expenses from './files/inventory/other_maintenance_operating_expenses.vue';
+import other_supplies_and_materials from './files/inventory/other_supplies_and_materials.vue';
+import other_supplies from './files/inventory/other_supplies.vue';
+import training_workshops from './files/inventory/training_workshops.vue';
+
+
+
 export const routes = [
 
     {
@@ -35,7 +52,20 @@ export const routes = [
         path: '/register',
         component: register
     },
-
+    {
+        path: '/access_levels',
+        component: access_levels,
+        meta: {
+            requiresAuth: true
+        }
+    },
+    {
+        path: '/ppmp',
+        component: ppmp,
+        meta: {
+            requiresAuth: true
+        }
+    },
     {
         path: '/home',
         component: home,
@@ -102,6 +132,47 @@ export const routes = [
     {
         path: '/heads',
         component: heads,
+        meta: {
+            requiresAuth: true
+        }
+    },
+    {
+        path: '/inventory',
+        component: inventory,
+            children:[
+                {
+                    path: '/accountable_forms',
+                    component: accountable_forms,
+                },
+                {
+                    path: '/drugs_and_medicines',
+                    component: drugs_and_medicines,
+                },
+                {
+                    path: '/ict_supplies',
+                    component: ict_supplies,
+                },
+                {
+                    path: '/medical_dental_and_laboratory_supplies',
+                    component: medical_dental_and_laboratory_supplies,
+                },
+                {
+                    path: '/other_maintenance_operating_expenses',
+                    component: other_maintenance_operating_expenses,
+                },
+                {
+                    path: '/other_supplies_and_materials',
+                    component: other_supplies_and_materials,
+                },
+                {
+                    path: '/other_supplies',
+                    component: other_supplies,
+                },
+                {
+                    path: '/training_workshops',
+                    component: training_workshops,
+                },
+            ],
         meta: {
             requiresAuth: true
         }

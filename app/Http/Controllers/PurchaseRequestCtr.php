@@ -7,8 +7,15 @@ use Illuminate\Http\Response;
 use App\Model\PurchaseRequest as PR;
 use App\Model\Item;
 
+
 class PurchaseRequestCtr extends Controller
 {
+
+    public function search(Request $request)
+    {
+        
+    }
+
     public function index()
     {
         $prs = PR::with('items')->orderBy('id')->get()->jsonSerialize();
@@ -17,16 +24,19 @@ class PurchaseRequestCtr extends Controller
 
     public function store(Request $request)
     {
-        $item = Item::where('id', $request->item_id)->first();
-        $item_cost = $item->cost;
-        $total_cost = $item_cost * $request->quantity;
 
-        
+        $count = count($request->items);
+
         $pr = PR::create([
             'purpose' => $request->purpose,
         ]);
-
-        $pr->items()->attach($pr->id, ['item_id' => $request->item_id, 'quantity' => $request->quantity, 'total_cost' => $total_cost]);
+        
+        for($i = 0; $i < $count; $i++){
+            $item_cost = Item::where('id', $request->items[$i]['id'])->first();
+            $total_cost = $item_cost->cost * $request->items[$i]['quantity'];
+            $pr->items()->attach($pr->id, ['item_id' => $request->items[$i]['id'], 'quantity' => $request->items[$i]['quantity'], 'total_cost' => $total_cost]);
+        }
+        
         
         return response($pr->id, Response::HTTP_CREATED);
     }

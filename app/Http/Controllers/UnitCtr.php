@@ -17,9 +17,9 @@ class UnitCtr extends Controller
 
     public function all()
     {
-        $units = Unit::orderBy('id')->get()->jsonSerialize();
+        $units = Unit::orderBy('id')->get();
 
-        return response($units, Response::HTTP_OK);
+        return response()->json($units);
     }
     public function store(Request $request)
     {

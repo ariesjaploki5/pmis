@@ -29,6 +29,12 @@
                 </router-link>
               </li>
               <li class="nav-item">
+                <router-link to='/ppmp' class="nav-link">
+                    <i class="nav-icon fa fa-th"></i>
+                    <p>PPMP</p>
+                </router-link>
+              </li>
+              <li class="nav-item">
                 <router-link to='/purchase_orders' class="nav-link">
                     <i class="nav-icon fa fa-th"></i>
                     <p>Purchase Orders</p>
@@ -41,11 +47,23 @@
                 </router-link>
               </li>
               <li class="nav-item">
+                <router-link to='/inventory' class="nav-link">
+                    <i class="nav-icon fa fa-th"></i>
+                    <p>Inventory</p>
+                </router-link>
+              </li>
+              <li class="nav-item">
+                <router-link to='/access_levels' class="nav-link">
+                    <i class="nav-icon fa fa-th"></i>
+                    <p>Access Level</p>
+                </router-link>
+              </li>
+              <!-- <li class="nav-item">
                 <router-link to='/items' class="nav-link">
                     <i class="nav-icon fa fa-th"></i>
                     <p>Items</p>
                 </router-link>
-              </li>
+              </li> -->
               <li class="nav-item">
                 <router-link to='/categories' class="nav-link">
                     <i class="nav-icon fa fa-th"></i>
@@ -104,6 +122,12 @@
                 <router-link to='/employees' class="nav-link">
                     <i class="nav-icon fas fa-users"></i>
                     <p>Employees</p>
+                </router-link>
+              </li>
+              <li class="nav-item">
+                <router-link to='/users' class="nav-link">
+                    <i class="nav-icon fas fa-users"></i>
+                    <p>Users</p>
                 </router-link>
               </li>
               <li class="nav-item">

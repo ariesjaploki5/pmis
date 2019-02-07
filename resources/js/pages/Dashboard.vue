@@ -22,6 +22,21 @@
 </template>
 <script>
 export default {
-    
+    data(){
+        return{
+
+        }
+    },
+    computed: {
+            current_user() {
+                return this.$store.getters.current_user;
+            },
+            access_level_id() {
+                return this.$store.getters.current_user.access_level_id; 
+            },
+            employee_id() {
+                return this.$store.getters.current_user.employee_id; 
+            }
+        },
 }
 </script>

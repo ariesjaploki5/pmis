@@ -10,7 +10,7 @@ class UserCtr extends Controller
 {
     public function index()
     {
-        $users = User::orderBy('employeeid')->paginate(10)->jsonSerialize();
+        $users = User::with('employee', 'access_level')->orderBy('employee_id')->paginate(10)->jsonSerialize();
 
         return response($users, Response::HTTP_OK);
     }
@@ -20,9 +20,12 @@ class UserCtr extends Controller
         
     }   
 
-    public function update()
+    public function update(Request $request, $id)
     {
+        $user = User::findOrFail($id);
+        $user->update($request->all());
 
+        return response()->json($user);
     }
 
     public function destroy()

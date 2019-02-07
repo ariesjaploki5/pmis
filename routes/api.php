@@ -26,6 +26,13 @@ Route::group(['prefix' => 'auth'], function ($router) {
     Route::put('item/{id}', 'ItemCtr@update');
     Route::delete('item/{id}/delete', 'ItemCtr@destroy');
 
+
+    Route::get('access_levels', 'AccessLevelCtr@index');
+    Route::get('all_access_levels', 'AccessLevelCtr@all');
+    Route::post('access_level', 'AccessLevelCtr@store');
+    Route::put('access_level/{id}', 'AccessLevelCtr@update');
+    Route::delete('access_level/{id}/delete', 'AccessLevelCtr@destroy');
+
     Route::get('departments', 'DepartmentCtr@index');
     Route::post('department', 'DepartmentCtr@store');
     Route::put('department/{id}', 'DepartmentCtr@update');
@@ -72,7 +79,9 @@ Route::group(['prefix' => 'auth'], function ($router) {
     Route::delete('category/{id}/delete', 'CategoryCtr@destroy');
 
     Route::get('/users', 'UserCtr@index');
-
+    Route::post('/user', 'UserCtr@store');
+    Route::put('/user/{id}', 'UserCtr@update');
+    Route::delete('/user/{id}/delete', 'UserCtr@destroy');
 
     Route::get('/units', 'UnitCtr@index');
     Route::post('/unit', 'UnitCtr@store');
@@ -90,6 +99,7 @@ Route::group(['prefix' => 'auth'], function ($router) {
     Route::put('/purchase_order', 'PurchaseOrderCtr@update');
     
     Route::get('/mops', 'ModeOfProcurementCtr@index');
+    Route::get('/all_mops', 'ModeOfProcurementCtr@all');
     Route::post('/mop', 'ModeOfProcurementCtr@store');
     Route::put('/mop/{id}', 'ModeOfProcurementCtr@update');
     Route::delete('/mop/{id}/delete', 'ModeOfProcurementCtr@destroy');
@@ -101,3 +111,6 @@ Route::group(['prefix' => 'auth'], function ($router) {
 
     Route::put('/purchase_request/{id}', 'PurchaseRequestCtr@update');
     Route::delete('/purchase_request/{id}/delete', 'PurchaseRequestCtr@destroy');
+
+    Route::post('ppmp', 'PpmpCtr@store');
+    Route::get('ppmp', 'PpmpCtr@index');

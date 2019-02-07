@@ -16,3 +16,5 @@ Route::get('{any}', function () {
 })->where('any', '.*');
 
 
+
+// Route::post('store_ppmp', 'Ppmpctr@store');
