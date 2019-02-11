@@ -40,6 +40,7 @@ import other_supplies_and_materials from './files/inventory/other_supplies_and_m
 import other_supplies from './files/inventory/other_supplies.vue';
 import training_workshops from './files/inventory/training_workshops.vue';
 
+import ppmp_ict_supplies from './files/ppmp_ict_supplies.vue';
 
 
 export const routes = [
@@ -58,6 +59,10 @@ export const routes = [
         meta: {
             requiresAuth: true
         }
+    },
+    {
+        path: '/ppmp_ict_supplies',
+        component: ppmp_ict_supplies
     },
     {
         path: '/ppmp',

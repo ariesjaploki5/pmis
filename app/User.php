@@ -41,6 +41,9 @@ class User extends Authenticatable implements JWTSubject
         return $this->belongsTo('App\Model\Employee', 'employee_id', 'employeeid');
     }
 
-   
+    public function ppmps()
+    {
+        return $this->hasMany('App\Model\PPMP\IctSupply');
+    }
     
 }

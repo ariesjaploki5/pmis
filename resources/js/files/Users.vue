@@ -103,7 +103,6 @@ te<template>
                 this.editmode = false;
                 this.form.reset();
                 $('#usermodal').modal('show');
-                
             },
             store_user(){
                 this.$Progress.start();

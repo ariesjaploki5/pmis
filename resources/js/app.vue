@@ -1,7 +1,6 @@
 <template>
     <div>
         <div  v-if="!current_user">
-            <guestbar></guestbar>
             <router-view></router-view>
         </div>
         <div v-else>

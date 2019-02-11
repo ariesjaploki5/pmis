@@ -16115,8 +16115,33 @@ readers do not read off random characters that represent icons */
   font-family: "Font Awesome 5 Brands";
 }
 
-.navbar-laravel {
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+.sidebar .router-link-exact-active {
+  background-color: #21926c;
+  color: #fff !important;
+}
+
+.sidebar .router-link-exact-active p {
+  font-size: 14px;
+}
+
+.sidebar .router-link-exact-active i {
+  font-size: 14px;
+  color: black;
+}
+
+.sidebar .nav-item a:hover {
+  background-color: #21926c;
+}
+
+.sidebar .nav-item a:hover p {
+  color: black;
+}
+
+.sidebar .nav-item a:hover i {
+  color: black;
+}
+
+.brand-link {
+  background-color: #21926c;
 }
 

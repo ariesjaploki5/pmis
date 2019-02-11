@@ -7,5 +7,8 @@ use App\Model\Pmo;
 
 class PmoCtr extends Controller
 {
-    //
+    public function index()
+    {
+        
+    }
 }

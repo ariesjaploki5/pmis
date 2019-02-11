@@ -73,7 +73,7 @@ return [
         'sqlsrv' => [
             'driver' => 'sqlsrv',
             'host' => env('DB_HOST', '192.168.7.3'),
-            'database' => env('DB_DATABASE', 'hospital'),
+            'database' => env('DB_DATABASE', 'hospital_e'),
             'username' => env('DB_USERNAME', 'HOMIS_USER'),
             'password' => env('DB_PASSWORD', 'RESU_SIMOH'),
             'charset' => 'utf8',

@@ -14,8 +14,36 @@
 @import '~@fortawesome/fontawesome-free/scss/solid.scss';
 @import '~@fortawesome/fontawesome-free/scss/brands.scss';
 
-.navbar-laravel {
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+
+
+
+.sidebar .router-link-exact-active{
+  background-color: rgb(33, 146, 108);
+  color: #fff !important;
+  p{
+    font-size: 14px;
+  }
+  i{
+    font-size: 14px;
+    color: black;
+  }
 }
 
+.sidebar .nav-item a:hover { 
+  background-color: rgb(33, 146, 108);
+  
+  p{
+
+ 
+    color: black;
+  }
+  i{
+
+
+    color: black;
+  }
+}
+
+.brand-link {
+  background-color: rgb(33, 146, 108);
+}

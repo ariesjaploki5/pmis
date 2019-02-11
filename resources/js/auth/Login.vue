@@ -1,7 +1,7 @@
 <template>
-    <div class="login row justify-content-center mt-3">
-        <div class="col-lg-3 col-md-6 col-sm-8">
-            <div class="card rounded-0">
+    <div class="login row justify-content-center mt-5">
+        <div class="col-lg-3 col-md-6 col-sm-8 mt-5">
+            <div class="card rounded-0 mt-5">
                 <div class="card-body">
                     <div class="card-title text-center">
                         Login
