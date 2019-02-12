@@ -41,7 +41,7 @@ import other_supplies from './files/inventory/other_supplies.vue';
 import training_workshops from './files/inventory/training_workshops.vue';
 
 import ppmp_ict_supplies from './files/ppmp_ict_supplies.vue';
-
+import ppmp_drugs_and_medicines from './files/ppmp_drugs_and_medicines.vue';
 
 export const routes = [
 
@@ -63,6 +63,10 @@ export const routes = [
     {
         path: '/ppmp_ict_supplies',
         component: ppmp_ict_supplies
+    },
+    {
+        path: '/ppmp_drugs_and_medicines',
+        component: ppmp_drugs_and_medicines
     },
     {
         path: '/ppmp',

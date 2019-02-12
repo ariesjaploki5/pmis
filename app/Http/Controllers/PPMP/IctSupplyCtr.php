@@ -13,7 +13,7 @@ class IctSupplyCtr extends Controller
     public function index()
     {
         $ppmps = Ppmp::with('ict_supplies')->orderBy('id', 'desc')->get();
-
+        
         return response()->json($ppmps);
     }
 
@@ -30,7 +30,8 @@ class IctSupplyCtr extends Controller
         for($i = 0; $i < $count; $i++)
         {
             $estimated_cost = $request->items[$i]['cost_per_unit'] * $request->items[$i]['quantity'];
-            $ppmp = IctSupply::create([
+
+            $ict_supply = IctSupply::create([
                 'description' => $request->items[$i]['description'],
                 'specification' => $request->items[$i]['specification'],
                 'cost_per_unit' => $request->items[$i]['cost_per_unit'],
@@ -39,6 +40,7 @@ class IctSupplyCtr extends Controller
                 'ppmp_id' => $ppmp->id,
                 'status' => 'pending',
             ]);
+
         }
         
 
@@ -53,5 +55,12 @@ class IctSupplyCtr extends Controller
     public function destroy($id)
     {
         
+        $ppmp = Ppmp::where('id', $id)->first();
+        
+        if($ppmp != null){
+            $ppmp->delete();
+            $ict_supply = IctSupply::where('ppmp_id', $id)->delete();
+        }        
+        return response()->json($ppmp);
     }
 }

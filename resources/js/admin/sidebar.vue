@@ -42,19 +42,19 @@
                 </a>
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
-                        <router-link to='/ppmp_ict_supplies' class="nav-link">
+                        <router-link to='/ppmp_drugs_and_medicines' class="nav-link">
                             <i class="nav-icon fas fa-balance-scale ml-3"></i>
                             <p>PPMP</p>
                         </router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link to='#' class="nav-link">
+                        <router-link to='/ap_drugs_and_medicines' class="nav-link">
                             <i class="nav-icon fas fa-wallet ml-3"></i>
                             <p>APP</p>
                         </router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link to='/purchase_requests' class="nav-link">
+                        <router-link to='/pr_drugs_and_medicines' class="nav-link">
                             <i class="nav-icon fas fa-shopping-cart ml-3"></i>
                             <p>Requests</p>
                         </router-link>

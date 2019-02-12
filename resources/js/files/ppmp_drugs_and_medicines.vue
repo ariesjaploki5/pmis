@@ -1,11 +1,14 @@
+<template>
+    
+</template>
 
 <template>
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <div class="row">
+                <!-- <div class="row">
                     <div class="card-title col-6">
-                        ICT SUPPLIES
+                        Drugs and Medicines
                     </div>
                     <div class="col-6 text-right">
                         <button class="btn btn-sm btn-primary" @click="create_ppmp">add</button>
@@ -13,8 +16,8 @@
                             <div class="modal-dialog modal-xl" role="document">
                                 <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 v-show="!editmode" class="modal-title" id="ppmp_modal_label">Add New ppmp</h5>
-                                    <h5 v-show="editmode" class="modal-title" id="ppmp_modal_label">Update ppmp</h5>
+                                    <h5 v-show="!editmode" class="modal-title" id="ppmp_modal_label">Add New PPMP</h5>
+                                    <h5 v-show="editmode" class="modal-title" id="ppmp_modal_label">Update PPMP</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                     </button>
@@ -66,6 +69,14 @@
                             </div>
                         </div>
                     </div>
+                </div> -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group row justify-content-center">
+                            <input type="text" class="form-control col-md-8" name="" id="" aria-describedby="helpId" placeholder="">
+                            <button type="button" class="btn btn-primary btn-md ml-2 "><i class="fas fa-search"></i></button>
+                        </div>
+                    </div>
                 </div>
                 <div class="row">
                     <table class="table">
@@ -84,40 +95,32 @@
                             <tr v-for="ppmp in ppmps" :key="ppmp.id">
                                 <td>{{ ppmp.id }}</td>
                                 <td>
-                                    <div v-for="item in ppmp.ict_supplies" :key="item.id">
+                                    <div v-for="item in ppmp.drugs_and_medicines" :key="item.id">
                                         <p>{{ item.description }}</p>
                                     </div>
                                 </td>
                                 <td>
-                                    <div v-for="item in ppmp.ict_supplies" :key="item.id">
+                                    <div v-for="item in ppmp.drugs_and_medicines" :key="item.id">
                                         <p>{{ item.specification }}</p>
                                     </div>
                                 </td>
                                 <td>
-                                    <div v-for="item in ppmp.ict_supplies" :key="item.id">
+                                    <div v-for="item in ppmp.drugs_and_medicines" :key="item.id">
                                         <p>{{ item.cost_per_unit }}</p>
                                     </div>
                                 </td>
                                 <td>
-                                    <div v-for="item in ppmp.ict_supplies" :key="item.id">
+                                    <div v-for="item in ppmp.drugs_and_medicines" :key="item.id">
                                         <p>{{ item.quantity }}</p>
                                     </div>
                                 </td>
                                 <td>
-                                    <div v-for="item in ppmp.ict_supplies" :key="item.id">
+                                    <div v-for="item in ppmp.drugs_and_medicines" :key="item.id">
                                         <p>{{ item.estimated_cost }}</p>
                                     </div>
                                 </td>
                                 <td>
-                                    <div class="btn-group dropleft">
-                                        <button class="btn btn-outline-info btn-sm dropdown-toggle text-bold" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            Action
-                                        </button>
-                                        <div class="dropdown-menu">
-                                            <a class="dropdown-item" @click="edit_ppmp(ppmp)">Edit</a>
-                                            <a class="dropdown-item" @click="delete_ppmp(ppmp.id)">Delete</a>
-                                        </div>
-                                    </div>
+                                    
                                 </td>
                             </tr>
                         </tbody>
@@ -136,8 +139,11 @@ export default {
             form: new Form({
                 id: '',
                 items: [{
+                    dmdcomb: "",
+                    dmdctr: "",
                     description: "",
                     specification: "",
+                    unit_id: "",
                     cost_per_unit: "",
                     quantity: "",
                     estimated_cost: "",
@@ -159,28 +165,19 @@ export default {
             this.form.reset();
             $('#ppmp_modal').modal('show');
         },
-        add_new_item(){
+        add_new_item(item){
             this.form.items.push({
-                    description: "",
-                    specification: "",
-                    cost_per_unit: "",
+                    dmdcomb: item.dmdcomb,
+                    dmdctr: item.dmdcomb,
+                    description: item.description,
+                    specification: item.specification,
+                    cost_per_unit: item.cost_per_unit,
                     quantity: "",
                     estimated_cost: "",
 				});
         },
         store_ppmp(){
-            this.$Progress.start();
-            this.form.post('api/ict_supply/'+this.user_id).then(() => {
-                Fire.$emit('success');
-                $('#ppmp_modal').modal('hide');
-                    toast({
-                        type: 'success',
-                        title: 'Added Successfully'
-                    });
-                this.$Progress.finish();
-            }).catch(() =>{
-                this.$Progress.fail();
-            })
+            
         },
         edit_ppmp(ppmp){
             this.editmode = true;
@@ -188,25 +185,10 @@ export default {
             $('#ppmp_modal').modal('show');
         },
         update_ppmp(){
-            this.$Progress.start();
-            this.form.put('api/ict_supply/'+this.form.id).then(() => {
-                Fire.$emit('success');
-                $('#ppmp_modal').modal('hide');
-                    toast({
-                        type: 'success',
-                        title: 'Added Successfully'
-                    });
-                this.$Progress.finish();
-            }).catch(() => {
-                this.$Progress.fail();
-            })
+            
         },
         delete_ppmp(id){
-            axios.delete('api/ict_supply/'+id).then(() => {
-
-            }).catch(() => {
-
-            });
+            
         },
     },
     created(){

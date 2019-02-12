@@ -16,7 +16,7 @@ class IctSupply extends Model
 
     public function ppmp()
     {
-        return $this->hasOne('App\Ppmp');
+        return $this->belongsTo('App\Ppmp');
     }
 
 

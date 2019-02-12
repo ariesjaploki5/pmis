@@ -115,11 +115,11 @@ Route::group(['prefix' => 'auth'], function ($router) {
     Route::post('ppmp', 'PpmpCtr@store');
     Route::get('ppmp', 'PpmpCtr@index');
 
-    Route::group(['prefix' => 'ppmp'], function (){
-        Route::get('/ict_supply', 'PPMP\IctSupplyCtr@index');
-        Route::post('/ict_supply/{id}', 'PPMP\IctSupplyCtr@store');
-        Route::put('/ict_supply/{id}', 'PPMP\IctSupplyCtr@update');
-        Route::delete('/ict_supply/{id}/delete', 'PPMP\IctSupplyCtr@destroy');
-    });
 
-    
+    Route::get('/ict_supply', 'PPMP\IctSupplyCtr@index');
+    Route::post('/ict_supply/{id}', 'PPMP\IctSupplyCtr@store');
+    Route::put('/ict_supply/{id}', 'PPMP\IctSupplyCtr@update');
+    Route::delete('/ict_supply/{id}', 'PPMP\IctSupplyCtr@destroy');
+
+
+    Route::get('/drugs_and_medicines', 'DrugsAndMedicinesCtr@index');
