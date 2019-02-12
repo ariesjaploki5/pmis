@@ -123,3 +123,4 @@ Route::group(['prefix' => 'auth'], function ($router) {
 
 
     Route::get('/drugs_and_medicines', 'DrugsAndMedicinesCtr@index');
+    Route::post('/drugs_and_medicines/search', 'DrugsAndMedicinesCtr@search');
