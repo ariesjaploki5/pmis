@@ -21,17 +21,15 @@
                     
                         <table class="table table-hover" style="overflow-y: auto; height:40rem; width:100%;display:block;">
                         <tbody>
-                            <tr v-for="dm in dms" :key="dm.id" style="">
+                            <tr v-for="dm in dms" :key="dm.id">
                                 <td class="col">
                                     <span class="text-capitalize">{{ dm.gendesc }}</span>
-                                
                                     <span class="badge badge-pill badge-primary pb-0"><h6>{{ dm.formdesc }}</h6> </span>
-                                
                                     <span class="badge badge-pill badge-success pb-0"><h6>{{ dm.dmdnost }} {{ dm.stredesc }}</h6></span>
                                 </td>
                                 <td class="col">
                                     <div class="text-right">
-                                        <button type="button" class="btn btn-primary btn-sm">Add <i class="fas fa-plus"></i></button>
+                                        <button type="button" class="btn btn-primary btn-sm" @click="add_item(dm)">Add <i class="fas fa-plus-circle"></i></button>
                                     </div>
                                 </td>
                             </tr>
@@ -60,9 +58,19 @@
                     PPMP
                 </div>
                 <div class="row">
-                    <table class="table" height="648rem">
-                        
-                        
+                    <table class="table table-hover" style="overflow-y: auto; height:40rem; width:100%;display:block;">
+                        <tr v-for="item in items" :key="item.id">
+                            <td class="col">
+                                <span class="text-capitalize">{{ item.gendesc }}</span>
+                                <span class="badge badge-pill badge-primary pb-0"><h6>{{ item.formdesc }}</h6> </span>
+                                <span class="badge badge-pill badge-success pb-0"><h6>{{ item.dmdnost }} {{ item.stredesc }}</h6></span>
+                            </td>
+                            <td class="col">
+                                <div class="text-right">
+                                    <button type="button" class="btn btn-danger btn-sm">Remove <i class="fas fa-minus-circle"></i></button>
+                                </div>
+                            </td>
+                        </tr>
                     </table>
                 </div>
             </div>
@@ -80,39 +88,32 @@ export default {
             form_search: new Form({
                 search: '',
             }),
-            form: new Form({
-                id: '',
-                items: [{
-
-                }]
-            }),
-            
+            items: {},
         }
     },
     methods: {
         load_all(){
-           
+           this.my_items();
         },
         get_search(){
             this.form_search.post('api/drugs_and_medicines/search').then(({data}) => this.dms = data);
         },
 
-        create_ppmp(){
-            this.editmode = false;
-            this.form.reset();
-            $('#ppmp_modal').modal('show');
+        my_items(){
+            axios.get('api/drugs_and_medicines/'+this.user_id).then(({data}) => this.items = data);
         },
-        add_new_item(item){
-            this.form.items.push({
-                    dmdcomb: item.dmdcomb,
-                    dmdctr: item.dmdcomb,
-                    description: item.description,
-                    specification: item.specification,
-                    cost_per_unit: item.cost_per_unit,
-                    quantity: "",
-                    estimated_cost: "",
-				});
+
+        add_item(dm){
+            axios.post('api/drugs_and_medicines/'+dm.dmdcomb+'/'+dm.dmdctr+'/'+this.user_id).then(() => {
+                this.my_items();
+            });
         },
+
+        remove_item(dm){
+            axios.delete('api/drugs_and_medicines/'+dm.dmdcomb+'/'+dm.dmdctr+'/'+this.user_id).then(() => {
+                this.my_items();
+            });
+        }
 
     },
     created(){

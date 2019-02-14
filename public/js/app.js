@@ -4195,6 +4195,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -4204,14 +4215,13 @@ __webpack_require__.r(__webpack_exports__);
       form_search: new Form({
         search: ''
       }),
-      form: new Form({
-        id: '',
-        items: [{}]
-      })
+      items: {}
     };
   },
   methods: {
-    load_all: function load_all() {},
+    load_all: function load_all() {
+      this.my_items();
+    },
     get_search: function get_search() {
       var _this = this;
 
@@ -4220,29 +4230,35 @@ __webpack_require__.r(__webpack_exports__);
         return _this.dms = data;
       });
     },
-    create_ppmp: function create_ppmp() {
-      this.editmode = false;
-      this.form.reset();
-      $('#ppmp_modal').modal('show');
+    my_items: function my_items() {
+      var _this2 = this;
+
+      axios.get('api/drugs_and_medicines/' + this.user_id).then(function (_ref2) {
+        var data = _ref2.data;
+        return _this2.items = data;
+      });
     },
-    add_new_item: function add_new_item(item) {
-      this.form.items.push({
-        dmdcomb: item.dmdcomb,
-        dmdctr: item.dmdcomb,
-        description: item.description,
-        specification: item.specification,
-        cost_per_unit: item.cost_per_unit,
-        quantity: "",
-        estimated_cost: ""
+    add_item: function add_item(dm) {
+      var _this3 = this;
+
+      axios.post('api/drugs_and_medicines/' + dm.dmdcomb + '/' + dm.dmdctr + '/' + this.user_id).then(function () {
+        _this3.my_items();
+      });
+    },
+    remove_item: function remove_item(dm) {
+      var _this4 = this;
+
+      axios.delete('api/drugs_and_medicines/' + dm.dmdcomb + '/' + dm.dmdctr + '/' + this.user_id).then(function () {
+        _this4.my_items();
       });
     }
   },
   created: function created() {
-    var _this2 = this;
+    var _this5 = this;
 
     this.load_all();
     Fire.$on('success', function () {
-      _this2.load_all();
+      _this5.load_all();
     });
   },
   computed: {
@@ -63528,7 +63544,7 @@ var render = function() {
                         },
                         [
                           _c("i", {
-                            staticClass: "nav-icon fas fa-balance-scale ml-3"
+                            staticClass: "nav-icon fas fa-balance-scale"
                           }),
                           _vm._v(" "),
                           _c("p", [_vm._v("PPMP")])
@@ -63549,9 +63565,7 @@ var render = function() {
                           attrs: { to: "/ap_drugs_and_medicines" }
                         },
                         [
-                          _c("i", {
-                            staticClass: "nav-icon fas fa-wallet ml-3"
-                          }),
+                          _c("i", { staticClass: "nav-icon fas fa-wallet" }),
                           _vm._v(" "),
                           _c("p", [_vm._v("APP")])
                         ]
@@ -63572,7 +63586,7 @@ var render = function() {
                         },
                         [
                           _c("i", {
-                            staticClass: "nav-icon fas fa-shopping-cart ml-3"
+                            staticClass: "nav-icon fas fa-shopping-cart"
                           }),
                           _vm._v(" "),
                           _c("p", [_vm._v("Requests")])
@@ -63599,9 +63613,7 @@ var render = function() {
                           attrs: { to: "/categories" }
                         },
                         [
-                          _c("i", {
-                            staticClass: "nav-icon fas fa-copyright ml-3"
-                          }),
+                          _c("i", { staticClass: "nav-icon fas fa-copyright" }),
                           _vm._v(" "),
                           _c("p", [_vm._v("Categories")])
                         ]
@@ -63622,7 +63634,7 @@ var render = function() {
                         },
                         [
                           _c("i", {
-                            staticClass: "nav-icon fas fa-info-circle ml-3"
+                            staticClass: "nav-icon fas fa-info-circle"
                           }),
                           _vm._v(" "),
                           _c("p", [_vm._v("Pap Codes")])
@@ -63643,9 +63655,7 @@ var render = function() {
                           attrs: { to: "/mode_of_procurements" }
                         },
                         [
-                          _c("i", {
-                            staticClass: "nav-icon fas fa-suitcase ml-3"
-                          }),
+                          _c("i", { staticClass: "nav-icon fas fa-suitcase" }),
                           _vm._v(" "),
                           _c("p", [_vm._v("Mode of Procurements")])
                         ]
@@ -63663,7 +63673,7 @@ var render = function() {
                         { staticClass: "nav-link", attrs: { to: "/pmos" } },
                         [
                           _c("i", {
-                            staticClass: "nav-icon fas fa-address-card ml-3"
+                            staticClass: "nav-icon fas fa-address-card"
                           }),
                           _vm._v(" "),
                           _c("p", [_vm._v("PMO/End-User")])
@@ -63685,7 +63695,7 @@ var render = function() {
                         },
                         [
                           _c("i", {
-                            staticClass: "nav-icon fas fa-money-bill-alt ml-3"
+                            staticClass: "nav-icon fas fa-money-bill-alt"
                           }),
                           _vm._v(" "),
                           _c("p", [_vm._v("Source of Funds")])
@@ -63703,7 +63713,7 @@ var render = function() {
                         "router-link",
                         { staticClass: "nav-link", attrs: { to: "/units" } },
                         [
-                          _c("i", { staticClass: "nav-icon fas fa-info ml-3" }),
+                          _c("i", { staticClass: "nav-icon fas fa-info" }),
                           _vm._v(" "),
                           _c("p", [_vm._v("Units")])
                         ]
@@ -63730,7 +63740,7 @@ var render = function() {
                         },
                         [
                           _c("i", {
-                            staticClass: "nav-icon fas fa-prescription ml-3"
+                            staticClass: "nav-icon fas fa-prescription"
                           }),
                           _vm._v(" "),
                           _c("p", [_vm._v("Drugs and Medicines")])
@@ -63751,9 +63761,7 @@ var render = function() {
                           attrs: { to: "/ict_supplies" }
                         },
                         [
-                          _c("i", {
-                            staticClass: "nav-icon fas fa-tools ml-3"
-                          }),
+                          _c("i", { staticClass: "nav-icon fas fa-tools" }),
                           _vm._v(" "),
                           _c("p", [_vm._v("ICT Supplies")])
                         ]
@@ -63780,7 +63788,7 @@ var render = function() {
                         },
                         [
                           _c("i", {
-                            staticClass: "nav-icon fas fa-user-shield ml-3"
+                            staticClass: "nav-icon fas fa-user-shield"
                           }),
                           _vm._v(" "),
                           _c("p", [_vm._v("Access Level")])
@@ -63798,7 +63806,7 @@ var render = function() {
                         "router-link",
                         { staticClass: "nav-link", attrs: { to: "/heads" } },
                         [
-                          _c("i", { staticClass: "nav-icon fas fa-user ml-3" }),
+                          _c("i", { staticClass: "nav-icon fas fa-user" }),
                           _vm._v(" "),
                           _c("p", [_vm._v("Heads")])
                         ]
@@ -63819,7 +63827,7 @@ var render = function() {
                         },
                         [
                           _c("i", {
-                            staticClass: "nav-icon fas fa-hospital-alt ml-3"
+                            staticClass: "nav-icon fas fa-hospital-alt"
                           }),
                           _vm._v(" "),
                           _c("p", [_vm._v("Divisions")])
@@ -63840,9 +63848,7 @@ var render = function() {
                           attrs: { to: "/departments" }
                         },
                         [
-                          _c("i", {
-                            staticClass: "nav-icon fas fa-building ml-3"
-                          }),
+                          _c("i", { staticClass: "nav-icon fas fa-building" }),
                           _vm._v(" "),
                           _c("p", [_vm._v("Departments")])
                         ]
@@ -63862,9 +63868,7 @@ var render = function() {
                           attrs: { to: "/employees" }
                         },
                         [
-                          _c("i", {
-                            staticClass: "nav-icon fas fa-users ml-3"
-                          }),
+                          _c("i", { staticClass: "nav-icon fas fa-users" }),
                           _vm._v(" "),
                           _c("p", [_vm._v("Employees")])
                         ]
@@ -63881,9 +63885,7 @@ var render = function() {
                         "router-link",
                         { staticClass: "nav-link", attrs: { to: "/users" } },
                         [
-                          _c("i", {
-                            staticClass: "nav-icon fas fa-users ml-3"
-                          }),
+                          _c("i", { staticClass: "nav-icon fas fa-users" }),
                           _vm._v(" "),
                           _c("p", [_vm._v("Users")])
                         ]
@@ -63927,7 +63929,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("a", { staticClass: "nav-link" }, [
+    return _c("a", { staticClass: "nav-link", attrs: { href: "" } }, [
       _c("i", { staticClass: "nav-icon fas fa-calendar" }),
       _vm._v(" "),
       _c("p", [_vm._v("Purchase Request")])
@@ -67737,7 +67739,26 @@ var render = function() {
                             )
                           ]),
                           _vm._v(" "),
-                          _vm._m(1, true)
+                          _c("td", { staticClass: "col" }, [
+                            _c("div", { staticClass: "text-right" }, [
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn btn-primary btn-sm",
+                                  attrs: { type: "button" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.add_item(dm)
+                                    }
+                                  }
+                                },
+                                [
+                                  _vm._v("Add "),
+                                  _c("i", { staticClass: "fas fa-plus-circle" })
+                                ]
+                              )
+                            ])
+                          ])
                         ])
                       }),
                       0
@@ -67745,12 +67766,65 @@ var render = function() {
                   ]
                 )
               ])
-            : _c("div", { staticClass: "row" }, [_vm._m(2)])
+            : _c("div", { staticClass: "row" }, [_vm._m(1)])
         ])
       ])
     ]),
     _vm._v(" "),
-    _vm._m(3)
+    _c("div", { staticClass: "col-md-6" }, [
+      _c("div", { staticClass: "card" }, [
+        _c("div", { staticClass: "card-body" }, [
+          _c("div", { staticClass: "card-title" }, [
+            _vm._v("\r\n                    PPMP\r\n                ")
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "row" }, [
+            _c(
+              "table",
+              {
+                staticClass: "table table-hover",
+                staticStyle: {
+                  "overflow-y": "auto",
+                  height: "40rem",
+                  width: "100%",
+                  display: "block"
+                }
+              },
+              _vm._l(_vm.items, function(item) {
+                return _c("tr", { key: item.id }, [
+                  _c("td", { staticClass: "col" }, [
+                    _c("span", { staticClass: "text-capitalize" }, [
+                      _vm._v(_vm._s(item.gendesc))
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "span",
+                      { staticClass: "badge badge-pill badge-primary pb-0" },
+                      [_c("h6", [_vm._v(_vm._s(item.formdesc))])]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "span",
+                      { staticClass: "badge badge-pill badge-success pb-0" },
+                      [
+                        _c("h6", [
+                          _vm._v(
+                            _vm._s(item.dmdnost) + " " + _vm._s(item.stredesc)
+                          )
+                        ])
+                      ]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _vm._m(2, true)
+                ])
+              }),
+              0
+            )
+          ])
+        ])
+      ])
+    ])
   ])
 }
 var staticRenderFns = [
@@ -67768,20 +67842,6 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("td", { staticClass: "col" }, [
-      _c("div", { staticClass: "text-right" }, [
-        _c(
-          "button",
-          { staticClass: "btn btn-primary btn-sm", attrs: { type: "button" } },
-          [_vm._v("Add "), _c("i", { staticClass: "fas fa-plus" })]
-        )
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("table", { staticClass: "table", attrs: { height: "600rem" } }, [
       _c("tbody", [_c("tr", [_c("td"), _vm._v(" "), _c("td")])])
     ])
@@ -67790,17 +67850,13 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-6" }, [
-      _c("div", { staticClass: "card" }, [
-        _c("div", { staticClass: "card-body" }, [
-          _c("div", { staticClass: "card-title" }, [
-            _vm._v("\r\n                    PPMP\r\n                ")
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "row" }, [
-            _c("table", { staticClass: "table", attrs: { height: "648rem" } })
-          ])
-        ])
+    return _c("td", { staticClass: "col" }, [
+      _c("div", { staticClass: "text-right" }, [
+        _c(
+          "button",
+          { staticClass: "btn btn-danger btn-sm", attrs: { type: "button" } },
+          [_vm._v("Remove "), _c("i", { staticClass: "fas fa-minus-circle" })]
+        )
       ])
     ])
   }

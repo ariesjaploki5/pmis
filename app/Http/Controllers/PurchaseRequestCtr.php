@@ -36,8 +36,6 @@ class PurchaseRequestCtr extends Controller
             $total_cost = $item_cost->cost * $request->items[$i]['quantity'];
             $pr->items()->attach($pr->id, ['item_id' => $request->items[$i]['id'], 'quantity' => $request->items[$i]['quantity'], 'total_cost' => $total_cost]);
         }
-        
-        
         return response($pr->id, Response::HTTP_CREATED);
     }
 
@@ -51,11 +49,8 @@ class PurchaseRequestCtr extends Controller
     {
         $pr = PR::findOrFail($id);
         $count = count($request->item_id);
-
         $item_ids = $request->items;
-
         $quantities = $request->quanity;
-
         return response($pr, Response::HTTP_CREATED);
     }
 

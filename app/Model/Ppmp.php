@@ -7,9 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class Ppmp extends Model
 {
     protected $table = 'j10.pams_ppmps';
+    protected $primaryKey = '[id]';
     public $timestamps = false;
     protected $fillable = [
-        'type', 'user_id'
+        'type', 'user_id', 'status'
     ];
 
     public function pap_codes()

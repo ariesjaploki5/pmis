@@ -36,26 +36,26 @@
                 </router-link>
               </li>
               <li class="nav-item has-treeview">
-                <a class="nav-link">
+                <a href="" class="nav-link">
                     <i class="nav-icon fas fa-calendar"></i>
                     <p>Purchase Request</p>
                 </a>
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
                         <router-link to='/ppmp_drugs_and_medicines' class="nav-link">
-                            <i class="nav-icon fas fa-balance-scale ml-3"></i>
+                            <i class="nav-icon fas fa-balance-scale"></i>
                             <p>PPMP</p>
                         </router-link>
                     </li>
                     <li class="nav-item">
                         <router-link to='/ap_drugs_and_medicines' class="nav-link">
-                            <i class="nav-icon fas fa-wallet ml-3"></i>
+                            <i class="nav-icon fas fa-wallet"></i>
                             <p>APP</p>
                         </router-link>
                     </li>
                     <li class="nav-item">
                         <router-link to='/pr_drugs_and_medicines' class="nav-link">
-                            <i class="nav-icon fas fa-shopping-cart ml-3"></i>
+                            <i class="nav-icon fas fa-shopping-cart"></i>
                             <p>Requests</p>
                         </router-link>
                     </li>
@@ -70,37 +70,37 @@
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
                         <router-link to='/categories' class="nav-link">
-                            <i class="nav-icon fas fa-copyright ml-3"></i>
+                            <i class="nav-icon fas fa-copyright"></i>
                             <p>Categories</p>
                         </router-link>
                     </li>
                     <li class="nav-item">
                         <router-link to='/pap_codes' class="nav-link">
-                            <i class="nav-icon fas fa-info-circle ml-3"></i>
+                            <i class="nav-icon fas fa-info-circle"></i>
                             <p>Pap Codes</p>
                         </router-link>
                     </li>
                     <li class="nav-item">
                         <router-link to='/mode_of_procurements' class="nav-link">
-                            <i class="nav-icon fas fa-suitcase ml-3"></i>
+                            <i class="nav-icon fas fa-suitcase"></i>
                             <p>Mode of Procurements</p>
                         </router-link>
                     </li>
                     <li class="nav-item">
                         <router-link to='/pmos' class="nav-link">
-                            <i class="nav-icon fas fa-address-card ml-3"></i>
+                            <i class="nav-icon fas fa-address-card"></i>
                             <p>PMO/End-User</p>
                         </router-link>
                     </li>
                     <li class="nav-item">
                         <router-link to='/source_of_funds' class="nav-link">
-                            <i class="nav-icon fas fa-money-bill-alt ml-3"></i>
+                            <i class="nav-icon fas fa-money-bill-alt"></i>
                             <p>Source of Funds</p>
                         </router-link>
                     </li>
                     <li class="nav-item">
                         <router-link to='/units' class="nav-link">
-                            <i class="nav-icon fas fa-info ml-3"></i>
+                            <i class="nav-icon fas fa-info"></i>
                             <p>Units</p>
                         </router-link>
                     </li>
@@ -114,25 +114,25 @@
                     <ul class="nav nav-treeview">
                         <!-- <li class="nav-item">
                             <router-link to="/accountable_forms" class="nav-link">
-                            <i class="fa fa-circle-o nav-icon ml-3"></i>
+                            <i class="fa fa-circle-o nav-icon"></i>
                             <p>Accountable Forms</p>
                             </router-link>
                         </li> -->
                         <li class="nav-item">
                             <router-link to="/drugs_and_medicines" class="nav-link">
-                            <i class="nav-icon fas fa-prescription ml-3"></i>
+                            <i class="nav-icon fas fa-prescription"></i>
                             <p>Drugs and Medicines</p>
                             </router-link>
                         </li>
                         <li class="nav-item">
                             <router-link to="/ict_supplies" class="nav-link">
-                            <i class="nav-icon fas fa-tools ml-3"></i>
+                            <i class="nav-icon fas fa-tools"></i>
                             <p>ICT Supplies</p>
                             </router-link>
                         </li>
                         <!-- <li class="nav-item">
                             <router-link to="/medical_dental_and_laboratory_supplies" class="nav-link">
-                            <i class="fa fa-circle-o nav-icon ml-3"></i>
+                            <i class="fa fa-circle-o nav-icon"></i>
                             <p>Medical, Dental and Laboratory Supplies</p>
                             </router-link>
                         </li> -->
@@ -146,37 +146,37 @@
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
                         <router-link to='/access_levels' class="nav-link">
-                            <i class="nav-icon fas fa-user-shield ml-3"></i>
+                            <i class="nav-icon fas fa-user-shield"></i>
                             <p>Access Level</p>
                         </router-link>
                     </li>
                     <li class="nav-item">
                         <router-link to='/heads' class="nav-link">
-                            <i class="nav-icon fas fa-user ml-3"></i>
+                            <i class="nav-icon fas fa-user"></i>
                             <p>Heads</p>
                         </router-link>
                     </li>
                     <li class="nav-item">
                         <router-link to='/divisions' class="nav-link">
-                            <i class="nav-icon fas fa-hospital-alt ml-3"></i>
+                            <i class="nav-icon fas fa-hospital-alt"></i>
                             <p>Divisions</p>
                         </router-link>
                     </li>
                     <li class="nav-item">
                         <router-link to='/departments' class="nav-link">
-                            <i class="nav-icon fas fa-building ml-3"></i>
+                            <i class="nav-icon fas fa-building"></i>
                             <p>Departments</p>
                         </router-link>
                     </li>
                     <li class="nav-item">
                         <router-link to='/employees' class="nav-link">
-                            <i class="nav-icon fas fa-users ml-3"></i>
+                            <i class="nav-icon fas fa-users"></i>
                             <p>Employees</p>
                         </router-link>
                     </li>
                     <li class="nav-item">
                         <router-link to='/users' class="nav-link">
-                            <i class="nav-icon fas fa-users ml-3"></i>
+                            <i class="nav-icon fas fa-users"></i>
                             <p>Users</p>
                         </router-link>
                     </li>
