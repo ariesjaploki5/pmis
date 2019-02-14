@@ -8,6 +8,7 @@ use App\Model\DrugsAndMedicines\Hgen;
 use App\Model\DrugsAndMedicines\Hdruggrp;
 use App\Model\DrugsAndMedicines\Hroute;
 use App\Model\DrugsAndMedicines\Hstre;
+use App\Model\DrugsAndMedicines\Cart;
 use DB;
 
 
@@ -34,13 +35,41 @@ class DrugsAndMedicinesCtr extends Controller
         ->join('hospital.dbo.hform as hform', 'hdmhdr.formcode', '=', 'hform.formcode')
         ->leftjoin('hospital.dbo.hroute as hroute', 'hdmhdr.rtecode', '=', 'hroute.rtecode')
         ->leftjoin('hospital.dbo.hstre as stre', 'hdmhdr.strecode', '=', 'stre.strecode')
-        ->where('gendesc', 'like', '%' . $search . '%')
+        ->where('gendesc', 'like', $search . '%')
         ->orderBy('gendesc')
         ->orderBy('stredesc')
+        ->where('dmdstat', 'A')
+        ->where('grpstat', 'A')
+        ->where('genstat', 'A')
+        ->where('rtestat', 'A')
+        ->where('formstat', 'A')
         // ->select(['gendesc', 'formdesc', 'rtedesc', 'dmdrxot', 'dmdnost', 'stredesc'])
         ->get();
 
-        // $dm = Hgen::with('hdruggrps.hdmhdr')->where('gendesc', 'like', '%' . $search . '%')->select('gendesc')->get();
+        
         return response()->json($dm);
+    }
+
+
+    public function add(Request $request, $dmdcomb, $dmdctr, $user_id)
+    {
+        
+
+        return reponse()->json();
+    }
+
+    public function remove(Request $request, $dmdcomb, $dmdctr, $user_id)
+    {
+        $dm_remove = Cart::where('dmdcomb', $dmdcomb)->where('dmdctr', $dmdctr)->get();
+        
+        $dm = $this->cart($user_id);
+        return response()->json($dm);
+    }
+
+    public function cart($user_id)
+    {
+        $dm = Cart::hdmhdrs($user_id)->get();
+
+        return $dm;
     }
 }

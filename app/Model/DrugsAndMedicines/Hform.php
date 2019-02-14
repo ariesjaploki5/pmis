@@ -7,10 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class Hform extends Model
 {
     protected $table = 'hospital.dbo.hdruggrp';
-    protected $primaryKey = '[grpcode]';
+    protected $primaryKey = '[formcode]';
     public $timestamps = false;
 
     protected $fillable = [
-        
+        'formcode'
     ];
 }

@@ -124,3 +124,8 @@ Route::group(['prefix' => 'auth'], function ($router) {
 
     Route::get('/drugs_and_medicines', 'DrugsAndMedicinesCtr@index');
     Route::post('/drugs_and_medicines/search', 'DrugsAndMedicinesCtr@search');
+    Route::post('/drugs_and_medicines/{dmdcomb}/{dmdctr}', 'DrugsAndMedicinesCtr@add');
+    Route::delete('/drugs_and_medicines/{dmdcomb}/{dmdctr}', 'DrugsAndMedicinesCtr@remove');
+
+
+    Route::get('/drugs_and_medicines_cart', 'DrugsAndMedicinesCtr@cart');

@@ -46,4 +46,8 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany('App\Model\PPMP\IctSupply');
     }
     
+    public function carts()
+    {
+        return $this->hasMany('App\Model\DrugsAndMedicines\Cart');
+    }
 }
