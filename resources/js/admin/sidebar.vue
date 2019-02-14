@@ -36,7 +36,7 @@
                 </router-link>
               </li>
               <li class="nav-item has-treeview">
-                <a href='/#' class="nav-link">
+                <a class="nav-link">
                     <i class="nav-icon fas fa-calendar"></i>
                     <p>Purchase Request</p>
                 </a>
@@ -61,6 +61,7 @@
                     </li>
                 </ul>
               </li>
+              
               <li class="nav-item has-treeview">
                 <a href='/#' class="nav-link">
                     <i class="nav-icon fas fa-folder-open"></i>

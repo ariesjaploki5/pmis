@@ -14,6 +14,7 @@
     <body class="hold-transition sidebar-mini">
         <div id="app">
             <appvue></appvue>
+            
         </div>
         <script src="{{ asset('js/app.js')}}"></script>
     </body>

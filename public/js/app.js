@@ -2017,6 +2017,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'app-sidebar',
   methods: {
@@ -4162,39 +4163,60 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       editmode: false,
-      ppmps: {},
+      dms: {},
       search: '',
+      form_search: new Form({
+        search: ''
+      }),
       form: new Form({
         id: '',
-        items: [{
-          dmdcomb: "",
-          dmdctr: "",
-          description: "",
-          specification: "",
-          unit_id: "",
-          cost_per_unit: "",
-          quantity: "",
-          estimated_cost: ""
-        }]
+        items: [{}]
       })
     };
   },
   methods: {
-    load_all: function load_all() {// this.get_ict_supplies();
-    },
-    search: function search() {
-      axios.get('api/drugs_and_medicines/' + this.search);
-    },
-    get_ict_supplies: function get_ict_supplies() {
+    load_all: function load_all() {},
+    get_search: function get_search() {
       var _this = this;
 
-      axios.get('api/drugs_and_medicines').then(function (_ref) {
+      this.form_search.post('api/drugs_and_medicines/search').then(function (_ref) {
         var data = _ref.data;
-        return _this.ppmps = data;
+        return _this.dms = data;
       });
     },
     create_ppmp: function create_ppmp() {
@@ -4212,15 +4234,7 @@ __webpack_require__.r(__webpack_exports__);
         quantity: "",
         estimated_cost: ""
       });
-    },
-    store_ppmp: function store_ppmp() {},
-    edit_ppmp: function edit_ppmp(ppmp) {
-      this.editmode = true;
-      this.form.fill(ppmp);
-      $('#ppmp_modal').modal('show');
-    },
-    update_ppmp: function update_ppmp() {},
-    delete_ppmp: function delete_ppmp(id) {}
+    }
   },
   created: function created() {
     var _this2 = this;
@@ -63525,7 +63539,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("a", { staticClass: "nav-link", attrs: { href: "/#" } }, [
+    return _c("a", { staticClass: "nav-link" }, [
       _c("i", { staticClass: "nav-icon fas fa-calendar" }),
       _vm._v(" "),
       _c("p", [_vm._v("Purchase Request")])
@@ -67224,80 +67238,131 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "col-12" }, [
-    _c("div", { staticClass: "card" }, [
-      _c("div", { staticClass: "card-body" }, [
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-md-12" }, [
-            _c(
-              "div",
-              { staticClass: "form-group row justify-content-center" },
-              [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.search,
-                      expression: "search"
-                    }
-                  ],
-                  staticClass: "form-control col-md-8",
-                  attrs: {
-                    type: "text",
-                    name: "",
-                    id: "",
-                    "aria-describedby": "helpId",
-                    placeholder: ""
-                  },
-                  domProps: { value: _vm.search },
+  return _c("div", { staticClass: "row" }, [
+    _c("div", { staticClass: "col-md-6" }, [
+      _c("div", { staticClass: "card" }, [
+        _c("div", { staticClass: "card-body" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-md-12" }, [
+              _c(
+                "form",
+                {
                   on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.search = $event.target.value
+                    submit: function($event) {
+                      $event.preventDefault()
+                      _vm.get_search()
                     }
                   }
-                }),
-                _vm._v(" "),
+                },
+                [
+                  _c(
+                    "div",
+                    { staticClass: "form-group row justify-content-center" },
+                    [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.form_search.search,
+                            expression: "form_search.search"
+                          }
+                        ],
+                        staticClass: "form-control col-md-8",
+                        attrs: {
+                          type: "text",
+                          name: "",
+                          id: "",
+                          "aria-describedby": "helpId",
+                          placeholder: "search"
+                        },
+                        domProps: { value: _vm.form_search.search },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.form_search,
+                              "search",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm._m(0)
+                    ]
+                  )
+                ]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _vm.dms.length
+            ? _c("div", { staticClass: "row" }, [
                 _c(
-                  "button",
+                  "table",
                   {
-                    staticClass: "btn btn-primary btn-md ml-2",
-                    attrs: { type: "button" },
-                    on: { click: function($event) {} }
+                    staticClass: "table table-hover",
+                    staticStyle: {
+                      "overflow-y": "auto",
+                      height: "40rem",
+                      width: "100%",
+                      display: "block"
+                    }
                   },
-                  [_c("i", { staticClass: "fas fa-search" })]
-                )
-              ]
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _vm.ppmps.length
-          ? _c("div", { staticClass: "row" }, [
-              _c("table", { staticClass: "table" }, [
-                _vm._m(0),
-                _vm._v(" "),
-                _c(
-                  "tbody",
-                  _vm._l(_vm.ppmps, function(ppmp) {
-                    return _c("tr", { key: ppmp.id }, [
-                      _c("td"),
-                      _vm._v(" "),
-                      _c("td"),
-                      _vm._v(" "),
-                      _c("td")
-                    ])
-                  }),
-                  0
+                  [
+                    _c(
+                      "tbody",
+                      _vm._l(_vm.dms, function(dm) {
+                        return _c("tr", { key: dm.id }, [
+                          _c("td", { staticClass: "col" }, [
+                            _c("span", { staticClass: "text-capitalize" }, [
+                              _vm._v(_vm._s(dm.gendesc))
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "span",
+                              {
+                                staticClass:
+                                  "badge badge-pill badge-primary pb-0"
+                              },
+                              [_c("h6", [_vm._v(_vm._s(dm.formdesc))])]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "span",
+                              {
+                                staticClass:
+                                  "badge badge-pill badge-success pb-0"
+                              },
+                              [
+                                _c("h6", [
+                                  _vm._v(
+                                    _vm._s(dm.dmdnost) +
+                                      " " +
+                                      _vm._s(dm.stredesc)
+                                  )
+                                ])
+                              ]
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _vm._m(1, true)
+                        ])
+                      }),
+                      0
+                    )
+                  ]
                 )
               ])
-            ])
-          : _vm._e()
+            : _c("div", { staticClass: "row" }, [_vm._m(2)])
+        ])
       ])
-    ])
+    ]),
+    _vm._v(" "),
+    _vm._m(3)
   ])
 }
 var staticRenderFns = [
@@ -67305,13 +67370,49 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("th", [_vm._v("Description")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Specification")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Cost per Unit")])
+    return _c(
+      "button",
+      { staticClass: "btn btn-primary btn-md ml-2", attrs: { type: "submit" } },
+      [_c("i", { staticClass: "fas fa-search" })]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", { staticClass: "col" }, [
+      _c("div", { staticClass: "text-right" }, [
+        _c(
+          "button",
+          { staticClass: "btn btn-primary btn-sm", attrs: { type: "button" } },
+          [_vm._v("Add "), _c("i", { staticClass: "fas fa-plus" })]
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("table", { staticClass: "table", attrs: { height: "600rem" } }, [
+      _c("tbody", [_c("tr", [_c("td"), _vm._v(" "), _c("td")])])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-6" }, [
+      _c("div", { staticClass: "card" }, [
+        _c("div", { staticClass: "card-body" }, [
+          _c("div", { staticClass: "card-title" }, [
+            _vm._v("\r\n                    PPMP\r\n                ")
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "row" }, [
+            _c("table", { staticClass: "table", attrs: { height: "648rem" } })
+          ])
+        ])
       ])
     ])
   }
