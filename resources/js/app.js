@@ -1,17 +1,27 @@
 
 
 require('./bootstrap');
+
+
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Vuex from 'vuex';
 import { Form, HasError, AlertError } from 'vform';
+
+
 import {routes} from './routes';
 import StoreData from './store';
 import {initialize} from './helpers/general';
+
+
 import appvue from './app.vue';
 import moment from 'moment';
-
 import swal from 'sweetalert2'
+import VueProgressBar from 'vue-progressbar'
+
+
+
+
 window.swal = swal;
 
 const toast = swal.mixin({
@@ -31,7 +41,7 @@ Vue.component('pagination', require('laravel-vue-pagination'));
 Vue.use(VueRouter);
 Vue.use(Vuex);
 
-import VueProgressBar from 'vue-progressbar'
+
 
 Vue.use(VueProgressBar, {
     color: 'rgb(143, 255, 199)',

@@ -106,7 +106,7 @@
                     </li>
                 </ul>
               </li>
-               <li class="nav-item has-treeview">
+               <li class="nav-item has-treeview" v-if="current_user.access_level_id == 7|1">
                     <a href='#' class="nav-link">
                         <i class="nav-icon fas fa-boxes"></i>
                         <p>Inventory</p>

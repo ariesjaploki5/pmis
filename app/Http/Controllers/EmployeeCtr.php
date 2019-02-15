@@ -10,7 +10,7 @@ class EmployeeCtr extends Controller
 {
     public function index()
     {
-        $employees = Employee::orderBy('employeeid')->paginate(75)->jsonSerialize();
+        $employees = Employee::orderBy('employeeid', 'desc')->paginate(100)->jsonSerialize();
         return response($employees, Response::HTTP_OK);
     }
 

@@ -21,7 +21,7 @@ te<template>
 								<form @submit.prevent="editmode ? update_user() : store_user()" class="text-left">
 									<div class="modal-body">
 										<div class="form-group">
-											<label for="user_description">Description</label>
+											<label for="user_description">Access Level</label>
 											<select type="text" class="form-control form-control-sm" v-model="form.access_level_id">
                                                 <option v-for="al in access_levels.data" :key="al.id" :value="al.id">{{ al.description }}</option>
 											</select>

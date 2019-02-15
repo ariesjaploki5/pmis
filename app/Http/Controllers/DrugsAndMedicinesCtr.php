@@ -14,6 +14,10 @@ use DB;
 
 class DrugsAndMedicinesCtr extends Controller
 {
+
+
+
+
     public function index($user_id)
     {
         $select = PPMP::where('user_id', $user_id)->where('status', 'preparing')->orderBy('id', 'desc')->first();
@@ -85,7 +89,11 @@ class DrugsAndMedicinesCtr extends Controller
 
     public function remove(Request $request, $dmdcomb, $dmdctr, $user_id)
     {
-        
+        $select = PPMP::where('user_id', $user_id)->where('status', 'preparing')->orderBy('id', 'desc')->first();
+        $id = $select->id;
+        $item = DB::table('hospital_e.j10.pams_ppmp_drugs_and_medicines')->where('dmdcomb', $dmdcomb)->where('dmdctr', $dmdctr)->where('ppmp_id', $id)->delete();
+
+        return response()->json($item);
     }
 
     public function my_item(Request $request, $user_id)

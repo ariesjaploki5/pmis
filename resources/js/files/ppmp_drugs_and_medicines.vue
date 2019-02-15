@@ -21,12 +21,14 @@
                     
                         <table class="table table-hover" style="overflow-y: auto; height:40rem; width:100%;display:block;">
                         <tbody>
+                            
                             <tr v-for="dm in dms" :key="dm.id">
                                 <td class="col">
                                     <span class="text-capitalize">{{ dm.gendesc }}</span>
                                     <span class="badge badge-pill badge-primary pb-0"><h6>{{ dm.formdesc }}</h6> </span>
                                     <span class="badge badge-pill badge-success pb-0"><h6>{{ dm.dmdnost }} {{ dm.stredesc }}</h6></span>
                                 </td>
+                                
                                 <td class="col">
                                     <div class="text-right">
                                         <button type="button" class="btn btn-primary btn-sm" @click="add_item(dm)">Add <i class="fas fa-plus-circle"></i></button>
@@ -59,15 +61,35 @@
                 </div>
                 <div class="row">
                     <table class="table table-hover" style="overflow-y: auto; height:40rem; width:100%;display:block;">
+
                         <tr v-for="item in items" :key="item.id">
                             <td class="col">
                                 <span class="text-capitalize">{{ item.gendesc }}</span>
                                 <span class="badge badge-pill badge-primary pb-0"><h6>{{ item.formdesc }}</h6> </span>
                                 <span class="badge badge-pill badge-success pb-0"><h6>{{ item.dmdnost }} {{ item.stredesc }}</h6></span>
+                                
+                                <div class="input-group mt-2 col-4">
+                                    <div class="input-group-prepend">
+                                    <div class="input-group-text">Quantity</div>
+                                    </div>
+                                    <input type="number" class="form-control text-right" id="quantity" value="1">
+                                </div>
+                                <div class="input-group mt-2 col-4">
+                                    <div class="input-group-prepend">
+                                    <div class="input-group-text">Cost Per Unit</div>
+                                    </div>
+                                    <input type="number" class="form-control text-right" id="cost" readonly>
+                                </div>
+                                <div class="input-group mt-2 col-4">
+                                    <div class="input-group-prepend">
+                                    <div class="input-group-text">Estimated Cost</div>
+                                    </div>
+                                    <input type="number" class="form-control text-right" id="estimate_cost" readonly>
+                                </div>
                             </td>
                             <td class="col">
                                 <div class="text-right">
-                                    <button type="button" class="btn btn-danger btn-sm">Remove <i class="fas fa-minus-circle"></i></button>
+                                    <button type="button" class="btn btn-danger btn-sm" @click="remove_item(item)">Remove <i class="fas fa-minus-circle"></i></button>
                                 </div>
                             </td>
                         </tr>
