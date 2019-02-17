@@ -8,6 +8,7 @@ use App\Model\DrugsAndMedicines\Hgen;
 use App\Model\DrugsAndMedicines\Hdruggrp;
 use App\Model\DrugsAndMedicines\Hroute;
 use App\Model\DrugsAndMedicines\Hstre;
+use App\DrugsAndMedicines as DM;
 use App\Model\Ppmp;
 use DB;
 
@@ -17,10 +18,10 @@ class DrugsAndMedicinesCtr extends Controller
 
 
 
-
     public function index($user_id)
     {
         $select = PPMP::where('user_id', $user_id)->where('status', 'preparing')->orderBy('id', 'desc')->first();
+
         $items = DB::table('hospital_e.j10.pams_ppmps as ppmp')
         ->join('hospital_e.j10.pams_ppmp_drugs_and_medicines as dm', 'ppmp.id', '=', 'dm.ppmp_id')
         ->join('hospital.dbo.hdmhdr as hdmhdr', function($join){
@@ -38,26 +39,9 @@ class DrugsAndMedicinesCtr extends Controller
         
     }
 
-    public function search(Request $request)
+    public function search($search)
     {
-        $search = $request->search;
-        // $dm = Hdmhdr::with(['hdruggrp.hgen' => function ($q) use ($search) {
-        //     $q->where('gendesc', 'like', '%' . $search . '%');
-        // } , 'hroute', 'hstre'])->get();
-
-        $dm = DB::table('hospital.dbo.hdmhdr as hdmhdr')
-        ->join('hospital.dbo.hdruggrp as hdruggrp', 'hdmhdr.grpcode', '=', 'hdruggrp.grpcode')
-        ->join('hospital.dbo.hgen as hgen', 'hdruggrp.gencode', '=', 'hgen.gencode')
-        ->join('hospital.dbo.hform as hform', 'hdmhdr.formcode', '=', 'hform.formcode')
-        ->leftjoin('hospital.dbo.hroute as hroute', 'hdmhdr.rtecode', '=', 'hroute.rtecode')
-        ->leftjoin('hospital.dbo.hstre as stre', 'hdmhdr.strecode', '=', 'stre.strecode')
-        ->where('gendesc', 'like', $search . '%')
-        ->orderBy('gendesc')
-        ->orderBy('stredesc')
-        // ->select(['gendesc', 'formdesc', 'rtedesc', 'dmdrxot', 'dmdnost', 'stredesc'])
-        ->get();
-
-        // $dm = Hgen::with('hdruggrps.hdmhdr')->where('gendesc', 'like', '%' . $search . '%')->select('gendesc')->get();
+        $dm = DM::search($search)->orderBy('gendesc')->orderBy('stredesc')->get();
         return response()->json($dm);
     }
 
@@ -91,6 +75,8 @@ class DrugsAndMedicinesCtr extends Controller
     {
         $select = PPMP::where('user_id', $user_id)->where('status', 'preparing')->orderBy('id', 'desc')->first();
         $id = $select->id;
+
+
         $item = DB::table('hospital_e.j10.pams_ppmp_drugs_and_medicines')->where('dmdcomb', $dmdcomb)->where('dmdctr', $dmdctr)->where('ppmp_id', $id)->delete();
 
         return response()->json($item);
@@ -107,11 +93,14 @@ class DrugsAndMedicinesCtr extends Controller
         ->join('hospital.dbo.hdmhdr as hdmhdr', function($join){
             $join->on('dm.dmdcomb', '=', 'hdmhdr.dmdcomb')->on('dm.dmdctr', '=', 'hdmhdr.dmdctr');
         })
+
         ->join('hospital.dbo.hdruggrp as hdruggrp', 'hdmhdr.grpcode', '=', 'hdruggrp.grpcode')
         ->join('hospital.dbo.hgen as hgen', 'hdruggrp.gencode', '=', 'hgen.gencode')
         ->join('hospital.dbo.hform as hform', 'hdmhdr.formcode', '=', 'hform.formcode')
         ->leftjoin('hospital.dbo.hroute as hroute', 'hdmhdr.rtecode', '=', 'hroute.rtecode')
         ->leftjoin('hospital.dbo.hstre as stre', 'hdmhdr.strecode', '=', 'stre.strecode')
+
+
         ->where('ppmp.id', $select->id)->orderBy('dm.id')->get();
 
         if(!$items)

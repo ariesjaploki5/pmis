@@ -123,7 +123,8 @@ Route::group(['prefix' => 'auth'], function ($router) {
 
 
     Route::get('/drugs_and_medicines/{user_id}', 'DrugsAndMedicinesCtr@my_item');
-    Route::post('/drugs_and_medicines/search', 'DrugsAndMedicinesCtr@search');
+    Route::get('/drugs_and_medicines/{search}/search', 'DrugsAndMedicinesCtr@search');
 
     Route::post('/drugs_and_medicines/{dmdcomb}/{dmdctr}/{user_id}', 'DrugsAndMedicinesCtr@add');
     Route::delete('/drugs_and_medicines/{dmdcomb}/{dmdctr}/{user_id}', 'DrugsAndMedicinesCtr@remove');
+

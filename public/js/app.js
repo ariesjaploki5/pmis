@@ -4223,8 +4223,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -4244,7 +4242,7 @@ __webpack_require__.r(__webpack_exports__);
     get_search: function get_search() {
       var _this = this;
 
-      this.form_search.post('api/drugs_and_medicines/search').then(function (_ref) {
+      axios.get('api/drugs_and_medicines/' + this.search + '/search').then(function (_ref) {
         var data = _ref.data;
         return _this.dms = data;
       });
@@ -67269,54 +67267,49 @@ var render = function() {
           _c("div", { staticClass: "row" }, [
             _c("div", { staticClass: "col-md-12" }, [
               _c(
-                "form",
-                {
-                  on: {
-                    submit: function($event) {
-                      $event.preventDefault()
-                      _vm.get_search()
-                    }
-                  }
-                },
+                "div",
+                { staticClass: "form-group row justify-content-center" },
                 [
-                  _c(
-                    "div",
-                    { staticClass: "form-group row justify-content-center" },
-                    [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.form_search.search,
-                            expression: "form_search.search"
-                          }
-                        ],
-                        staticClass: "form-control col-md-8",
-                        attrs: {
-                          type: "text",
-                          name: "",
-                          id: "",
-                          "aria-describedby": "helpId",
-                          placeholder: "search"
-                        },
-                        domProps: { value: _vm.form_search.search },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(
-                              _vm.form_search,
-                              "search",
-                              $event.target.value
-                            )
-                          }
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.search,
+                        expression: "search"
+                      }
+                    ],
+                    staticClass: "form-control col-md-8",
+                    attrs: {
+                      type: "text",
+                      name: "",
+                      id: "",
+                      "aria-describedby": "helpId",
+                      placeholder: "search"
+                    },
+                    domProps: { value: _vm.search },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
                         }
-                      }),
-                      _vm._v(" "),
-                      _vm._m(0)
-                    ]
+                        _vm.search = $event.target.value
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary btn-md ml-2",
+                      attrs: { type: "submit" },
+                      on: {
+                        click: function($event) {
+                          _vm.get_search()
+                        }
+                      }
+                    },
+                    [_c("i", { staticClass: "fas fa-search" })]
                   )
                 ]
               )
@@ -67400,7 +67393,7 @@ var render = function() {
                   ]
                 )
               ])
-            : _c("div", { staticClass: "row" }, [_vm._m(1)])
+            : _c("div", { staticClass: "row" }, [_vm._m(0)])
         ])
       ])
     ]),
@@ -67409,7 +67402,9 @@ var render = function() {
       _c("div", { staticClass: "card" }, [
         _c("div", { staticClass: "card-body" }, [
           _c("div", { staticClass: "card-title" }, [
-            _vm._v("\r\n                    PPMP\r\n                ")
+            _vm._v(
+              "\r\n                    PPMP\r\n                    \r\n                "
+            )
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "row" }, [
@@ -67449,11 +67444,11 @@ var render = function() {
                       ]
                     ),
                     _vm._v(" "),
+                    _vm._m(1, true),
+                    _vm._v(" "),
                     _vm._m(2, true),
                     _vm._v(" "),
-                    _vm._m(3, true),
-                    _vm._v(" "),
-                    _vm._m(4, true)
+                    _vm._m(3, true)
                   ]),
                   _vm._v(" "),
                   _c("td", { staticClass: "col" }, [
@@ -67487,16 +67482,6 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      { staticClass: "btn btn-primary btn-md ml-2", attrs: { type: "submit" } },
-      [_c("i", { staticClass: "fas fa-search" })]
-    )
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement

@@ -1,6 +1,3 @@
-<template>
-    
-</template>
 
 <template>
 <div class="row">
@@ -9,12 +6,12 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <form @submit.prevent="get_search() ">
-                            <div class="form-group row justify-content-center">
-                                <input type="text" class="form-control col-md-8" name="" id="" aria-describedby="helpId" placeholder="search" v-model="form_search.search">
-                                <button type="submit" class="btn btn-primary btn-md ml-2" ><i class="fas fa-search"></i></button>
-                            </div>
-                        </form>
+                        
+                        <div class="form-group row justify-content-center">
+                            <input type="text" class="form-control col-md-8" name="" id="" aria-describedby="helpId" placeholder="search" v-model="search">
+                            <button type="submit" class="btn btn-primary btn-md ml-2" @click="get_search()"><i class="fas fa-search"></i></button>
+                        </div>
+                        
                     </div>
                 </div>
                 <div class="row" v-if="dms.length">
@@ -58,6 +55,7 @@
             <div class="card-body">
                 <div class="card-title">
                     PPMP
+                    
                 </div>
                 <div class="row">
                     <table class="table table-hover" style="overflow-y: auto; height:40rem; width:100%;display:block;">
@@ -118,7 +116,7 @@ export default {
            this.my_items();
         },
         get_search(){
-            this.form_search.post('api/drugs_and_medicines/search').then(({data}) => this.dms = data);
+            axios.get('api/drugs_and_medicines/'+this.search+'/search').then(({data}) => this.dms = data);
         },
 
         my_items(){

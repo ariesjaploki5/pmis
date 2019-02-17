@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use DB;
 use App\User;
 use App\Model\Employee;
-use App\Model\Access_Level;
+use App\Model\AccessLevel;
 use Illuminate\Support\Facades\Hash;
 
 
