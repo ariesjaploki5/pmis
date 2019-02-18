@@ -12,11 +12,8 @@ use App\DrugsAndMedicines as DM;
 use App\Model\Ppmp;
 use DB;
 
-
 class DrugsAndMedicinesCtr extends Controller
 {
-
-
 
     public function index($user_id)
     {
